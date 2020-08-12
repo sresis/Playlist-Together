@@ -20,7 +20,7 @@ class User(db.Model):
     password = db.Column(db.String(50))
 
     def __repr__(self):
-        return f'<User user_id={self.user_id} email={self.email}>'
+        return f'<user_id={self.user_id} email={self.email}>'
 
 class Playlist(db.Model):
 	"""A playlist."""
@@ -30,10 +30,11 @@ class Playlist(db.Model):
                         autoincrement=True,
                         primary_key=True)
 	user_1_id = db.Column(db.Integer, db.ForeignKey('users.user_id'))
-	user_2_id = db.Column(db.Integer, db.ForeignKey('users.user_id'))
+
+	user = db.relationship('User', backref='playlists')
 
 	def __repr__(self):
-		return f'<Playlist playlist_id={self.playlist_id}>'
+		return f'<playlist_id={self.playlist_id}>'
 
 class Song_Pref(db.Model):
 	"""A song preference."""
@@ -46,8 +47,34 @@ class Song_Pref(db.Model):
 	song_title = db.Column(db.String())
 	user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'))
 
+	user = db.relationship('User', backref='song_prefs')
+
+
 	def __repr__(self):
-		return f'<Song Pref ID song_pref_id={self.song_pref_id} Title song_title={self.song_title}>'
+		return f'<song_pref_id={self.song_pref_id} song_title={self.song_title}>'
+
+
+
+def connect_to_db(flask_app, db_uri='postgresql:///ratings', echo=True):
+    flask_app.config['SQLALCHEMY_DATABASE_URI'] = db_uri
+    flask_app.config['SQLALCHEMY_ECHO'] = echo
+    flask_app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
+    db.app = flask_app
+    db.init_app(flask_app)
+
+    print('Connected to the db!')
+
+
+if __name__ == '__main__':
+    from server import app
+
+    # Call connect_to_db(app, echo=False) if your program output gets
+    # too annoying; this will tell SQLAlchemy not to print out every
+    # query it executes.
+
+    connect_to_db(app)
+
 
 
 
