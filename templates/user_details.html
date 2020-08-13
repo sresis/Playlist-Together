@@ -3,8 +3,23 @@
 {% block title %}{{ user.email }}'s Page{% endblock %}
 
 {% block body %}
-<h1>{{ user.email }}</h1>
-<h2> {{ user.fname }} {{ user.lname }}</h2>
+
+<div id="user_details">
+	<ul class="main">
+		<li>Name: {{ user.fname }} {{ user.lname }}
+		<li>Email: {{ user.email }}</li>
+		<li>Favorite Songs: </li>
+		<li>Favorite Artists: </li>
+		<ul class="subcat">
+			{% for artist in artist_prefs %}
+				{% if artist.user_id == user.user_id %}
+					<li>{{ artist.artist_name }}</li>
+				{% endif %}
+			{% endfor %}
+			
+		</ul>
+	</ul>
+</div>
 
 <a href='/users'>Users</a>
 

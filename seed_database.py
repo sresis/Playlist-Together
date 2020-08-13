@@ -19,17 +19,31 @@ first_names = ['Mike', 'Melanie', 'Adam', 'Eve', 'Jenny', 'Jason', 'Mitch', 'Yol
 last_names = ['Roberts', 'Lee', 'Garcia', 'Smith', 'Jones', 'Yee', 'Washington', 'Williams', 'Lopez', 'Kirk', 'Henry']
 passwords = ['testing123', 'cantguessit12', 'random321']
 
+artists = ['Lil Wayne', 'Lizzo', 'Fleetwood Mac', 'Adele', 
+		'Kanye West', 'Avicii', 'Eminem', 'Selena Gomez', 'Justin Bieber', 
+		'The Killers', 'Coldplay', 'Future', 'Tyga', 'The Rolling Stones',
+		'Rihanna', 'Tim McGraw', 'Kane Brown', 'Carrie Underwood', 
+		'Taylor Swift', 'Spice Girls', 'Metallica', 'Kendrick Lamar',
+		'Green Day', 'Alesso', '50 Cent', 'Justin Timberlake']
 # make  random users
-for n in range(5):
+for n in range(8):
 	fname = choice(first_names)
 	first_names.remove(fname)
 	lname = choice(last_names)
 	email = f'{fname}_{lname}@gmail.com'
 	password = choice(passwords)
-	crud.create_user(email, fname, lname,password)
+	user = crud.create_user(email, fname, lname, password)
 
-artists = ['Lil Wayne', 'Lizzo', 'Fleetwood Mac', 'Adele', 
-		'Kanye West', 'Avicii', 'Eminem', 'Selena Gomez', 'Justin Bieber', 
-		'The Killers', 'Coldplay', 'Future', 'Tyga', 'The Rolling Stones',
-		'Rihanna', 'Tim McGraw', 'Kane Brown', 'Carrie Underwood', 
-		'Taylor Swift', 'Spice Girls', 'Metallica', 'Kendrick Lamar']
+	# adds artist preferences for each
+	existing_list = []
+	for n in range(5):
+		random_artist = choice(artists)
+		if random_artist not in existing_list:
+			crud.create_artist_pref(random_artist, user.user_id)
+			existing_list.append(random_artist)
+
+
+
+
+
+

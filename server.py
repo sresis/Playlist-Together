@@ -83,8 +83,9 @@ def show_user(user_id):
     """Show details on a particular user."""
 
     user = crud.get_user_by_id(user_id)
+    artist_prefs = crud.get_all_artist_prefs()
 
-    return render_template('user_details.html', user=user)
+    return render_template('user_details.html', user=user, artist_prefs=artist_prefs)
 
 @app.route('/profile/add_prefs')
 def show_prefs_form():
