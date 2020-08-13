@@ -54,7 +54,7 @@ def register_user():
 	return redirect('/')
 
 
-@app.route('/login', methods=['POST'])
+@app.route('/profile', methods=['POST'])
 def login_user():
 	## right now it only lets you log in with existing
 	#session['show_login'] == True
@@ -83,6 +83,8 @@ def show_user(user_id):
     user = crud.get_user_by_id(user_id)
 
     return render_template('user_details.html', user=user)
+
+
 
 
 
