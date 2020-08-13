@@ -1,4 +1,6 @@
 
+{% extends 'base.html' %}
+
 {%block title %} Combined Playlist Homepage {% endblock %}
 
 {% block body %}
@@ -9,17 +11,12 @@
 
 <h2>Create an Account</h2>
 <form action="/users" method="POST">
-	<p>
-		Email <input type="text" name="email">
-	</p>
-
-	<p>
-		Password <input type="password" name="password">
-    </p>
-
-    <p>
+		<p>First Name <input type="text" name="fname"></p>
+		<p>Last Name <input type="text" name="lname"></p>
+		<p>Email <input type="text" name="email"></p>
+		<p>Password<input type="text" name="password"></p>
     	<input type="submit">
-    </p>
+
 </form>
 {% endif %}
 {% if session['show_login'] %}

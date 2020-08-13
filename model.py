@@ -20,42 +20,43 @@ class User(db.Model):
     password = db.Column(db.String(50))
 
     def __repr__(self):
-        return f'<user_id={self.user_id} email={self.email}>'
+        return f'<user_id={self.user_id} email={self.email} fname={self.fname}>'
 
 class Playlist(db.Model):
-	"""A playlist."""
+    """A playlist."""
 
-	__tablename__ = "playlists"
-	playlist_id = db.Column(db.Integer,
+    __tablename__ = "playlists"
+    playlist_id = db.Column(db.Integer,
                         autoincrement=True,
                         primary_key=True)
-	user_1_id = db.Column(db.Integer, db.ForeignKey('users.user_id'))
+    user_1_id = db.Column(db.Integer, db.ForeignKey('users.user_id'))
+    # make middle table
+    user = db.relationship('User', backref='playlists')
 
-	user = db.relationship('User', backref='playlists')
-
-	def __repr__(self):
-		return f'<playlist_id={self.playlist_id}>'
+    def __repr__(self):
+        return f'<playlist_id={self.playlist_id}>'
 
 class Song_Pref(db.Model):
-	"""A song preference."""
+    """A song preference."""
 
-	__tablename__ = 'song_prefs'
+    __tablename__ = 'song_prefs'
 
-	song_pref_id = db.Column(db.Integer,
+    song_pref_id = db.Column(db.Integer,
                         autoincrement=True,
                         primary_key=True)
-	song_title = db.Column(db.String())
-	user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'))
+    song_title = db.Column(db.String())
+    user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'))
+    spotify_uri = db.Column(db.String())
 
-	user = db.relationship('User', backref='song_prefs')
-
-
-	def __repr__(self):
-		return f'<song_pref_id={self.song_pref_id} song_title={self.song_title}>'
+    user = db.relationship('User', backref='song_prefs')
 
 
+    def __repr__(self):
+        return f'<song_pref_id={self.song_pref_id} song_title={self.song_title}>'
 
-def connect_to_db(flask_app, db_uri='postgresql:///ratings', echo=True):
+
+
+def connect_to_db(flask_app, db_uri='postgresql:///playlist_combiner', echo=True):
     flask_app.config['SQLALCHEMY_DATABASE_URI'] = db_uri
     flask_app.config['SQLALCHEMY_ECHO'] = echo
     flask_app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
@@ -73,8 +74,10 @@ if __name__ == '__main__':
     # too annoying; this will tell SQLAlchemy not to print out every
     # query it executes.
 
-    connect_to_db(app)
 
+
+
+    connect_to_db(app)
 
 
 

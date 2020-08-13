@@ -15,10 +15,43 @@ app.jinja_env.undefined = StrictUndefined
 @app.route('/')
 def homepage():
 	"""view the homepage."""
-	session['show_create_account'] = True
-	session['show_login'] = True
+
 	
 	return render_template('homepage.html')
+
+
+@app.route('/users')
+def all_users():
+    """View all users."""
+
+    users = crud.get_users()
+
+    return render_template('all_users.html', users=users)
+
+@app.route('/users', methods=['POST'])
+def register_user():
+	"""Creates a new user."""
+
+	# gets the email, password, fname and lastname for user
+	email = request.form.get('email')
+	password = request.form.get('password')
+	fname = request.form.get('fname')
+	lname = request.form.get('lname')
+
+
+	# checks if email is already registered
+	# if registered, tell them account is already registered
+	# if user:
+	# flash('This email is already registered. Please try again.')
+	# # if not registered, create a new instance of user
+	# else:
+	
+	crud.create_user(email, password, fname, lname)
+	flash('Success! You can now log in.')
+
+	#redirects back to homepage
+	return redirect('/')
+
 
 
 
