@@ -61,7 +61,7 @@ def login_user():
 	# gets email and password from form
 	email = request.form['email']
 	password = request.form['password']
-	artist_prefs = crud.get_all_artist_prefs()
+
 	# gets user info based on email
 	user = crud.get_user_by_email(email)
 	session['user'] = []
@@ -70,7 +70,8 @@ def login_user():
 		#adds user to session
 		session['user'] = user.user_id
 		flash('you are logged in!')
-		return render_template('user_profile.html', user=user)
+		artist_prefs = crud.get_all_artist_prefs()
+		return render_template('user_profile.html', user=user, artist_prefs=artist_prefs)
 
 	else:
 		flash('incorrect login.')
