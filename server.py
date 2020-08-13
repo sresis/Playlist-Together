@@ -69,7 +69,7 @@ def login_user():
 		#adds user to session
 		session['user'] = user.user_id
 		flash('you are logged in!')
-		return redirect('/')
+		return render_template('user_profile.html', user=user)
 
 	else:
 		flash('incorrect login.')

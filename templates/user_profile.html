@@ -1,1 +1,20 @@
-<h1>User Profiles</h1>
+{% extends 'base.html' %}
+
+{% block title %}{{ user.fname }}'s Profile{% endblock %}
+
+{% block body %}
+<h2>{{ user.fname }}'s Profile</h2>
+<div id="user_details">
+	<ul>
+		<li>Name: {{ user.fname }} {{ user.lname }}
+		<li>Email: {{ user.email }}</li>
+		<li>Favorite Songs: </li>
+		<li>Favorite Artists: </li>
+	</ul>
+</div>
+
+<div id="navigation">
+	<a href='/users'>Users</a>
+</div>
+
+{% endblock %}
