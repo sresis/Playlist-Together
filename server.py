@@ -61,6 +61,7 @@ def login_user():
 	# gets email and password from form
 	email = request.form['email']
 	password = request.form['password']
+	artist_prefs = crud.get_all_artist_prefs()
 	# gets user info based on email
 	user = crud.get_user_by_email(email)
 	session['user'] = []
@@ -106,7 +107,11 @@ def add_users_prefs():
 	return render_template('updated_profile.html', artist_prefs=artist_prefs, user=user)
 ## how to make it so you can iterate through artists on profile
 
-
+## Jinja displays existing artists. Updated list of Artists. Make an Ajax call to get existing data
+## Ajax call can return JSON
+## route to take in what user typed in. in the end, return JSON that will be appended to the page
+#something similar to 106. passing in artist preferences for the user
+#look at crud and see what it does if there isn't any preferred
 
 if __name__ == '__main__':
 	connect_to_db(app)

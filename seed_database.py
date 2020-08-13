@@ -27,3 +27,9 @@ for n in range(5):
 	email = f'{fname}_{lname}@gmail.com'
 	password = choice(passwords)
 	crud.create_user(email, fname, lname,password)
+
+artists = ['Lil Wayne', 'Lizzo', 'Fleetwood Mac', 'Adele', 
+		'Kanye West', 'Avicii', 'Eminem', 'Selena Gomez', 'Justin Bieber', 
+		'The Killers', 'Coldplay', 'Future', 'Tyga', 'The Rolling Stones',
+		'Rihanna', 'Tim McGraw', 'Kane Brown', 'Carrie Underwood', 
+		'Taylor Swift', 'Spice Girls', 'Metallica', 'Kendrick Lamar']
