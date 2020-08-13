@@ -9,8 +9,8 @@ import crud
 import model
 import server
 
-os.system('dropdb ratings')
-os.system('createdb ratings')
+os.system('dropdb playlist_combiner')
+os.system('createdb playlist_combiner')
 
 model.connect_to_db(server.app)
 model.db.create_all()

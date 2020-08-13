@@ -1,4 +1,4 @@
-from model import db, User, Playlist, Song_Pref, connect_to_db
+from model import db, User, Playlist, Song_Pref, Artist_Pref, connect_to_db
 
 
 def create_user(email, fname, lname, password):
@@ -11,15 +11,15 @@ def create_user(email, fname, lname, password):
 
     return user
 
-def create_song_pref(song_title, user_id):
-	"""Creates a song preference for a given user."""
+def create_artist_pref(artist_name, user_id):
+	"""Creates an artist preference for a given user."""
 
-	song_pref = Song_Pref(song_title=song_title, user_id=user_id)
+	artist_pref = Artist_Pref(artist_name=artist_name, user_id=user_id)
 
-	db.session.add(song_pref)
+	db.session.add(artist_pref)
 	db.session.commit()
 
-	return song_pref
+	return artist_pref
 
 
 def get_users():
@@ -36,3 +36,10 @@ def get_user_by_email(email):
 	"""Returns a user based on their email."""
 
 	return User.query.filter(User.email == email).first()
+
+
+def get_all_artist_prefs():
+    """Return all artist prefs."""
+
+    return Artist_Pref.query.all()
+

@@ -84,11 +84,27 @@ def show_user(user_id):
 
     return render_template('user_details.html', user=user)
 
-@app.route('/profile/add_prefs', methods=['POST'])
-def add_prefs():
-	"""Enables user to add song or artist prefs to their profile."""
-	artist_pref = request.form.get('artist')
+@app.route('/profile/add_prefs')
+def show_prefs_form():
+	"""Shows form for user to input their preferences."""
+
+	# ## next: how to add this to the table
+	user_id = session['user']
+	user = crud.get_user_by_id(user_id)
+
 	return render_template('add_prefs.html')
+
+@app.route('/profile/add_prefs', methods=['POST'])
+def add_users_prefs():
+	"""enables users to add their preferences."""
+
+	artist = request.form.get('artist')
+	user_id = session['user']
+	user = crud.get_user_by_id(user_id)
+	artist_pref = crud.create_artist_pref(artist, user_id)
+	artist_prefs = crud.get_all_artist_prefs()
+	return render_template('updated_profile.html', artist_prefs=artist_prefs, user=user)
+## how to make it so you can iterate through artists on profile
 
 
 

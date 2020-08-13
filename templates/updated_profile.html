@@ -10,7 +10,12 @@
 		<li>Email: {{ user.email }}</li>
 		<li>Favorite Songs: </li>
 		<li>Favorite Artists: </li>
-
+		<ul class="subcat">
+			{% for artist in artist_prefs %}
+			<li>{{ artist.artist_name }}</li>
+			{% endfor %}
+			
+		</ul>
 	</ul>
 </div>
 
