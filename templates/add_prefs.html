@@ -1,0 +1,17 @@
+
+{% extends 'base.html' %}
+
+{%block title %} Add Preferences {% endblock %}
+
+{% block body %}
+
+
+<h2>Add Preferences to Profile</h2>
+<form action="/profile/add_prefs" method="POST" id="prefs">
+	
+	<div> Artist <input type="text" name="artist"></div>
+	
+    <p><input type="submit"></p>
+</form>
+
+{% endblock %}

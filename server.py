@@ -84,7 +84,11 @@ def show_user(user_id):
 
     return render_template('user_details.html', user=user)
 
-
+@app.route('/profile/add_prefs', methods=['POST'])
+def add_prefs():
+	"""Enables user to add song or artist prefs to their profile."""
+	artist_pref = request.form.get('artist')
+	return render_template('add_prefs.html')
 
 
 

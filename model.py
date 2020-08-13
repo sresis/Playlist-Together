@@ -54,6 +54,24 @@ class Song_Pref(db.Model):
     def __repr__(self):
         return f'<song_pref_id={self.song_pref_id} song_title={self.song_title}>'
 
+class Artist_Pref(db.Model):
+    """An artist preference."""
+
+    __tablename__ = 'artist_prefs'
+
+    artist_pref_id = db.Column(db.Integer,
+                        autoincrement=True,
+                        primary_key=True)
+    artist_name = db.Column(db.String())
+    user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'))
+    artist_uri = db.Column(db.String())
+
+    user = db.relationship('User', backref='artist_prefs')
+
+
+    def __repr__(self):
+        return f'<artist_pref_id={self.artist_pref_id} artist_name={self.artist_name}>'
+
 
 
 def connect_to_db(flask_app, db_uri='postgresql:///playlist_combiner', echo=True):
