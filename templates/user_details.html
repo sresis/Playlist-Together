@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ user.email }}'s Page{% endblock %}
+
+{% block body %}
+<h1>{{ user.email }}</h1>
+<h2> {{ user.fname }} {{ user.lname }}</h2>
+
+<a href='/users'>Users</a>
+
+{% endblock %}

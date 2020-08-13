@@ -34,9 +34,9 @@ def register_user():
 
 	# gets the email, password, fname and lastname for user
 	email = request.form.get('email')
-	password = request.form.get('password')
 	fname = request.form.get('fname')
 	lname = request.form.get('lname')
+	password = request.form.get('password')
 
 
 	# checks if email is already registered
@@ -47,7 +47,7 @@ def register_user():
 	#if not registered, create a new instance of user
 	else:
 	
-		crud.create_user(email, password, fname, lname)
+		crud.create_user(email, fname, lname, password)
 		flash('Success! You can now log in.')
 
 	#redirects back to homepage
@@ -55,6 +55,13 @@ def register_user():
 
 
 
+@app.route('/users/<user_id>')
+def show_user(user_id):
+    """Show details on a particular user."""
+
+    user = crud.get_user_by_id(user_id)
+
+    return render_template('user_details.html', user=user)
 
 
 
