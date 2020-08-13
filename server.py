@@ -41,13 +41,14 @@ def register_user():
 
 	# checks if email is already registered
 	# if registered, tell them account is already registered
-	# if user:
-	# flash('This email is already registered. Please try again.')
-	# # if not registered, create a new instance of user
-	# else:
+	user = crud.get_user_by_email(email)
+	if user:
+		flash('This email is already registered. Please try again.')
+	#if not registered, create a new instance of user
+	else:
 	
-	crud.create_user(email, password, fname, lname)
-	flash('Success! You can now log in.')
+		crud.create_user(email, password, fname, lname)
+		flash('Success! You can now log in.')
 
 	#redirects back to homepage
 	return redirect('/')

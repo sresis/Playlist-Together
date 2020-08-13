@@ -30,7 +30,7 @@ def get_users():
 def get_user_by_id(user_id):
 	"""returns a user based on their ID."""
 
-	return User.query.filter(User.user_id=user_id)
+	return User.query.get(user_id)
 
 def get_user_by_email(email):
 	"""Returns a user based on their email."""
