@@ -54,6 +54,27 @@ def register_user():
 	return redirect('/')
 
 
+@app.route('/login', methods=['POST'])
+def login_user():
+	## right now it only lets you log in with existing
+	#session['show_login'] == True
+	# gets email and password from form
+	email = request.form['email']
+	password = request.form['password']
+	# gets user info based on email
+	user = crud.get_user_by_email(email)
+	session['user'] = []
+	# checks if pasword in db matches form pasword
+	if user.password == password:
+		#adds user to session
+		session['user'] = user.user_id
+		flash('you are logged in!')
+		return redirect('/')
+
+	else:
+		flash('incorrect login.')
+		return redirect('/')
+
 
 @app.route('/users/<user_id>')
 def show_user(user_id):
