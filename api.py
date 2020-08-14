@@ -56,27 +56,27 @@ def make_url(items):
 	"""puts item in a format where they can be looked up. used for tracks or artists"""
 	lookup_url = ''
 	for item in items:
-		print(item)
 		lookup_url += item +'%2C'
 	#removes last '%'
 	lookup_url = lookup_url[:-3]
 	return lookup_url
 
 def get_recs_based_on_seed(tracks, artists):
-	if tracks != []:
-		tracks_piece = make_url(tracks)
+
+	tracks_piece = make_url(tracks)
 	artists_piece = make_url(artists)
 
 	string = BASE_URL + 'recommendations?seed_artists=' + artists_piece +'&seed_tracks=' + tracks_piece
-	print(string)
+
 	result = requests.get(string, headers=headers)
 
 	result = result.json()
 
-	#prints song and artist 
+	#returns track ID
+	tracks_list = []
 	for item in result['tracks']:
-		print(f"{item['name']} by {item['artists'][0]['name']}")
-	return None
+		tracks_list.append(item['id'])
+	return tracks_list
 
 #get_recs_based_on_seed(['0e4os6wHr1jbFn4yPtSEOe', '2RKY4G4RwRQufxBUv6ect3', '786h4kDeZiX5nYvOwA3wtE', '7utRJ4BeYx85khzP3lKoBX'],['4dpARuHxo51G3z768sgnrY','1HY2Jd0NmPuamShAr6KMms', '6PAt558ZEZl0DmdXlnjMgD'])
 #get_recs_based_on_seed(['7utRJ4BeYx85khzP3lKoBX', '786h4kDeZiX5nYvOwA3wtE'],['4dpARuHxo51G3z768sgnrY','1HY2Jd0NmPuamShAr6KMms', '6PAt558ZEZl0DmdXlnjMgD'])
@@ -106,6 +106,31 @@ def get_song_id(song_title):
 	song_id = result['tracks']['items'][0]['id']
 	
 	return song_id
+
+def get_song_title(song_id):
+	"""Returns the song title for a song ID."""
+
+	lookup_string = BASE_URL + 'tracks/' + song_id
+	result = requests.get(lookup_string, headers=headers)
+	result = result.json()
+
+	title = result['name']
+		
+	return title
+
+def get_song_artist(song_id):
+	"""Returns the song artist(s) for a song ID. """
+
+	lookup_string = BASE_URL + 'tracks/' + song_id
+	result = requests.get(lookup_string, headers=headers)
+	result = result.json()
+
+	artist_names = []
+	for item in result['artists']:
+		artist_names.append(item['name'])
+	text = (' and ').join(artist_names)
+		
+	return text
 
 
 

@@ -88,8 +88,18 @@ def show_user(user_id):
     user = crud.get_user_by_id(user_id)
     artist_prefs = crud.get_all_artist_prefs()
     song_prefs = crud.get_all_song_prefs()
+    rec_tracks = crud.get_recommended_tracks(user_id)
+    
+    rec_names = []
+    for track in rec_tracks:
+    	text_format = api.get_song_title(track)
+    	rec_names.append(text_format)
 
-    return render_template('user_details.html', user=user, artist_prefs=artist_prefs, song_prefs=song_prefs)
+
+
+
+    return render_template('user_details.html', user=user, artist_prefs=artist_prefs, song_prefs=song_prefs,
+    	rec_names=rec_names)
 
 @app.route('/profile/add_prefs')
 def show_prefs_form():
