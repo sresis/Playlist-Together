@@ -72,7 +72,9 @@ def login_user():
 		session['user'] = user.user_id
 		flash('you are logged in!')
 		artist_prefs = crud.get_all_artist_prefs()
-		return render_template('user_profile.html', user=user, artist_prefs=artist_prefs)
+		song_prefs = crud.get_all_song_prefs()
+		return render_template('user_profile.html', user=user, artist_prefs=artist_prefs,
+			song_prefs=song_prefs)
 
 	else:
 		flash('incorrect login.')
@@ -85,8 +87,9 @@ def show_user(user_id):
 
     user = crud.get_user_by_id(user_id)
     artist_prefs = crud.get_all_artist_prefs()
-    users_prefs = crud.return_users_artist_prefs(user.user_id)
-    return render_template('user_details.html', user=user, artist_prefs=artist_prefs, users_prefs=users_prefs)
+    song_prefs = crud.get_all_song_prefs()
+
+    return render_template('user_details.html', user=user, artist_prefs=artist_prefs, song_prefs=song_prefs)
 
 @app.route('/profile/add_prefs')
 def show_prefs_form():

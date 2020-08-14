@@ -53,6 +53,11 @@ def get_all_artist_prefs():
 
     return Artist_Pref.query.all()
 
+def get_all_song_prefs():
+    """Return all song prefs."""
+
+    return Song_Pref.query.all()
+
 def return_users_artist_prefs(user_id):
 	"""Returns all artist prefs for a user."""
 	prefs = Artist_Pref.query.filter(Artist_Pref.user_id == user_id)

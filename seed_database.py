@@ -51,7 +51,7 @@ for n in range(8):
 	existing_songs = []
 	for n in range(5):
 		random_song = choice(songs)
-		if random_song not in existing_list:
+		if random_song not in existing_songs:
 			crud.create_song_pref(random_song, user.user_id)
 			existing_songs.append(random_song)
 
