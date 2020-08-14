@@ -84,14 +84,29 @@ def get_recs_based_on_seed(tracks, artists):
 #get_recs_based_on_seed([''])
 
 def get_artist_id(artist_name):
-	"""gets the artist's URI based on artist name"""
-	# replaces spaces in name with symbols 
+	"""gets the artist's ID based on artist name"""
+
+	# replaces spaces in name with relevant symbols 
 	updated_name = artist_name.replace(" ", "%20")
 	lookup_string = BASE_URL + 'search?q=' + updated_name + '&type=artist&limit=1'
 	result = requests.get(lookup_string, headers=headers)
 	result = result.json()
 	artist_id = result['artists']['items'][0]['id']
 	
-
 	return artist_id
+
+def get_song_id(song_title):
+	"""Gets the song ID based on song title."""
+
+	# replacces spaces in name with relevant symbols
+	updated_name = song_title.replace(" ", "%20")
+	lookup_string = BASE_URL + 'search?q=' + updated_name + '&type=track&limit=1'
+	result = requests.get(lookup_string, headers=headers)
+	result = result.json()
+	song_id = result['tracks']['items'][0]['id']
+	
+	return song_id
+
+
+
 

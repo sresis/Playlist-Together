@@ -1,4 +1,5 @@
 from model import db, User, Playlist, Song_Pref, Artist_Pref, connect_to_db
+import api
 
 
 def create_user(email, fname, lname, password):
@@ -23,8 +24,9 @@ def create_artist_pref(artist_name, user_id):
 
 def create_song_pref(song_title, user_id):
 	"""Creates a song preference for a user."""
+	song_uri = api.get_song_id(song_title)
 
-	song_pref = Song_Pref(song_title=song_title, user_id=user_id)
+	song_pref = Song_Pref(song_title=song_title, user_id=user_id, song_uri=song_uri)
 
 	db.session.add(song_pref)
 	db.session.commit()
@@ -67,9 +69,5 @@ def return_users_artist_prefs(user_id):
 
 	return prefs_list
 
-def get_artist_uri(artist_name):
-	"""Gets artist URI based on artist name."""
-
-	return None
 
 

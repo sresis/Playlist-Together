@@ -46,7 +46,7 @@ class Song_Pref(db.Model):
                         primary_key=True)
     song_title = db.Column(db.String())
     user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'))
-    spotify_uri = db.Column(db.String())
+    song_uri = db.Column(db.String())
 
     user = db.relationship('User', backref='song_prefs')
 
