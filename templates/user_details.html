@@ -12,7 +12,7 @@
 		<ul class="song_list">
 			{% for song in song_prefs %}
 				{% if song.user_id == user.user_id %}
-					<li>{{ song.song_title song.song_uri }}</li>
+					<li>{{ song.song_title }} {{ song.song_uri }}</li>
 				{% endif %}
 			{% endfor %}
 		</ul>
@@ -21,7 +21,7 @@
 		<ul class="artistlist">
 			{% for artist in artist_prefs %}
 				{% if artist.user_id == user.user_id %}
-					<li>{{ artist.artist_name }}</li>
+					<li>{{ artist.artist_name }} {{ artist.artist_uri }}</li>
 				{% endif %}
 			{% endfor %}
 			

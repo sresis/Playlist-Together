@@ -15,7 +15,9 @@ def create_user(email, fname, lname, password):
 def create_artist_pref(artist_name, user_id):
 	"""Creates an artist preference for a given user."""
 
-	artist_pref = Artist_Pref(artist_name=artist_name, user_id=user_id)
+	artist_uri = api.get_artist_id(artist_name)
+
+	artist_pref = Artist_Pref(artist_name=artist_name, user_id=user_id, artist_uri=artist_uri)
 
 	db.session.add(artist_pref)
 	db.session.commit()
