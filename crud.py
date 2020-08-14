@@ -43,3 +43,18 @@ def get_all_artist_prefs():
 
     return Artist_Pref.query.all()
 
+def return_users_artist_prefs(user_id):
+	"""Returns all artist prefs for a user."""
+	prefs = Artist_Pref.query.filter(Artist_Pref.user_id == user_id)
+	prefs_list = []
+	for item in prefs:
+		prefs_list.append(item.artist_name)
+
+	return prefs_list
+
+def get_artist_uri(artist_name):
+	"""Gets artist URI based on artist name."""
+
+	return None
+
+

@@ -4,6 +4,7 @@ from flask import (Flask, render_template, request, flash, session,
                    redirect)
 from model import connect_to_db
 import crud
+import api
 
 from jinja2 import StrictUndefined
 
@@ -84,8 +85,8 @@ def show_user(user_id):
 
     user = crud.get_user_by_id(user_id)
     artist_prefs = crud.get_all_artist_prefs()
-
-    return render_template('user_details.html', user=user, artist_prefs=artist_prefs)
+    users_prefs = crud.return_users_artist_prefs(user.user_id)
+    return render_template('user_details.html', user=user, artist_prefs=artist_prefs, users_prefs=users_prefs)
 
 @app.route('/profile/add_prefs')
 def show_prefs_form():
