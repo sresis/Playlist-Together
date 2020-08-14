@@ -25,6 +25,11 @@ artists = ['Lil Wayne', 'Lizzo', 'Fleetwood Mac', 'Adele',
 		'Rihanna', 'Tim McGraw', 'Kane Brown', 'Carrie Underwood', 
 		'Taylor Swift', 'Spice Girls', 'Metallica', 'Kendrick Lamar',
 		'Green Day', 'Alesso', '50 Cent', 'Justin Timberlake']
+
+songs = ['Miracle Mile', 'A Milli', 'Hollaback Girl', 'Get Low', 'Night Moves', 'Paint It, Black',
+		'Hey There Delilah', 'Eye of the Tiger', 'Red Red Wine', '1985', 'Badd', 'Skinny Love', 
+		'Whatever You Like', 'No Diggity', 'Budapest', 'Babel', 'Location', 'Grillz', 'Country Sh*t',
+		'Trap Queen', 'Watermelon Sugar', 'Savage Love', 'Something I Need' ]
 # make  random users
 for n in range(8):
 	fname = choice(first_names)
@@ -34,13 +39,21 @@ for n in range(8):
 	password = choice(passwords)
 	user = crud.create_user(email, fname, lname, password)
 
-	# adds artist preferences for each
+	# adds artist preferences for each user
 	existing_list = []
 	for n in range(5):
 		random_artist = choice(artists)
 		if random_artist not in existing_list:
 			crud.create_artist_pref(random_artist, user.user_id)
 			existing_list.append(random_artist)
+
+	# adds song preferences for each user
+	existing_songs = []
+	for n in range(5):
+		random_song = choice(songs)
+		if random_song not in existing_list:
+			crud.create_song_pref(random_song, user.user_id)
+			existing_songs.append(random_song)
 
 
 

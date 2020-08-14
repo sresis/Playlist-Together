@@ -21,6 +21,16 @@ def create_artist_pref(artist_name, user_id):
 
 	return artist_pref
 
+def create_song_pref(song_title, user_id):
+	"""Creates a song preference for a user."""
+
+	song_pref = Song_Pref(song_title=song_title, user_id=user_id)
+
+	db.session.add(song_pref)
+	db.session.commit()
+
+	return song_pref
+
 
 def get_users():
     """Return all users."""
