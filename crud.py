@@ -127,7 +127,8 @@ def get_shared_tracks(user_1, user_2):
 	for item1 in user_1_songs:
 		for item2 in user_2_songs:
 			if item1 == item2 and item1 not in shared_songs:
-				shared_songs.append(item1)
+				name = api.get_song_title(item1)
+				shared_songs.append(name)
 
 	return shared_songs
 
