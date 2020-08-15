@@ -20,9 +20,9 @@
 		</ul>
 		<li>Recommended Songs: </li>
 		<ul class="subcat">
-			{% for artist in artist_prefs %}
-				{% if artist.user_id == user.user_id %}
-					<li>{{ artist.artist_name }}</li>
+			{% for song in song_prefs %}
+				{% if song.user_id == user.user_id %}
+					<li>{{ song.song_title }}</li>
 				{% endif %}
 			{% endfor %}
 			

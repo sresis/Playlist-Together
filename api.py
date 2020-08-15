@@ -66,7 +66,8 @@ def get_recs_based_on_seed(tracks, artists):
 	tracks_piece = make_url(tracks)
 	artists_piece = make_url(artists)
 
-	string = BASE_URL + 'recommendations?seed_artists=' + artists_piece +'&seed_tracks=' + tracks_piece
+
+	string = BASE_URL + 'recommendations?limit=60&seed_artists=' + artists_piece +'&seed_tracks=' + tracks_piece
 
 	result = requests.get(string, headers=headers)
 
@@ -77,6 +78,10 @@ def get_recs_based_on_seed(tracks, artists):
 	for item in result['tracks']:
 		tracks_list.append(item['id'])
 	return tracks_list
+
+
+
+
 
 #get_recs_based_on_seed(['0e4os6wHr1jbFn4yPtSEOe', '2RKY4G4RwRQufxBUv6ect3', '786h4kDeZiX5nYvOwA3wtE', '7utRJ4BeYx85khzP3lKoBX'],['4dpARuHxo51G3z768sgnrY','1HY2Jd0NmPuamShAr6KMms', '6PAt558ZEZl0DmdXlnjMgD'])
 #get_recs_based_on_seed(['7utRJ4BeYx85khzP3lKoBX', '786h4kDeZiX5nYvOwA3wtE'],['4dpARuHxo51G3z768sgnrY','1HY2Jd0NmPuamShAr6KMms', '6PAt558ZEZl0DmdXlnjMgD'])
@@ -131,7 +136,7 @@ def get_song_artist(song_id):
 	text = (' and ').join(artist_names)
 		
 	return text
-
+## try to see if it does it based on songs
 
 
 

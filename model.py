@@ -72,6 +72,15 @@ class Artist_Pref(db.Model):
     def __repr__(self):
         return f'<artist_pref_id={self.artist_pref_id} artist_name={self.artist_name}>'
 
+class Song_Rec(db.Model):
+    """A song rec."""
+
+    ___tablename___ = 'song_recs'
+
+    rec_id= db.Column(db.Integer,
+                        autoincrement=True,
+                        primary_key=True)
+
 
 
 def connect_to_db(flask_app, db_uri='postgresql:///playlist_combiner', echo=True):
@@ -92,6 +101,11 @@ if __name__ == '__main__':
     # too annoying; this will tell SQLAlchemy not to print out every
     # query it executes.
 
+
+# if you have recommended songs already, 
+#test out the endpoints
+#storing recommended songs? storing song info?
+# store song info that you will want?
 
 
 

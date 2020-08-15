@@ -8,7 +8,7 @@
 	<ul class="main">
 		<li>Name: {{ user.fname }} {{ user.lname }}
 		<li>Email: {{ user.email }} </li>
-		<li>Favorite Songs:  </li>
+		<li>Favorite Songs: </li>
 		<ul class="song_list">
 			{% for song in song_prefs %}
 				{% if song.user_id == user.user_id %}
@@ -29,6 +29,13 @@
 		<ul class="recs">
 			{% for name in rec_names %}
 				<li>{{ name }}</li>
+			{% endfor %}
+			
+		</ul>
+		<li>Shared with User 1:</li>
+		<ul class="recs">
+			{% for pref in shared_prefs %}
+				<li>{{ pref }}</li>
 			{% endfor %}
 			
 		</ul>

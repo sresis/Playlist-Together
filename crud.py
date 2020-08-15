@@ -97,6 +97,7 @@ def get_recommended_tracks(user_id):
 	artist_list = sample(user_artists, num_artists)
 	track_list = sample(user_tracks, num_songs)
 
+
 	# get IDs for each track in track list
 	track_ids_list = []
 	for track in track_list:
@@ -113,6 +114,22 @@ def get_recommended_tracks(user_id):
 
 	# returns songs in ID format
 	return recommended_tracks
+
+def get_shared_tracks(user_1, user_2):
+	"""Returns shared recommended tracks for 2 users."""
+
+	# gets recommended songs for each user
+	user_1_songs = get_recommended_tracks(user_1)
+	user_2_songs = get_recommended_tracks(user_2)
+
+	# checks if there are any songs in common
+	shared_songs = []
+	for item1 in user_1_songs:
+		for item2 in user_2_songs:
+			if item1 == item2 and item1 not in shared_songs:
+				shared_songs.append(item1)
+
+	return shared_songs
 
 
 

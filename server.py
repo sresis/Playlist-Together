@@ -95,11 +95,12 @@ def show_user(user_id):
     	text_format = api.get_song_title(track)
     	rec_names.append(text_format)
 
+    shared_prefs = crud.get_shared_tracks(user_id,1)
 
 
 
     return render_template('user_details.html', user=user, artist_prefs=artist_prefs, song_prefs=song_prefs,
-    	rec_names=rec_names)
+    	rec_names=rec_names, shared_prefs=shared_prefs)
 
 @app.route('/profile/add_prefs')
 def show_prefs_form():
@@ -115,13 +116,20 @@ def show_prefs_form():
 def add_users_prefs():
 	"""enables users to add their preferences."""
 
+	#gets artist and songs from input form
 	artist = request.form.get('artist')
+	song_title = request.form.get('song')
+
+	# Adds song and artist prefs to the User
 	user_id = session['user']
 	user = crud.get_user_by_id(user_id)
-	artist_pref = crud.create_artist_pref(artist, user_id)
+	if artist:
+		artist_pref = crud.create_artist_pref(artist, user_id)
+	if song_title:
+		song_pref = crud.create_song_pref(song_title, user_id)
 	artist_prefs = crud.get_all_artist_prefs()
-	return render_template('updated_profile.html', artist_prefs=artist_prefs, user=user)
-## how to make it so you can iterate through artists on profile
+	song_prefs = crud.get_all_song_prefs()
+	return render_template('updated_profile.html', artist_prefs=artist_prefs, song_prefs=song_prefs, user=user)
 
 ## Jinja displays existing artists. Updated list of Artists. Make an Ajax call to get existing data
 ## Ajax call can return JSON
