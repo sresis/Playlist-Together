@@ -77,9 +77,14 @@ class Song_Rec(db.Model):
 
     ___tablename___ = 'song_recs'
 
-    rec_id= db.Column(db.Integer,
-                        autoincrement=True,
-                        primary_key=True)
+    song_rec_id = db.Column(db.Integer,
+                    autoincrement=True,
+                    primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'))
+    song_uri = db.Column(db.String, db.ForeignKey('song_prefs.song_uri'))
+
+    user = db.relationship('User', backref='song_recs')
+    song_pref = db.relationship('Song_Pref', backref='song_recs')
 
 
 
