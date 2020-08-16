@@ -36,6 +36,18 @@ class Playlist(db.Model):
     def __repr__(self):
         return f'<playlist_id={self.playlist_id}>'
 
+class Song(db.Model):
+    """ A song."""
+
+    __tablename__ = "songs"
+    song_id = db.Column(db.Integer,
+                    autoincrement=True,
+                    primary_key=True)
+    song_uri = db.Column(db.String())
+    song_title db>column(db.String())
+
+    def __repr__(self):
+        return f'<song_id={self.song_id} song_title={self.song_title}>'
 class Song_Pref(db.Model):
     """A song preference."""
 
@@ -86,7 +98,8 @@ class Song_Rec(db.Model):
     user = db.relationship('User', backref='song_recs')
     song_pref = db.relationship('Song_Pref', backref='song_recs')
 
-
+    def __repr__(self):
+        return f'<song_rec_id={self.song_rec_id} user_id={self.user_id} song_uri={self.song_uri}>'
 
 def connect_to_db(flask_app, db_uri='postgresql:///playlist_combiner', echo=True):
     flask_app.config['SQLALCHEMY_DATABASE_URI'] = db_uri
