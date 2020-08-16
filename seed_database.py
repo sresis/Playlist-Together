@@ -8,6 +8,7 @@ from datetime import datetime
 import crud
 import model
 import server
+import api
 
 os.system('dropdb playlist_combiner')
 os.system('createdb playlist_combiner')
@@ -54,6 +55,17 @@ for n in range(8):
 		if random_song not in existing_songs:
 			crud.create_song_pref(random_song, user.user_id)
 			existing_songs.append(random_song)
+
+	# adds song recs for each user
+	#gets recommended songs for user
+	song_recs = crud.get_recommended_tracks(user.user_id)
+	
+	#adds each recommended song to DB
+	for song in song_recs:
+		#gets song title
+		title = api.get_song_title(song)
+		crud.create_recommended_track(user.user_id, song, title)
+
 
 
 

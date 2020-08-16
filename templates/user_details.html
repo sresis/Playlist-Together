@@ -27,10 +27,12 @@
 		</ul>
 		<li>Recommended Songs:</li>
 		<ul class="recs">
-			{% for name in rec_names %}
-				<li>{{ name }}</li>
+			{% for song in song_recs %}
+				{% if song.user_id == user.user_id %}
+					<li>{{ song.song_title }} </li>
+				{% endif %}
 			{% endfor %}
-			
+		</ul>
 		</ul>
 		<li>Shared with User 1:</li>
 		<ul class="recs">

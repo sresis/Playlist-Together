@@ -1,4 +1,4 @@
-from model import db, User, Playlist, Song_Pref, Artist_Pref, connect_to_db
+from model import db, User, Playlist, Song_Pref, Artist_Pref, Song_Rec, connect_to_db
 import api
 from random import choice, randint, sample 
 
@@ -65,6 +65,12 @@ def get_all_song_prefs():
 
     return Song_Pref.query.all()
 
+
+def get_all_song_recs():
+    """Return all song recs."""
+
+    return Song_Rec.query.all()
+
 def return_users_artist_prefs(user_id):
 	"""Returns all artist prefs for a user in a list format."""
 	prefs = Artist_Pref.query.filter(Artist_Pref.user_id == user_id)
@@ -112,15 +118,30 @@ def get_recommended_tracks(user_id):
 
 	recommended_tracks = api.get_recs_based_on_seed(track_ids_list, artist_ids_list)
 
+
 	# returns songs in ID format
 	return recommended_tracks
+
+
+def create_recommended_track(user_id, song_uri, song_title):
+	"""Creates a recommended track for the user and adds it to the database."""
+	# to implement
+
+	rec_track = Song_Rec(user_id=user_id, song_uri=song_uri, song_title=song_title)
+
+	db.session.add(rec_track)
+	db.session.commit()
+
+	return rec_track
+
+
 
 def get_shared_tracks(user_1, user_2):
 	"""Returns shared recommended tracks for 2 users."""
 
 	# gets recommended songs for each user
-	user_1_songs = get_recommended_tracks(user_1)
-	user_2_songs = get_recommended_tracks(user_2)
+	user_1_songs = Song_Rec.query.filter(Song_Rec.user_id == user_1)
+	user_2_songs = Song_Rec.query.filter(Song_Rec.user_id == user_2)
 
 	# checks if there are any songs in common
 	shared_songs = []

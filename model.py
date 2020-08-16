@@ -36,18 +36,19 @@ class Playlist(db.Model):
     def __repr__(self):
         return f'<playlist_id={self.playlist_id}>'
 
-class Song(db.Model):
-    """ A song."""
+# class Song(db.Model):
+#     """ A song."""
 
-    __tablename__ = "songs"
-    song_id = db.Column(db.Integer,
-                    autoincrement=True,
-                    primary_key=True)
-    song_uri = db.Column(db.String())
-    song_title db>column(db.String())
+#     __tablename__ = "songs"
+#     song_id = db.Column(db.Integer,
+#                     autoincrement=True,
+#                     primary_key=True)
+#     song_uri = db.Column(db.String())
+#     song_title = db.column(db.String())
 
-    def __repr__(self):
-        return f'<song_id={self.song_id} song_title={self.song_title}>'
+#     def __repr__(self):
+#         return f'<song_id={self.song_id} song_title={self.song_title}>'
+
 class Song_Pref(db.Model):
     """A song preference."""
 
@@ -93,10 +94,11 @@ class Song_Rec(db.Model):
                     autoincrement=True,
                     primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'))
-    song_uri = db.Column(db.String, db.ForeignKey('song_prefs.song_uri'))
+    song_uri = db.Column(db.String)
+    song_title = db.Column(db.String)
 
     user = db.relationship('User', backref='song_recs')
-    song_pref = db.relationship('Song_Pref', backref='song_recs')
+
 
     def __repr__(self):
         return f'<song_rec_id={self.song_rec_id} user_id={self.user_id} song_uri={self.song_uri}>'
