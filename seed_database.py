@@ -48,23 +48,29 @@ for n in range(8):
 			crud.create_artist_pref(random_artist, user.user_id)
 			existing_list.append(random_artist)
 
-	# adds song preferences for each user
+	# adds song preferences for each user. also adds song to the DB so don't need to keep querying
 	existing_songs = []
 	for n in range(5):
 		random_song = choice(songs)
 		if random_song not in existing_songs:
 			crud.create_song_pref(random_song, user.user_id)
+			crud.create_song(random_song, 'urixx', 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.8)
 			existing_songs.append(random_song)
 
 	# adds song recs for each user
 	#gets recommended songs for user
 	song_recs = crud.get_recommended_tracks(user.user_id)
 	
-	#adds each recommended song to DB
+	#adds each recommended song to DB. also adds it to Song DB. 
 	for song in song_recs:
 		#gets song title
 		title = api.get_song_title(song)
 		crud.create_recommended_track(user.user_id, song, title)
+
+		#gets all audio features for song
+		audio_features = get_audio_features(song)
+		tempo = audio_features['tempo'] 
+		crud.create_song(random_song, 'urixx', tempo, 0.5, 0.5, 0.5, 0.5, 0.5, 0.8)
 
 
 

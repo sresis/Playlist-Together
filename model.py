@@ -36,22 +36,29 @@ class Playlist(db.Model):
     def __repr__(self):
         return f'<playlist_id={self.playlist_id}>'
 
-# class Song(db.Model):
-#     """ A song."""
+class Song(db.Model):
+    """ A song."""
 
-#     __tablename__ = "songs"
-#     song_id = db.Column(db.Integer,
-#                     autoincrement=True,
-#                     primary_key=True)
-#     song_uri = db.Column(db.String())
-#     song_title = db.column(db.String())
+    __tablename__ = "songs"
+    song_id = db.Column(db.Integer,
+                    autoincrement=True,
+                    primary_key=True)
+    song_title = db.column(db.String())
+    song_uri = db.Column(db.String())
+    tempo = db.Column(db.Integer())
+    valence = db.Column(db.Integer())
+    danceability = db.Column(db.Integer())
+    energy = db.Column(db.Integer())
+    loudness = db.Column(db.Integer())
+    acousticness = db.Column(db.Integer())
+    speechiness = db.Column(db.Integer())
 
-#     def __repr__(self):
-#         return f'<song_id={self.song_id} song_title={self.song_title}>'
+    def __repr__(self):
+        return f'<song_id={self.song_id} song_uri={self.song_uri} song_title={self.song_title}>'
 
 class Song_Pref(db.Model):
     """A song preference."""
-
+    # eventually remove song title/song URI??
     __tablename__ = 'song_prefs'
 
     song_pref_id = db.Column(db.Integer,
@@ -60,8 +67,10 @@ class Song_Pref(db.Model):
     song_title = db.Column(db.String())
     user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'))
     song_uri = db.Column(db.String())
+    song_id = db.Column(db.Integer, db.ForeignKey('songs.song_id'))
 
     user = db.relationship('User', backref='song_prefs')
+    song = db.relationship('Song', backref='song_prefs')
 
 
     def __repr__(self):
@@ -94,10 +103,12 @@ class Song_Rec(db.Model):
                     autoincrement=True,
                     primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'))
-    song_uri = db.Column(db.String)
-    song_title = db.Column(db.String)
+    song_uri = db.Column(db.String())
+    song_title = db.Column(db.String())
+    song_id = db.Column(db.Integer, db.ForeignKey('songs.song_id'))
 
     user = db.relationship('User', backref='song_recs')
+    song = db.relationship('Song', backref='song_recs')
 
 
     def __repr__(self):

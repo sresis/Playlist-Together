@@ -1,4 +1,4 @@
-from model import db, User, Playlist, Song_Pref, Artist_Pref, Song_Rec, connect_to_db
+from model import db, User, Playlist, Song_Pref, Artist_Pref, Song_Rec, Song, connect_to_db
 import api
 from random import choice, randint, sample 
 
@@ -36,6 +36,29 @@ def create_song_pref(song_title, user_id):
 	db.session.commit()
 
 	return song_pref
+
+def create_recommended_track(user_id, song_uri, song_title):
+	"""Creates a recommended track for the user and adds it to the database."""
+	# to implement
+
+	rec_track = Song_Rec(user_id=user_id, song_uri=song_uri, song_title=song_title)
+
+	db.session.add(rec_track)
+	db.session.commit()
+
+	return rec_track
+
+def create_song(song_title, song_uri, tempo, valence, danceability, energy, loudness, acousticness, speechiness):
+	"""Creates a Song and adds it to the database."""
+
+	song = Song(song_title=song_title, song_uri=song_uri, tempo=tempo, valence=valence, 
+		danceability=danceability, energy=energy, loudness=loudness, acousticness=acousticness, speechiness=speechiness)
+
+	db.session.add(song)
+	db.session.commit()
+
+	return song 
+
 
 
 
@@ -123,16 +146,7 @@ def get_recommended_tracks(user_id):
 	return recommended_tracks
 
 
-def create_recommended_track(user_id, song_uri, song_title):
-	"""Creates a recommended track for the user and adds it to the database."""
-	# to implement
 
-	rec_track = Song_Rec(user_id=user_id, song_uri=song_uri, song_title=song_title)
-
-	db.session.add(rec_track)
-	db.session.commit()
-
-	return rec_track
 
 def get_recommended_songs(user_id):
 	"""Returns all recommended songs for a user."""
@@ -143,11 +157,16 @@ def average_song_attribute(user_id, attribute):
 	"""Averages the values of a particular song attribute across all recommended songs for a user."""
 
 	# gets all recommended songs for user
+	all_songs = get_recommended_songs(user_id)
+	song_features = api.get_several_tracks_audio_features(rec_tracks)
 
-	# iterates through each song and adds value to total
+	# iterates through each song and adds attribute value to list
+	for song in song_features:
+		print(song)
 
+	# can get avg (also get std dev??) from list
 
-	# sum / count
+	# return the avg
 	return None
 
 

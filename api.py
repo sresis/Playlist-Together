@@ -46,11 +46,9 @@ def get_several_tracks_audio_features(tracks):
 	lookup_url = BASE_URL + 'audio-features?ids='
 	#adds each track to lookup URL
 	for track in tracks:
-		print(track)
 		lookup_url = lookup_url + track +'%2C'
 	#removes last '%'
 	lookup_url = lookup_url[:-3]
-	print(lookup_url)
 	result = requests.get(lookup_url, headers=headers)
 	return result.json()
 
