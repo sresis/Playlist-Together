@@ -68,9 +68,15 @@ for n in range(8):
 		crud.create_recommended_track(user.user_id, song, title)
 
 		#gets all audio features for song
-		audio_features = get_audio_features(song)
-		tempo = audio_features['tempo'] 
-		crud.create_song(random_song, 'urixx', tempo, 0.5, 0.5, 0.5, 0.5, 0.5, 0.8)
+		audio_features = api.get_audio_features(song)
+		tempo = audio_features['tempo']
+		valence = audio_features['valence']
+		danceability = audio_features['danceability']
+		energy = audio_features['energy']
+		loudness = audio_features['loudness']
+		acousticness = audio_features['acousticness']
+		speechiness = audio_features['speechiness']
+		crud.create_song(random_song, song, tempo, valence, danceability, energy, loudness, acousticness, speechiness)
 
 
 
