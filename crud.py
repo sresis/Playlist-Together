@@ -95,11 +95,19 @@ def get_user_song_prefs(user_id):
 
 	return Song_Pref.query.filter(Song_Pref.user_id == user_id)
 
+def get_user_song_recs(user_id):
+	"""Gets all song recs for a user."""
+
+	return Song_Rec.query.filter(Song_Rec.user_id == user_id)
+
+
 
 def get_all_song_recs():
     """Return all song recs."""
 
     return Song_Rec.query.all()
+
+
 
 def return_users_artist_prefs(user_id):
 	"""Returns all artist prefs for a user in a list format."""
@@ -164,17 +172,19 @@ def average_song_attribute(user_id, attribute):
 	"""Averages the values of a particular song attribute across all recommended songs for a user."""
 
 	# gets all recommended songs for user
+	song_list = get_user_song_recs(user_id)
 
+	q = db.session.query(Song.song_id, Song.valence).outerjoin(Song_Rec)
 
 	# iterates through each song and adds attribute value to list
 	all_attributes = []
-	for song in song_features:
-		print(song)
+	for song in q:
+		all_attributes.append(song.valence)
 
 	# can get avg (also get std dev??) from list
 
 	# return the avg
-	return None
+	return all_attributes
 
 
 

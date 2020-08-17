@@ -100,11 +100,11 @@ def show_user(user_id):
     # gets attributes of user's recommended tracks
 
     shared_prefs = crud.get_shared_tracks(user_id,1)
-    song_features = api.get_several_tracks_audio_features(rec_tracks)
+    song_attributes = crud.average_song_attribute(user_id,'valence')
 
 
     return render_template('user_details.html', user=user, artist_prefs=artist_prefs, song_prefs=song_prefs,
-    	rec_names=rec_names, shared_prefs=shared_prefs, song_recs=song_recs,song_features=song_features)
+    	rec_names=rec_names, shared_prefs=shared_prefs, song_recs=song_recs, song_attributes=song_attributes)
 
 @app.route('/profile/add_prefs')
 def show_prefs_form():
