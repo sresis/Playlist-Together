@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ user.email }}'s Page{% endblock %}
+
+{% block body %}
+
+<div id="user_details">
+	<ul class="main">
+		<li>Name: {{ user.fname }} {{ user.lname }}
+		<li>Email: {{ user.email }} </li>
+
+		<li>Recommended Songs:</li>
+
+</div>
+
+<a href='/users'>Users</a>
+
+{% endblock %}

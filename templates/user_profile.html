@@ -9,8 +9,17 @@
 		<li>Name: {{ user.fname }} {{ user.lname }}
 		<li>Email: {{ user.email }}</li>
 		<li>Favorite Songs:  </li>
+		<ul class="song">
+			{% for song in song_prefs %}
+				{% if song.user_id == user.user_id %}
+					<li>{{ song.song_title }}</li>
+				{% endif %}
+			{% endfor %}
+
+
+		</ul>
 		<li>Favorite Artists: </li>
-		<ul class="subcat">
+		<ul class="artist">
 			{% for artist in artist_prefs %}
 				{% if artist.user_id == user.user_id %}
 					<li>{{ artist.artist_name }}</li>
@@ -20,10 +29,15 @@
 		</ul>
 	</ul>
 </div>
+<form action="/profile/get_recs" method="POST" id="prefs">
+	
 
+    <p><input type="submit"></p>
+</form>
 <div id="navigation">
 	<ul>
 		<li><a href='/profile/add_prefs'>Add Preferences</a></li>
+		<li><a href='/profile/get_recs'>Generate Updated Recs</a></li>
 		<li><a href='/users'>View All Users</a></li>
 </div>
 

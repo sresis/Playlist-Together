@@ -135,6 +135,28 @@ def add_users_prefs():
 	return render_template('updated_profile.html', artist_prefs=artist_prefs, 
 		song_prefs=song_prefs, user=user, song_recs=song_recs)
 
+
+@app.route('/profile/get_recs', methods=['POST'])
+def get_recs():
+	"""Gets song recommendations for user."""
+
+	# # how to make this so it will update when user updates songs? automatic?
+	user_id = session['user']
+	user = crud.get_user_by_id(user_id)
+	song_recs = crud.get_recommended_tracks(user_id)
+	
+
+	# #adds each recommended song to DB
+	for song in song_recs:
+		#gets song title
+		title = api.get_song_title(song)
+		crud.create_recommended_track(user_id, song, title)
+
+	return render_template('prof_2.html', user=user, song_recs=song_recs)
+
+
+
+
 ## Jinja displays existing artists. Updated list of Artists. Make an Ajax call to get existing data
 ## Ajax call can return JSON
 ## route to take in what user typed in. in the end, return JSON that will be appended to the page
