@@ -151,8 +151,10 @@ def get_recs():
 		#gets song title
 		title = api.get_song_title(song)
 		crud.create_recommended_track(user_id, song, title)
+	user_song_recs = crud.get_all_song_recs()
 
-	return render_template('prof_2.html', user=user, song_recs=song_recs)
+
+	return render_template('prof_2.html', user=user, user_song_recs=user_song_recs)
 
 
 
