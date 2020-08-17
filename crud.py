@@ -48,11 +48,13 @@ def create_recommended_track(user_id, song_uri, song_title):
 
 	return rec_track
 
-def create_song(song_title, song_uri, tempo, valence, danceability, energy, loudness, acousticness, speechiness):
+def create_song(song_title, song_uri, tempo, valence, danceability, 
+	energy, loudness, acousticness, speechiness):
 	"""Creates a Song and adds it to the database."""
 
 	song = Song(song_title=song_title, song_uri=song_uri, tempo=tempo, valence=valence, 
-		danceability=danceability, energy=energy, loudness=loudness, acousticness=acousticness, speechiness=speechiness)
+		danceability=danceability, energy=energy, loudness=loudness, 
+		acousticness=acousticness, speechiness=speechiness)
 
 	db.session.add(song)
 	db.session.commit()
@@ -87,6 +89,11 @@ def get_all_song_prefs():
     """Return all song prefs."""
 
     return Song_Pref.query.all()
+
+def get_user_song_prefs(user_id):
+	"""Gets all song prefs for a user."""
+
+	return Song_Pref.query.filter(Song_Pref.user_id == user_id)
 
 
 def get_all_song_recs():
@@ -157,10 +164,10 @@ def average_song_attribute(user_id, attribute):
 	"""Averages the values of a particular song attribute across all recommended songs for a user."""
 
 	# gets all recommended songs for user
-	all_songs = get_recommended_songs(user_id)
-	song_features = api.get_several_tracks_audio_features(rec_tracks)
+
 
 	# iterates through each song and adds attribute value to list
+	all_attributes = []
 	for song in song_features:
 		print(song)
 
