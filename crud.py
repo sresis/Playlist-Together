@@ -90,7 +90,7 @@ def return_users_track_prefs(user_id):
 	return prefs_list	
 
 def get_recommended_tracks(user_id):
-	"""Gets recommended tracks for a user given Spotify's ability to generate based on 
+	"""Makes recommended tracks for a user given Spotify's ability to generate based on 
 	up to 5 seeds."""
 
 	# number of songs and artists to be included as seeds
@@ -133,6 +133,22 @@ def create_recommended_track(user_id, song_uri, song_title):
 	db.session.commit()
 
 	return rec_track
+
+def get_recommended_songs(user_id):
+	"""Returns all recommended songs for a user."""
+
+	return Song_Rec.query.filter(Song_Rec.user_id == user_id)
+
+def average_song_attribute(user_id, attribute):
+	"""Averages the values of a particular song attribute across all recommended songs for a user."""
+
+	# gets all recommended songs for user
+
+	# iterates through each song and adds value to total
+
+
+	# sum / count
+	return None
 
 
 

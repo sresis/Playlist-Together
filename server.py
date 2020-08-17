@@ -89,7 +89,7 @@ def show_user(user_id):
     artist_prefs = crud.get_all_artist_prefs()
     song_prefs = crud.get_all_song_prefs()
     rec_tracks = crud.get_recommended_tracks(user_id)
-    
+    x = crud.get_all_song_recs()
     rec_names = []
     for track in rec_tracks:
     	text_format = api.get_song_title(track)
@@ -97,12 +97,14 @@ def show_user(user_id):
 
     song_recs = crud.get_all_song_recs()
 
-    shared_prefs = crud.get_shared_tracks(user_id,1)
+    # gets attributes of user's recommended tracks
 
+    shared_prefs = crud.get_shared_tracks(user_id,1)
+    song_features = api.get_several_tracks_audio_features(rec_tracks)
 
 
     return render_template('user_details.html', user=user, artist_prefs=artist_prefs, song_prefs=song_prefs,
-    	rec_names=rec_names, shared_prefs=shared_prefs, song_recs=song_recs)
+    	rec_names=rec_names, shared_prefs=shared_prefs, song_recs=song_recs,song_features=song_features)
 
 @app.route('/profile/add_prefs')
 def show_prefs_form():
@@ -152,6 +154,7 @@ def get_recs():
 		title = api.get_song_title(song)
 		crud.create_recommended_track(user_id, song, title)
 	user_song_recs = crud.get_all_song_recs()
+
 
 
 	return render_template('prof_2.html', user=user, user_song_recs=user_song_recs)

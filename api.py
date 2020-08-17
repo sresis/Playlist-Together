@@ -31,6 +31,8 @@ BASE_URL = 'https://api.spotify.com/v1/'
 def get_audio_features(track):
 	"""gets features for a track from the Spotify API"""
 	result = requests.get(BASE_URL + 'audio-features/' + track, headers=headers)
+
+
 	return result.json()
 
 
@@ -137,6 +139,7 @@ def get_song_artist(song_id):
 		
 	return text
 ## try to see if it does it based on songs
+
 
 
 
