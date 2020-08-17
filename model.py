@@ -40,18 +40,19 @@ class Song(db.Model):
     """ A song."""
 
     __tablename__ = "songs"
+
     song_id = db.Column(db.Integer,
                     autoincrement=True,
                     primary_key=True)
     song_title = db.column(db.String())
     song_uri = db.Column(db.String())
-    tempo = db.Column(db.Integer())
-    valence = db.Column(db.Integer())
-    danceability = db.Column(db.Integer())
-    energy = db.Column(db.Integer())
-    loudness = db.Column(db.Integer())
-    acousticness = db.Column(db.Integer())
-    speechiness = db.Column(db.Integer())
+    tempo = db.Column(db.Float())
+    valence = db.Column(db.Float())
+    danceability = db.Column(db.Float())
+    energy = db.Column(db.Float())
+    loudness = db.Column(db.Float())
+    acousticness = db.Column(db.Float())
+    speechiness = db.Column(db.Float())
 
     def __repr__(self):
         return f'<song_id={self.song_id} song_uri={self.song_uri} song_title={self.song_title}>'
