@@ -100,7 +100,7 @@ def show_user(user_id):
     # gets attributes of user's recommended tracks
 
     shared_prefs = crud.get_shared_tracks(user_id,1)
-    song_attributes = crud.average_song_attribute(user_id,'valence')
+    song_attributes = crud.get_song_attributes(user_id,'valence')
 
 
     return render_template('user_details.html', user=user, artist_prefs=artist_prefs, song_prefs=song_prefs,

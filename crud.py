@@ -176,35 +176,44 @@ def get_recommended_songs(user_id):
 
 	return Song_Rec.query.filter(Song_Rec.user_id == user_id)
 
-def average_song_attribute(user_id, attribute):
+def get_song_attributes(user_id, attribute):
 	"""Averages the values of a particular song attribute across all recommended songs for a user."""
 
-
-
-	#q = db.session.query(Song_Rec.user_id).join(Song).all()
-
-	#q = Song_Rec.query.filter_by(user_id = user_id).options(db.joinedload('song')).all()
 	q = db.session.query(Song_Rec, Song).join(Song).filter(Song_Rec.user_id == user_id).all()
 
-	attribute_list = []
+	#create dictionary to store values for each attribute
+	all_attributes = {
+	'tempo': [],
+	'valence': [],
+	'danceability': [],
+	'energy': [],
+	'loudness': [],
+	'acousticness': [],
+	'speechiness': []
+	}
 	for item in q:
-		attribute_list.append(item[1].valence)
 
-	avg = sum(attribute_list) / len(attribute_list)
+		# add attribute to each song to a list stored in key-value pair
+
+		all_attributes['tempo'].append(item[1].tempo)
+		all_attributes['valence'].append(item[1].valence)
+		all_attributes['danceability'].append(item[1].danceability)
+		all_attributes['energy'].append(item[1].energy)
+		all_attributes['loudness'].append(item[1].loudness)
+		all_attributes['acousticness'].append(item[1].acousticness)
+		all_attributes['speechiness'].append(item[1].speechiness)
+
 
 	
-
-	# iterates through each song and adds attribute value to list
-	# all_attributes = []
-	# for song in q:
+	# dictionary with attribute names as keys. values as. append as integers
 	# # 	## how to make this dynamic based on variable???
 
 	# 	all_attributes.append(song.valence)
 
 	# # can get avg (also get std dev??) from list
 
-	# # return the avg
-	return avg
+
+	return all_attributes
 
 
 
