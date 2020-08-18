@@ -65,7 +65,7 @@ for n in range(8):
 	for song in song_recs:
 		#gets song title
 		title = api.get_song_title(song)
-		crud.create_recommended_track(user.user_id, song, title)
+		
 
 		#gets all audio features for song
 		audio_features = api.get_audio_features(song)
@@ -77,8 +77,9 @@ for n in range(8):
 		acousticness = audio_features['acousticness']
 		speechiness = audio_features['speechiness']
 		crud.create_song(title, song, tempo, valence, danceability, energy, loudness, acousticness, speechiness)
-
-
+		# get song ID and use to create recommended track
+		song_id = crud.get_song_id(song)
+		crud.create_recommended_track(user.user_id, song, title, song_id)
 
 
 

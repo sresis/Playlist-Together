@@ -62,7 +62,14 @@ def create_song(song_title, song_uri, tempo, valence, danceability,
 
 	return song 
 
+def get_song_id(uri):
+	"""Returns the song ID for a given URI."""
 
+
+	song = Song.query.filter(Song.song_uri == uri).first()
+	return_value = song.song_id
+
+	return return_value
 
 
 def get_users():
@@ -176,8 +183,8 @@ def average_song_attribute(user_id, attribute):
 
 	#q = db.session.query(Song_Rec.user_id).join(Song).all()
 
-	q = Song_Rec.query.filter_by(user_id = user_id).options(db.joinedload('song')).all()
-	#q = db.session.query(Song_Rec).join(Song, Song_Rec.song_id == Song.song_id).all()
+	#q = Song_Rec.query.filter_by(user_id = user_id).options(db.joinedload('song')).all()
+	q = db.session.query(Song_Rec).join(Song, Song_Rec.song_id == Song.song_id).all()
 	print('hiii')
 	print(q)
 	for item in q:
