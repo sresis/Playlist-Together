@@ -105,10 +105,12 @@ def show_user(user_id):
     averages = crud.get_average(song_attributes)
     stdev = crud.get_stdev(song_attributes)
 
+    similar_songs = crud.get_similar_songs(12, user_id)
+
 
     return render_template('user_details.html', user=user, artist_prefs=artist_prefs, song_prefs=song_prefs,
     	rec_names=rec_names, shared_prefs=shared_prefs, song_recs=song_recs, 
-    	song_attributes=song_attributes, averages=averages, stdev=stdev)
+    	song_attributes=song_attributes, averages=averages, stdev=stdev, similar_songs=similar_songs)
 
 @app.route('/profile/add_prefs')
 def show_prefs_form():

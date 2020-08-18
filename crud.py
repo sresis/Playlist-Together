@@ -279,6 +279,54 @@ def get_shared_tracks(user_1, user_2):
 
 	return shared_songs
 
+def get_similar_songs(user_1, user_2):
+	"""Gets similar songs from user_2 based on user_1 averages."""
+
+
+	# pulls attributes for each of the user's songs
+	user_1_attributes = get_song_attributes(user_1)
+
+	#gets the avg and stdev for user
+	user_1_avg = get_average(user_1_attributes)
+	user_1_stdev = get_stdev(user_1_attributes)
+
+	#stores similar songs in a list
+	similar_songs = []
+	user_1_tempo = user_1_avg['tempo']
+	user_1_valence = user_1_avg['valence']
+	user_1_speechiness = user_1_avg['speechiness']
+	user_1_acousticness = user_1_avg['acousticness']
+
+	#songs must be within this range of the average
+	tempo_range = 2
+	valence_range = 0.02
+	speechiness_range = 0.02
+	acousticness_range = 0.05
+
+	#joins the Song and Song_Rec table for user 2
+	q = db.session.query(Song_Rec, Song).join(Song).filter(Song_Rec.user_id == user_2).all()
+
+	# if User 2 song is within avg +/- range, add it to the list
+	for item in q:
+		# # if tempo is within range, add it.
+		# if item[1].tempo > (user_1_tempo - tempo_range) and item[1].tempo < (user_1_tempo + tempo_range):
+		# 	similar_songs.append(item[1].song_title)
+		# if valence is within range, add it.
+		if item[1].valence > (user_1_valence - valence_range) and item[1].valence < (user_1_valence + valence_range):
+			similar_songs.append(item[1].song_title)	
+		# if speechiness is within range, add it.
+		if item[1].speechiness > (user_1_speechiness - speechiness_range) and item[1].speechiness < (user_1_speechiness + speechiness_range):
+			similar_songs.append(item[1].song_title)
+		if item[1].acousticness > (user_1_acousticness - acousticness_range) and item[1].acousticness < (user_1_acousticness + acousticness_range):
+			similar_songs.append(item[1].song_title)	
+
+
+
+ 
+
+
+	return similar_songs
+
 
 
 
