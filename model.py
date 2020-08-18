@@ -44,7 +44,7 @@ class Song(db.Model):
     song_id = db.Column(db.Integer,
                     autoincrement=True,
                     primary_key=True)
-    song_title = db.column(db.String())
+    song_title = db.Column(db.String())
     song_uri = db.Column(db.String())
     tempo = db.Column(db.Float())
     valence = db.Column(db.Float())

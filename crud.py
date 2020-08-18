@@ -174,20 +174,23 @@ def average_song_attribute(user_id, attribute):
 	# gets all recommended songs for user
 	song_list = get_user_song_recs(user_id)
 
-	q = db.session.query(Song).outerjoin(Song_Rec).all()
-	print(q)
+	q = Song_Rec.query.filter_by(user_id = 8).options(db.joinedload(Song_Rec.song)).all()
+
+	# still a song rec object
+	print(q[0].song_id)
+	
 
 	# iterates through each song and adds attribute value to list
-	all_attributes = []
-	for song in q:
-		## how to make this dynamic based on variable???
+	# all_attributes = []
+	# for song in q:
+	# # 	## how to make this dynamic based on variable???
 
-		all_attributes.append(song.valence)
+	# 	all_attributes.append(song.valence)
 
-	# can get avg (also get std dev??) from list
+	# # can get avg (also get std dev??) from list
 
-	# return the avg
-	return all_attributes
+	# # return the avg
+	return q
 
 
 
