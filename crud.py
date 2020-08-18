@@ -1,6 +1,7 @@
 from model import db, User, Playlist, Song_Pref, Artist_Pref, Song_Rec, Song, connect_to_db
 import api
 from random import choice, randint, sample 
+import pdb
 
 
 
@@ -37,11 +38,11 @@ def create_song_pref(song_title, user_id):
 
 	return song_pref
 
-def create_recommended_track(user_id, song_uri, song_title):
+def create_recommended_track(user_id, song_uri, song_title, song_id):
 	"""Creates a recommended track for the user and adds it to the database."""
 	# to implement
 
-	rec_track = Song_Rec(user_id=user_id, song_uri=song_uri, song_title=song_title)
+	rec_track = Song_Rec(user_id=user_id, song_uri=song_uri, song_title=song_title, song_id=song_id)
 
 	db.session.add(rec_track)
 	db.session.commit()
@@ -171,13 +172,17 @@ def get_recommended_songs(user_id):
 def average_song_attribute(user_id, attribute):
 	"""Averages the values of a particular song attribute across all recommended songs for a user."""
 
-	# gets all recommended songs for user
-	song_list = get_user_song_recs(user_id)
 
-	q = Song_Rec.query.filter_by(user_id = 8).options(db.joinedload(Song_Rec.song)).all()
 
-	# still a song rec object
-	print(q[0].song_id)
+	#q = db.session.query(Song_Rec.user_id).join(Song).all()
+
+	q = Song_Rec.query.filter_by(user_id = user_id).options(db.joinedload('song')).all()
+	#q = db.session.query(Song_Rec).join(Song, Song_Rec.song_id == Song.song_id).all()
+	print('hiii')
+	print(q)
+	for item in q:
+		print(item.song_id)
+
 	
 
 	# iterates through each song and adds attribute value to list

@@ -98,7 +98,7 @@ class Artist_Pref(db.Model):
 class Song_Rec(db.Model):
     """A song rec."""
 
-    ___tablename___ = 'song_recs'
+    __tablename__ = 'song_recs'
 
     song_rec_id = db.Column(db.Integer,
                     autoincrement=True,
