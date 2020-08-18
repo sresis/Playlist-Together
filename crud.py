@@ -2,6 +2,7 @@ from model import db, User, Playlist, Song_Pref, Artist_Pref, Song_Rec, Song, co
 import api
 from random import choice, randint, sample 
 import pdb
+import statistics
 
 
 
@@ -176,7 +177,7 @@ def get_recommended_songs(user_id):
 
 	return Song_Rec.query.filter(Song_Rec.user_id == user_id)
 
-def get_song_attributes(user_id, attribute):
+def get_song_attributes(user_id):
 	"""Averages the values of a particular song attribute across all recommended songs for a user."""
 
 	q = db.session.query(Song_Rec, Song).join(Song).filter(Song_Rec.user_id == user_id).all()
@@ -204,17 +205,33 @@ def get_song_attributes(user_id, attribute):
 		all_attributes['speechiness'].append(item[1].speechiness)
 
 
-	
-	# dictionary with attribute names as keys. values as. append as integers
-	# # 	## how to make this dynamic based on variable???
-
-	# 	all_attributes.append(song.valence)
-
-	# # can get avg (also get std dev??) from list
-
-
 	return all_attributes
+def get_average(attribute_dict):
+	"""returns the average for each value."""
 
+
+	averages = {
+	'tempo': 0,
+	'valence': 0,
+	'danceability': 0,
+	'energy': 0,
+	'loudness': 0,
+	'acousticness': 0,
+	'speechiness': 0
+
+	}
+	# get the mean and add it to the dict
+	for item in attribute_dict:
+		averages['tempo'] = statistics.mean(attribute_dict['tempo'])
+		averages['valence'] = statistics.mean(attribute_dict['valence'])
+		averages['danceability'] = statistics.mean(attribute_dict['danceability'])
+		averages['energy'] = statistics.mean(attribute_dict['energy'])
+		averages['loudness'] = statistics.mean(attribute_dict['loudness'])
+		averages['acousticness'] = statistics.mean(attribute_dict['acousticness'])
+		averages['speechiness'] = statistics.mean(attribute_dict['speechiness'])
+
+
+	return averages
 
 
 def get_shared_tracks(user_1, user_2):
