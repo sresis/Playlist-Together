@@ -184,11 +184,13 @@ def average_song_attribute(user_id, attribute):
 	#q = db.session.query(Song_Rec.user_id).join(Song).all()
 
 	#q = Song_Rec.query.filter_by(user_id = user_id).options(db.joinedload('song')).all()
-	q = db.session.query(Song_Rec).join(Song, Song_Rec.song_id == Song.song_id).all()
-	print('hiii')
-	print(q)
+	q = db.session.query(Song_Rec, Song).join(Song).filter(Song_Rec.user_id == user_id).all()
+
+	attribute_list = []
 	for item in q:
-		print(item.song_id)
+		attribute_list.append(item[1].valence)
+
+	avg = sum(attribute_list) / len(attribute_list)
 
 	
 
@@ -202,7 +204,7 @@ def average_song_attribute(user_id, attribute):
 	# # can get avg (also get std dev??) from list
 
 	# # return the avg
-	return q
+	return avg
 
 
 
