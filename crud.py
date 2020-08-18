@@ -28,7 +28,7 @@ def create_artist_pref(artist_name, user_id):
 
 	return artist_pref
 
-def create_song_pref(song_title, user_id):
+def create_song_pref(song_title, user_id, song_uri):
 	"""Creates a song preference for a user."""
 	song_uri = api.get_song_id(song_title)
 

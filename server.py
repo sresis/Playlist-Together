@@ -132,7 +132,9 @@ def add_users_prefs():
 	if artist:
 		artist_pref = crud.create_artist_pref(artist, user_id)
 	if song_title:
-		song_pref = crud.create_song_pref(song_title, user_id)
+		#gets song id
+		song_uri = api.get_song_id(song_title)
+		song_pref = crud.create_song_pref(song_title, user_id, song_uri)
 	artist_prefs = crud.get_all_artist_prefs()
 	song_prefs = crud.get_all_song_prefs()
 	song_recs = crud.get_all_song_recs()
@@ -151,10 +153,22 @@ def get_recs():
 	
 
 	# #adds each recommended song to DB
-	for song in song_recs:
+	for song_uri in song_recs:
 		#gets song title
-		title = api.get_song_title(song)
-		crud.create_recommended_track(user_id, song, title)
+		title = api.get_song_title(song_uri)
+		## how to get song id
+		# create song then get song ID to make rec track
+		audio_fx = api.get_audio_features(song_uri)
+		tempo = audio_fx['tempo']
+		valence = audio_fx['valence']
+		danceability = audio_fx['danceability']
+		energy = audio_fx['energy']
+		loudness = audio_fx['loudness']
+		acousticness = audio_fx['acousticness']
+		speechiness = audio_fx['speechiness']
+		crud.create_song(title, song_uri, tempo, valence, danceability, energy, loudness, acousticness, speechiness)
+		song_id = crud.get_song_id(song_uri) 
+		crud.create_recommended_track(user_id, song_uri, title, song_id)
 	user_song_recs = crud.get_all_song_recs()
 
 

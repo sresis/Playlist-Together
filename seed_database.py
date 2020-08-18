@@ -52,9 +52,21 @@ for n in range(8):
 	existing_songs = []
 	for n in range(5):
 		random_song = choice(songs)
+		
+		print(random_song)
 		if random_song not in existing_songs:
-			crud.create_song_pref(random_song, user.user_id)
-			crud.create_song(random_song, 'urixx', 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.8)
+			uri = api.get_song_id(random_song)
+			audio_fx = api.get_audio_features(uri)
+			tempo = audio_fx['tempo']
+			valence = audio_fx['valence']
+			danceability = audio_fx['danceability']
+			energy = audio_fx['energy']
+			loudness = audio_fx['loudness']
+			acousticness = audio_fx['acousticness']
+			speechiness = audio_fx['speechiness']
+			crud.create_song(random_song, uri, tempo, valence, danceability, energy, loudness, acousticness, speechiness)
+			song_id = crud.get_song_id(uri)
+			crud.create_song_pref(random_song, user.user_id, song_id)
 			existing_songs.append(random_song)
 
 	# adds song recs for each user
