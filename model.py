@@ -55,7 +55,7 @@ class Song(db.Model):
     speechiness = db.Column(db.Float())
 
     def __repr__(self):
-        return f'<song_id={self.song_id} song_uri={self.song_uri} song_title={self.song_title}>'
+        return f'<song_id={self.song_id} song_uri={self.song_uri} >'
 
 class Song_Pref(db.Model):
     """A song preference."""

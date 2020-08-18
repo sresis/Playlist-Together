@@ -76,7 +76,7 @@ for n in range(8):
 		loudness = audio_features['loudness']
 		acousticness = audio_features['acousticness']
 		speechiness = audio_features['speechiness']
-		crud.create_song(random_song, song, tempo, valence, danceability, energy, loudness, acousticness, speechiness)
+		crud.create_song(title, song, tempo, valence, danceability, energy, loudness, acousticness, speechiness)
 
 
 
