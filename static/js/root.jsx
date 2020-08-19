@@ -53,11 +53,25 @@ function Users() {
 function Login(props){
 	return (
 	<div>
-		Email:
-		<input type="text"></input>
-		Password:
-		<input type="text"></input>
-		<button>Login</button>
+		<p>
+			First Name:
+			<input type="text" name="fname"></input>
+		</p>
+		<p>
+			Last Name:
+			<input type="text" name="lname"></input>
+		</p>
+		<p>
+			Email:
+			<input type="text" name="email"></input>
+		</p>
+		<p>
+			Password:
+			<input type="text" name="password"></input>
+		</p>
+		<p>
+			<button>Login</button>
+		</p>
 	</div>
 	);
 }
