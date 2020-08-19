@@ -1,5 +1,4 @@
-import server
-import pdb; pdb.set_trace()
+#import server
 from model import db, User, Playlist, Song_Pref, Artist_Pref, Song_Rec, Song, connect_to_db
 import model
 import api
@@ -7,8 +6,8 @@ from random import choice, randint, sample
 import pdb
 import statistics
 
-
-model.connect_to_db(server.app)
+#import pdb; pdb.set_trace()
+#model.connect_to_db(server.app)
 
 
 
@@ -335,7 +334,7 @@ def get_similar_songs(user_1, user_2):
 	return similar_songs
 
 
-
+## recommend other users based on preferences
 
 
 

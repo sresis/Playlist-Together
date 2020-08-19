@@ -35,7 +35,7 @@ def get_audio_features(track):
 
 	return result.json()
 
-
+# query recommended songs
 def get_audio_analysis(track):
 	"""gets audio analysis for a track from Spotify API"""
 	result = requests.get(BASE_URL + 'audio-analysis/' + track, headers=headers)
