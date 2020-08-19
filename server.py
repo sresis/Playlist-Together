@@ -3,7 +3,7 @@
 from flask import (Flask, render_template, request, flash, session,
                    redirect)
 from model import connect_to_db
-import crud
+import crud ##comment out if you want to -i into crud.py
 import api
 
 from jinja2 import StrictUndefined
@@ -105,7 +105,7 @@ def show_user(user_id):
     averages = crud.get_average(song_attributes)
     stdev = crud.get_stdev(song_attributes)
 
-    similar_songs = crud.get_similar_songs(12, user_id)
+    similar_songs = crud.get_similar_songs(11, user_id)
 
 
     return render_template('user_details.html', user=user, artist_prefs=artist_prefs, song_prefs=song_prefs,

@@ -1,8 +1,15 @@
+import server
+import pdb; pdb.set_trace()
 from model import db, User, Playlist, Song_Pref, Artist_Pref, Song_Rec, Song, connect_to_db
+import model
 import api
 from random import choice, randint, sample 
 import pdb
 import statistics
+
+
+model.connect_to_db(server.app)
+
 
 
 
@@ -135,7 +142,7 @@ def return_users_track_prefs(user_id):
 		prefs_list.append(item.song_title)
 
 	return prefs_list	
-
+## make a db folder and have subfolders for each table. User.py for user functions etc
 def get_recommended_tracks(user_id):
 	"""Makes recommended tracks for a user given Spotify's ability to generate based on 
 	up to 5 seeds."""
@@ -299,9 +306,9 @@ def get_similar_songs(user_1, user_2):
 
 	#songs must be within this range of the average
 	tempo_range = 2
-	valence_range = 0.02
-	speechiness_range = 0.02
-	acousticness_range = 0.05
+	valence_range = 0.01
+	speechiness_range = 0.01
+	acousticness_range = 0.015
 
 	#joins the Song and Song_Rec table for user 2
 	q = db.session.query(Song_Rec, Song).join(Song).filter(Song_Rec.user_id == user_2).all()
