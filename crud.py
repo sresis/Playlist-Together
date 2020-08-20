@@ -1,10 +1,12 @@
 #import server
-from model import db, User, Playlist, Song_Pref, Artist_Pref, Song_Rec, Song, connect_to_db
+from model import (db, User, Playlist, Song_Pref, 
+Artist_Pref, Song_Rec, Playlist_Song, Playlist_User, Song, connect_to_db)
 import model
 import api
 from random import choice, randint, sample 
 import pdb
 import statistics
+from DB import playlist_song, playlist
 
 #import pdb; pdb.set_trace()
 #model.connect_to_db(server.app)
@@ -286,9 +288,10 @@ def get_shared_tracks(user_1, user_2):
 
 	return shared_songs
 
-def get_similar_songs(user_1, user_2):
+def get_similar_songs(user_1, user_2, song_count_max):
 	"""Gets similar songs from user_2 based on user_1 averages."""
 
+	song_count_max = 5
 
 	# pulls attributes for each of the user's songs
 	user_1_attributes = get_song_attributes(user_1)
@@ -313,19 +316,37 @@ def get_similar_songs(user_1, user_2):
 	#joins the Song and Song_Rec table for user 2
 	q = db.session.query(Song_Rec, Song).join(Song).filter(Song_Rec.user_id == user_2).all()
 
+
+	# create instance of Playlist class
+	new_playlist = playlist.create_playlist()
+
+	## eventually add in a while loop for target number of songs
 	# if User 2 song is within avg +/- range, add it to the list
-	for item in q:
-		# # if tempo is within range, add it.
-		# if item[1].tempo > (user_1_tempo - tempo_range) and item[1].tempo < (user_1_tempo + tempo_range):
-		# 	similar_songs.append(item[1].song_title)
-		# if valence is within range, add it.
-		if item[1].valence > (user_1_valence - valence_range) and item[1].valence < (user_1_valence + valence_range):
-			similar_songs.append(item[1].song_title)	
-		# if speechiness is within range, add it.
-		if item[1].speechiness > (user_1_speechiness - speechiness_range) and item[1].speechiness < (user_1_speechiness + speechiness_range):
-			similar_songs.append(item[1].song_title)
-		if item[1].acousticness > (user_1_acousticness - acousticness_range) and item[1].acousticness < (user_1_acousticness + acousticness_range):
-			similar_songs.append(item[1].song_title)
+	song_count = 0
+
+	## make sure the while loop works
+	while song_count < song_count_max:
+		for item in q:
+			# # if tempo is within range, add it.
+			# if item[1].tempo > (user_1_tempo - tempo_range) and item[1].tempo < (user_1_tempo + tempo_range):
+			# 	similar_songs.append(item[1].song_title)
+			# if valence is within range, add it.
+			if item[1].valence > (user_1_valence - valence_range) and item[1].valence < (user_1_valence + valence_range):
+				similar_songs.append(item[1].song_title)
+
+				# adds song to playlist song table
+				playlist_song.create_playlist_song(item[1].song_id, new_playlist.playlist_id)
+				song_count += 1
+
+			# if speechiness is within range, add it.
+			if item[1].speechiness > (user_1_speechiness - speechiness_range) and item[1].speechiness < (user_1_speechiness + speechiness_range):
+				similar_songs.append(item[1].song_title)
+				song_count += 1
+			if item[1].acousticness > (user_1_acousticness - acousticness_range) and item[1].acousticness < (user_1_acousticness + acousticness_range):
+				similar_songs.append(item[1].song_title)
+				playlist_song.create_playlist_song(item[1].song_id, new_playlist.playlist_id)
+				song_count += 1
+
 
 
 			### add to playlist clss	
