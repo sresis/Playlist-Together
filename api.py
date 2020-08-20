@@ -108,6 +108,8 @@ def get_song_id(song_title):
 	lookup_string = BASE_URL + 'search?q=' + updated_name + '&type=track&limit=1'
 	result = requests.get(lookup_string, headers=headers)
 	result = result.json()
+	#song_id = result
+	#print(song_id)
 	song_id = result['tracks']['items'][0]['id']
 	
 	return song_id

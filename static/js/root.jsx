@@ -26,7 +26,7 @@ function App() {
 	        {/* A <Switch> looks through its children <Route>s and
 	            renders the first one that matches the current URL. */}
 	        <Switch>
-	          <Route path="/login">
+	          <Route path="/login" component={Login}>
 	            <Login />
 	          </Route>
 	          <Route path="/users">
@@ -40,27 +40,42 @@ function App() {
 	    </Router>
   );
 }
-
+function PostListItem(props) {
+  return <li>{props.email}</li>
+}
 function Homepage() {
 	return <div> Welcome to my site </div>;
 }
 
-function Users() {
-	return <div>Users**</div>;
+function Users(props) {
+	// get info from server and make components out of it
+    // get the info from the server
+    // make componenets out of it 
+    // render them 
+    return<div>Hiiiii</div>
+
+
+
+		
+
+
+ function alertMessage() {
+    alert('You just handled an event!');
+  }
+
+  return (
+    <button onClick={alertMessage}>
+      Click me
+    </button>
+  );
 		
 
 }
 function Login(props){
+	// look out for changes in the form. onChange function that is updating props to reflect current value
+	// when ready to post, bundle it into a javascript object. send it as object , one of arguments
 	return (
 	<div>
-		<p>
-			First Name:
-			<input type="text" name="fname"></input>
-		</p>
-		<p>
-			Last Name:
-			<input type="text" name="lname"></input>
-		</p>
 		<p>
 			Email:
 			<input type="text" name="email"></input>
@@ -70,10 +85,13 @@ function Login(props){
 			<input type="text" name="password"></input>
 		</p>
 		<p>
-			<button>Login</button>
+			<button name="login">Login</button>
 		</p>
 	</div>
 	);
 }
+
+
+
 
 ReactDOM.render(<App />, document.getElementById('root'))

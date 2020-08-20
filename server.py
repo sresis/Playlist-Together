@@ -1,6 +1,6 @@
 """Server for movie ratings app."""
 
-from flask import (Flask, render_template, request, flash, session,
+from flask import (Flask, render_template, request, flash, session, jsonify,
                    redirect)
 from model import connect_to_db
 import crud ##comment out if you want to -i into crud.py
@@ -56,6 +56,18 @@ def register_user():
 	return redirect('/')
 
 
+@app.route('/api/users')
+def get_users():
+    """View all users."""
+
+    # gets all users and jsonifies it
+
+    users = crud.get_users()
+
+    return jsonify(users)
+
+
+
 @app.route('/profile', methods=['POST'])
 def login_user():
 	## right now it only lets you log in with existing
@@ -63,6 +75,8 @@ def login_user():
 	# gets email and password from form
 	email = request.form['email']
 	password = request.form['password']
+
+	##
 
 	# gets user info based on email
 	user = crud.get_user_by_email(email)
@@ -76,12 +90,18 @@ def login_user():
 		song_prefs = crud.get_all_song_prefs()
 		return render_template('user_profile.html', user=user, artist_prefs=artist_prefs,
 			song_prefs=song_prefs)
-
+			## here you would pass in a  jsnonified dict. all the info for this user. make dict with that in it
+			# parse json string. use info from that to build out components
+			#maybe do request.__.get
 	else:
 		flash('incorrect login.')
 		return redirect('/')
 
+## only one HTML template with Root component
+# server routes would no longer render templates. they would all be returning JSON
+# be processing this data in javascript
 
+# be using react. fetch function to get things back from .jsx
 @app.route('/users/<user_id>')
 def show_user(user_id):
     """Show details on a particular user."""
