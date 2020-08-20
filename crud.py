@@ -282,6 +282,7 @@ def get_shared_tracks(user_1, user_2):
 			if item1 == item2 and item1 not in shared_songs:
 				name = api.get_song_title(item1)
 				shared_songs.append(name)
+					# add to playlist songs db
 
 	return shared_songs
 
@@ -324,14 +325,15 @@ def get_similar_songs(user_1, user_2):
 		if item[1].speechiness > (user_1_speechiness - speechiness_range) and item[1].speechiness < (user_1_speechiness + speechiness_range):
 			similar_songs.append(item[1].song_title)
 		if item[1].acousticness > (user_1_acousticness - acousticness_range) and item[1].acousticness < (user_1_acousticness + acousticness_range):
-			similar_songs.append(item[1].song_title)	
+			similar_songs.append(item[1].song_title)
 
 
-
- 
-
+			### add to playlist clss	
 
 	return similar_songs
+
+
+
 
 
 ## recommend other users based on preferences

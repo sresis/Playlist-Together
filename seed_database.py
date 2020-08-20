@@ -32,7 +32,7 @@ songs = ['Miracle Mile', 'A Milli', 'Hollaback Girl', 'Get Low', 'Night Moves', 
 		'Whatever You Like', 'No Diggity', 'Budapest', 'Babel', 'Location', 'Grillz', 'Country Sh*t',
 		'Trap Queen', 'Watermelon Sugar', 'Savage Love', 'Something I Need' ]
 # make  random users
-for n in range(8):
+for n in range(5):
 	fname = choice(first_names)
 	first_names.remove(fname)
 	lname = choice(last_names)

@@ -29,12 +29,46 @@ class Playlist(db.Model):
     playlist_id = db.Column(db.Integer,
                         autoincrement=True,
                         primary_key=True)
-    user_1_id = db.Column(db.Integer, db.ForeignKey('users.user_id'))
-    # make middle table
-    user = db.relationship('User', backref='playlists')
+
+
 
     def __repr__(self):
         return f'<playlist_id={self.playlist_id}>'
+
+class Playlist_User(db.Model):
+    """A playlist user."""
+
+    __tablename__ = "playlist_user"
+    playlist_user_id = db.Column(db.Integer,
+                        autoincrement=True,
+                        primary_key=True)
+
+    playlist_id = db.Column(db.Integer, db.ForeignKey('playlists.playlist_id'))
+    user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'))
+
+
+    playlist = db.relationship('Playlist', backref='playlist_user')
+    user = db.relationship('User', backref='playlist_user')
+
+    def __repr__(self):
+        return f'<playlist_user_id={self.playlist_user_id} user_id={self.user_id} playlist_id={self.playlist_id}>'
+
+class Playlist_Song(db.Model):
+    """A playlist song."""
+
+    __tablename__ = "playlist_song"
+    playlist_song_id = db.Column(db.Integer,
+                        autoincrement=True,
+                        primary_key=True)
+    song_id = db.Column(db.Integer, db.ForeignKey('songs.song_id'))
+    playlist_id = db.Column(db.Integer, db.ForeignKey('playlists.playlist_id'))
+
+
+    song = db.relationship('Song', backref='playlist_song')
+    playlist = db.relationship('Playlist', backref='playlist_song')
+
+    def __repr__(self):
+        return f'<playlist_song_id={self.playlist_song_id}>'
 
 class Song(db.Model):
     """ A song."""
@@ -53,9 +87,10 @@ class Song(db.Model):
     loudness = db.Column(db.Float())
     acousticness = db.Column(db.Float())
     speechiness = db.Column(db.Float())
+    song_artist = db.Column(db.String())
 
     def __repr__(self):
-        return f'<song_id={self.song_id} song_uri={self.song_uri} >'
+        return f'<song_id={self.song_id} song_title={self.song_title} song_artist ={self.song_artist} >'
 
 class Song_Pref(db.Model):
     """A song preference."""

@@ -14,12 +14,12 @@ app.jinja_env.undefined = StrictUndefined
 
 
 @app.route('/')
-def root():
+def homepage():
 	"""view the homepage."""
 
 	
-	return render_template("root.html")
-	#return render_template('homepage.html')
+
+	return render_template('homepage.html')
 
 
 @app.route('/users')
@@ -62,9 +62,15 @@ def get_users():
 
     # gets all users and jsonifies it
 
-    users = crud.get_users()
+    top_posts = [
+    {"id": 93, "title": "why kiwis are the best fruit, part 9", "body": " body text for p1"},
+    {"id": 783, "title": "typsetting in the 19th century", "body": " body text for p2"},
+    {"id": 1383, "title": "debugging, a lifes tale", "body": " body text for p3"}
+    ]
 
-    return jsonify(users)
+    #users = crud.get_users()
+
+    return jsonify(top_posts)
 
 
 
@@ -126,7 +132,7 @@ def show_user(user_id):
     averages = crud.get_average(song_attributes)
     stdev = crud.get_stdev(song_attributes)
 
-    similar_songs = crud.get_similar_songs(11, user_id)
+    similar_songs = crud.get_similar_songs(2, user_id)
 
 
     return render_template('user_details.html', user=user, artist_prefs=artist_prefs, song_prefs=song_prefs,

@@ -47,27 +47,28 @@ function Homepage() {
 	return <div> Welcome to my site </div>;
 }
 
-function Users(props) {
+function Users() {
 	// get info from server and make components out of it
     // get the info from the server
     // make componenets out of it 
     // render them 
-    return<div>Hiiiii</div>
+
+    const [users, setUsers] = React.useState([])
+
+    React.useEffect(() => {
+    fetch('/api/users', (result) => {
+    	setUsers(result);
+    });
+}, [])
+
+
 
 
 
 		
 
 
- function alertMessage() {
-    alert('You just handled an event!');
-  }
 
-  return (
-    <button onClick={alertMessage}>
-      Click me
-    </button>
-  );
 		
 
 }
