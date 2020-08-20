@@ -57,12 +57,12 @@ def create_recommended_track(user_id, song_uri, song_title, song_id):
 	return rec_track
 
 def create_song(song_title, song_uri, tempo, valence, danceability, 
-	energy, loudness, acousticness, speechiness):
+	energy, loudness, acousticness, speechiness, song_artist):
 	"""Creates a Song and adds it to the database."""
 
 	song = Song(song_title=song_title, song_uri=song_uri, tempo=tempo, valence=valence, 
 		danceability=danceability, energy=energy, loudness=loudness, 
-		acousticness=acousticness, speechiness=speechiness)
+		acousticness=acousticness, speechiness=speechiness, song_artist=song_artist)
 
 	db.session.add(song)
 	db.session.commit()

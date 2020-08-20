@@ -50,12 +50,13 @@ for n in range(5):
 
 	# adds song preferences for each user. also adds song to the DB so don't need to keep querying
 	existing_songs = []
-	for n in range(5):
+	for n in range(4):
 		random_song = choice(songs)
 		
 		print(random_song)
 		if random_song not in existing_songs:
 			uri = api.get_song_id(random_song)
+			artist = api.get_song_id(random_song)
 			audio_fx = api.get_audio_features(uri)
 			tempo = audio_fx['tempo']
 			valence = audio_fx['valence']
@@ -64,7 +65,8 @@ for n in range(5):
 			loudness = audio_fx['loudness']
 			acousticness = audio_fx['acousticness']
 			speechiness = audio_fx['speechiness']
-			crud.create_song(random_song, uri, tempo, valence, danceability, energy, loudness, acousticness, speechiness)
+			crud.create_song(random_song, uri, tempo, valence, danceability, 
+				energy, loudness, acousticness, speechiness, artist)
 			song_id = crud.get_song_id(uri)
 			crud.create_song_pref(random_song, user.user_id, song_id)
 			existing_songs.append(random_song)
@@ -77,6 +79,7 @@ for n in range(5):
 	for song in song_recs:
 		#gets song title
 		title = api.get_song_title(song)
+		artist = api.get_song_artist(song)
 		
 
 		#gets all audio features for song
@@ -88,7 +91,9 @@ for n in range(5):
 		loudness = audio_features['loudness']
 		acousticness = audio_features['acousticness']
 		speechiness = audio_features['speechiness']
-		crud.create_song(title, song, tempo, valence, danceability, energy, loudness, acousticness, speechiness)
+		crud.create_song(title, song, tempo, valence, 
+			danceability, energy, loudness, acousticness, 
+			speechiness, artist)
 		# get song ID and use to create recommended track
 		song_id = crud.get_song_id(song)
 		crud.create_recommended_track(user.user_id, song, title, song_id)

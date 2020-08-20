@@ -30,8 +30,6 @@ class Playlist(db.Model):
                         autoincrement=True,
                         primary_key=True)
 
-
-
     def __repr__(self):
         return f'<playlist_id={self.playlist_id}>'
 

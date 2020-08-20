@@ -197,7 +197,9 @@ def get_recs():
 		loudness = audio_fx['loudness']
 		acousticness = audio_fx['acousticness']
 		speechiness = audio_fx['speechiness']
-		crud.create_song(title, song_uri, tempo, valence, danceability, energy, loudness, acousticness, speechiness)
+		artist = api.get_song_artist(song_uri)
+		crud.create_song(title, song_uri, tempo, valence, danceability, 
+			energy, loudness, acousticness, speechiness, artist)
 		song_id = crud.get_song_id(song_uri) 
 		crud.create_recommended_track(user_id, song_uri, title, song_id)
 	user_song_recs = crud.get_all_song_recs()
