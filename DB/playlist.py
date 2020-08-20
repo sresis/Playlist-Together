@@ -11,3 +11,7 @@ def create_playlist():
 	db.session.commit()
 
 	return playlist
+
+def sort_songs(songs_list):
+	"""Sorts the songs based on 2nd item in list.""" 
+	return(sorted(songs_list, key = lambda x: x[1])) 

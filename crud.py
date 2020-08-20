@@ -291,7 +291,7 @@ def get_shared_tracks(user_1, user_2):
 def get_similar_songs(user_1, user_2, song_count_max):
 	"""Gets similar songs from user_2 based on user_1 averages."""
 
-	song_count_max = 5
+
 
 	# pulls attributes for each of the user's songs
 	user_1_attributes = get_song_attributes(user_1)
@@ -302,16 +302,28 @@ def get_similar_songs(user_1, user_2, song_count_max):
 
 	#stores similar songs in a list
 	similar_songs = []
+
+	# gets averages for each attribute
 	user_1_tempo = user_1_avg['tempo']
 	user_1_valence = user_1_avg['valence']
 	user_1_speechiness = user_1_avg['speechiness']
 	user_1_acousticness = user_1_avg['acousticness']
 
+	#sets z-score to get in range +/- 10%
+	z_score = 1
+
+
+	# gets stdev for each attribute
+	user_1_tempo_sd = user_1_stdev['tempo']
+	user_1_valence_sd = user_1_stdev['valence']
+	user_1_speechiness_sd = user_1_stdev['speechiness']
+	user_1_acousticness_sd = user_1_stdev['acousticness']
+
 	#songs must be within this range of the average
-	tempo_range = 2
-	valence_range = 0.01
-	speechiness_range = 0.01
-	acousticness_range = 0.015
+	tempo_range = z_score * user_1_tempo_sd
+	valence_range = z_score * user_1_valence_sd
+	speechiness_range = z_score * user_1_speechiness_sd
+	acousticness_range = z_score * user_1_acousticness_sd
 
 	#joins the Song and Song_Rec table for user 2
 	q = db.session.query(Song_Rec, Song).join(Song).filter(Song_Rec.user_id == user_2).all()
@@ -319,39 +331,66 @@ def get_similar_songs(user_1, user_2, song_count_max):
 
 	# create instance of Playlist class
 	new_playlist = playlist.create_playlist()
+	
 
-	## eventually add in a while loop for target number of songs
-	# if User 2 song is within avg +/- range, add it to the list
-	song_count = 0
+	## list to store the songs and similarity rating. this will then be sorted
+	all_song_similarities = []
 
-	## make sure the while loop works
-	while song_count < song_count_max:
-		for item in q:
-			# # if tempo is within range, add it.
-			# if item[1].tempo > (user_1_tempo - tempo_range) and item[1].tempo < (user_1_tempo + tempo_range):
-			# 	similar_songs.append(item[1].song_title)
-			# if valence is within range, add it.
-			if item[1].valence > (user_1_valence - valence_range) and item[1].valence < (user_1_valence + valence_range):
-				similar_songs.append(item[1].song_title)
+	for item in q:
 
-				# adds song to playlist song table
-				playlist_song.create_playlist_song(item[1].song_id, new_playlist.playlist_id)
-				song_count += 1
+		# if valence is within range
+		valence_z = abs((item[1].valence - user_1_valence) / user_1_valence_sd)
+		speechiness_z = abs((item[1].valence - user_1_speechiness) / user_1_speechiness_sd)
+		acousticness_z = abs((item[1].valence - user_1_acousticness) / user_1_acousticness_sd)
 
-			# if speechiness is within range, add it.
-			if item[1].speechiness > (user_1_speechiness - speechiness_range) and item[1].speechiness < (user_1_speechiness + speechiness_range):
-				similar_songs.append(item[1].song_title)
-				song_count += 1
-			if item[1].acousticness > (user_1_acousticness - acousticness_range) and item[1].acousticness < (user_1_acousticness + acousticness_range):
-				similar_songs.append(item[1].song_title)
-				playlist_song.create_playlist_song(item[1].song_id, new_playlist.playlist_id)
-				song_count += 1
+		# calculates the average of the z-scores to give a "similarity score"
+		similarity_score = statistics.mean([valence_z, speechiness_z, acousticness_z])
+
+
+		song_similarity = [item[1].song_title, similarity_score]
+		all_song_similarities.append(song_similarity)
 
 
 
-			### add to playlist clss	
+		if ((item[1].valence > (user_1_valence - valence_range) 
+		and item[1].valence < (user_1_valence + valence_range)
+		# and acousticness is within range
+		and (item[1].acousticness > (user_1_acousticness- acousticness_range) 
+		and item[1].valence < (user_1_acousticness + acousticness_range)))):
+			similar_songs.append(item[1].song_title)
 
-	return similar_songs
+
+			# adds song to playlist song table
+			playlist_song.create_playlist_song(item[1].song_id, new_playlist.playlist_id)
+
+
+
+
+		# # if speechiness is within range, add it.
+		# if item[1].speechiness > (user_1_speechiness - speechiness_range) and 
+		# item[1].speechiness < (user_1_speechiness + speechiness_range):
+		# 	similar_songs.append(item[1].song_title)
+		# 	song_count += 1
+		
+		# if item[1].acousticness > (user_1_acousticness - acousticness_range) and 
+		# item[1].acousticness < (user_1_acousticness + acousticness_range):
+		# 	similar_songs.append(item[1].song_title)
+		# 	playlist_song.create_playlist_song(item[1].song_id, new_playlist.playlist_id)
+		# 	song_count += 1
+
+			#z score = 0.06
+
+			### add to playlist clss
+	sorted_list = playlist.sort_songs(all_song_similarities)
+
+	#list to store matching songs up to max song count
+	matching_songs = []
+	i = 0
+	while i < song_count_max:
+		matching_songs.append(sorted_list[i][0])
+		i += 1
+
+	return matching_songs
 
 
 
