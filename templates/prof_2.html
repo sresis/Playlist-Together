@@ -12,9 +12,7 @@
 		<li>Recommended Songs:</li>
 		<ul class="recs">
 			{% for song in user_song_recs %}
-				{% if song.user_id == user.user_id %}
-					<li>{{ song.song_title }} </li>
-				{% endif %}
+				<li>{{ song.song_title }} </li>
 		
 			{% endfor %}
 		</ul>		

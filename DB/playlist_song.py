@@ -1,9 +1,8 @@
 from model import db, Playlist_Song, connect_to_db
 import model
 import api
-from random import choice, randint, sample 
-import pdb
-import statistics
+
+
 
 def create_playlist_song(song_id, playlist_id):
 	"""Creates a playlist song and adds to DB."""

@@ -11,41 +11,31 @@
 		<li>Favorite Songs: </li>
 		<ul class="song_list">
 			{% for song in song_prefs %}
-				{% if song.user_id == user.user_id %}
-					<li>{{ song.song_title }} </li>
-				{% endif %}
+				<li>{{ song.song_title }} </li>
 			{% endfor %}
 		</ul>
 		<li>Favorite Artists: </li>
 		<ul class="subcat">
 			{% for artist in artist_prefs %}
-				{% if artist.user_id == user.user_id %}
-					<li>{{ artist.artist_name }}</li>
-				{% endif %}
+				<li>{{ artist.artist_name }}</li>
+
 			{% endfor %}
 			
 		</ul>
 		<li>Recommended Songs:</li>
-<!-- 		<ul class="recs">
-			{% for song in song_recs %}
-				{% if song.user_id == user.user_id %}
-					<li>{{ song.song_title }}</li>
-				{% endif %}
-			{% endfor %}
-		</ul> -->
 
 		</ul>
 		<li>Recommended Song Attributes</li>
 		{{ averages }}
 		<p>{{ stdev }}</p>
-		<li>Shared with User 1:</li>
+		<li>Shared with User {{ fname }}:</li>
 		<ul class="recs">
 			{% for pref in shared_prefs %}
 				<li>{{ pref }}</li>
 			{% endfor %}
 			
 		</ul>
-		<li> Similar Songs with User 1</li>
+		<li> Similar Songs with {{ fname }}</li>
 		{{ similar_songs }}
 
 		

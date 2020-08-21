@@ -113,8 +113,8 @@ def show_user(user_id):
     """Show details on a particular user."""
 
     user = crud.get_user_by_id(user_id)
-    artist_prefs = crud.get_all_artist_prefs()
-    song_prefs = crud.get_all_song_prefs()
+    artist_prefs = crud.get_user_artist_prefs(user_id)
+    song_prefs = crud.get_user_song_prefs(user_id)
     rec_tracks = crud.get_recommended_tracks(user_id)
     x = crud.get_all_song_recs()
     rec_names = []
@@ -125,8 +125,6 @@ def show_user(user_id):
     session_user = session['user']
     x = crud.get_user_by_id(session_user)
     fname = x.fname
-
-    song_recs = crud.get_all_song_recs()
 
     # gets attributes of user's recommended tracks
 
@@ -140,7 +138,7 @@ def show_user(user_id):
 
 
     return render_template('user_details.html', user=user, artist_prefs=artist_prefs, song_prefs=song_prefs,
-    	rec_names=rec_names, shared_prefs=shared_prefs, song_recs=song_recs, 
+    	rec_names=rec_names, shared_prefs=shared_prefs,
     	song_attributes=song_attributes, averages=averages, stdev=stdev, 
     	similar_songs=similar_songs, fname=fname)
 
@@ -207,7 +205,7 @@ def get_recs():
 			energy, loudness, acousticness, speechiness, artist)
 		song_id = crud.get_song_id(song_uri) 
 		crud.create_recommended_track(user_id, song_uri, title, song_id)
-	user_song_recs = crud.get_all_song_recs()
+	user_song_recs = crud.get_all_song_recs(user_id)
 
 
 

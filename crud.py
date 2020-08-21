@@ -112,6 +112,11 @@ def get_user_song_prefs(user_id):
 
 	return Song_Pref.query.filter(Song_Pref.user_id == user_id)
 
+def get_user_artist_prefs(user_id):
+	"""Gets all song prefs for a user."""
+
+	return Artist_Pref.query.filter(Artist_Pref.user_id == user_id)
+
 def get_user_song_recs(user_id):
 	"""Gets all song recs for a user."""
 
@@ -332,7 +337,7 @@ def get_similar_songs(user_1, user_2, song_count_max):
 
 	for item in q:
 
-		# if valence is within range
+		# calculate z-score for each attribute
 		valence_z = abs((item[1].valence - user_1_valence) / user_1_valence_sd)
 		speechiness_z = abs((item[1].speechiness - user_1_speechiness) / user_1_speechiness_sd)
 		acousticness_z = abs((item[1].acousticness - user_1_acousticness) / user_1_acousticness_sd)

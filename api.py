@@ -66,7 +66,6 @@ def get_recs_based_on_seed(tracks, artists):
 	tracks_piece = make_url(tracks)
 	artists_piece = make_url(artists)
 
-
 	string = BASE_URL + 'recommendations?limit=60&seed_artists=' + artists_piece +'&seed_tracks=' + tracks_piece
 
 	result = requests.get(string, headers=headers)
