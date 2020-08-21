@@ -132,7 +132,7 @@ def show_user(user_id):
     averages = crud.get_average(song_attributes)
     stdev = crud.get_stdev(song_attributes)
 
-    similar_songs = crud.get_similar_songs(2, user_id, 5)
+    similar_songs = crud.get_all_similar_songs(6, user_id, 10)
 
 
     return render_template('user_details.html', user=user, artist_prefs=artist_prefs, song_prefs=song_prefs,

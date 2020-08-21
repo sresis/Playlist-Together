@@ -308,6 +308,8 @@ def get_similar_songs(user_1, user_2, song_count_max):
 	user_1_valence = user_1_avg['valence']
 	user_1_speechiness = user_1_avg['speechiness']
 	user_1_acousticness = user_1_avg['acousticness']
+	user_1_danceability = user_1_avg['danceability']
+	user_1_energy = user_1_avg['energy']
 
 	#sets z-score to get in range +/- 10%
 	z_score = 1
@@ -318,12 +320,16 @@ def get_similar_songs(user_1, user_2, song_count_max):
 	user_1_valence_sd = user_1_stdev['valence']
 	user_1_speechiness_sd = user_1_stdev['speechiness']
 	user_1_acousticness_sd = user_1_stdev['acousticness']
+	user_1_danceability_sd = user_1_stdev['danceability']
+	user_1_energy_sd = user_1_stdev['energy']
 
 	#songs must be within this range of the average
 	tempo_range = z_score * user_1_tempo_sd
 	valence_range = z_score * user_1_valence_sd
 	speechiness_range = z_score * user_1_speechiness_sd
 	acousticness_range = z_score * user_1_acousticness_sd
+	danceability_range = z_score * user_1_danceability_sd
+	energy_range = z_score * user_1_energy_sd
 
 	#joins the Song and Song_Rec table for user 2
 	q = db.session.query(Song_Rec, Song).join(Song).filter(Song_Rec.user_id == user_2).all()
@@ -340,47 +346,18 @@ def get_similar_songs(user_1, user_2, song_count_max):
 
 		# if valence is within range
 		valence_z = abs((item[1].valence - user_1_valence) / user_1_valence_sd)
-		speechiness_z = abs((item[1].valence - user_1_speechiness) / user_1_speechiness_sd)
-		acousticness_z = abs((item[1].valence - user_1_acousticness) / user_1_acousticness_sd)
+		speechiness_z = abs((item[1].speechiness - user_1_speechiness) / user_1_speechiness_sd)
+		acousticness_z = abs((item[1].acousticness - user_1_acousticness) / user_1_acousticness_sd)
+		danceability_z = abs((item[1].danceability - user_1_danceability) / user_1_danceability_sd)
+		energy_z = abs((item[1].energy - user_1_energy) / user_1_energy_sd)
 
 		# calculates the average of the z-scores to give a "similarity score"
-		similarity_score = statistics.mean([valence_z, speechiness_z, acousticness_z])
+		similarity_score = statistics.mean([valence_z, speechiness_z, acousticness_z, danceability_z, energy_z])
 
 
 		song_similarity = [item[1].song_title, similarity_score]
 		all_song_similarities.append(song_similarity)
 
-
-
-		if ((item[1].valence > (user_1_valence - valence_range) 
-		and item[1].valence < (user_1_valence + valence_range)
-		# and acousticness is within range
-		and (item[1].acousticness > (user_1_acousticness- acousticness_range) 
-		and item[1].valence < (user_1_acousticness + acousticness_range)))):
-			similar_songs.append(item[1].song_title)
-
-
-			# adds song to playlist song table
-			playlist_song.create_playlist_song(item[1].song_id, new_playlist.playlist_id)
-
-
-
-
-		# # if speechiness is within range, add it.
-		# if item[1].speechiness > (user_1_speechiness - speechiness_range) and 
-		# item[1].speechiness < (user_1_speechiness + speechiness_range):
-		# 	similar_songs.append(item[1].song_title)
-		# 	song_count += 1
-		
-		# if item[1].acousticness > (user_1_acousticness - acousticness_range) and 
-		# item[1].acousticness < (user_1_acousticness + acousticness_range):
-		# 	similar_songs.append(item[1].song_title)
-		# 	playlist_song.create_playlist_song(item[1].song_id, new_playlist.playlist_id)
-		# 	song_count += 1
-
-			#z score = 0.06
-
-			### add to playlist clss
 	sorted_list = playlist.sort_songs(all_song_similarities)
 
 	#list to store matching songs up to max song count
@@ -392,11 +369,23 @@ def get_similar_songs(user_1, user_2, song_count_max):
 
 	return matching_songs
 
+def get_all_similar_songs(user_1, user_2, target_songs):
+	"""Runs the get similar songs both ways to return all similar songs for both users."""
+	list_1 = get_similar_songs(user_1, user_2, target_songs)
+	list_2 = get_similar_songs(user_2, user_1, target_songs)
+
+
+	shared_list = []
+	for item in list_1:
+		shared_list.append(item)
+
+	for item in list_2:
+		shared_list.append(item)
+
+	return shared_list
 
 
 
-
-## recommend other users based on preferences
 
 
 
