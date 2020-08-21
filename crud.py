@@ -6,7 +6,7 @@ import api
 from random import choice, randint, sample 
 import pdb
 import statistics
-from DB import playlist_song, playlist
+from DB import playlist_song, playlist, playlist_user
 
 #import pdb; pdb.set_trace()
 #model.connect_to_db(server.app)
@@ -327,11 +327,6 @@ def get_similar_songs(user_1, user_2, song_count_max):
 	#joins the Song and Song_Rec table for user 2
 	q = db.session.query(Song_Rec, Song).join(Song).filter(Song_Rec.user_id == user_2).all()
 
-
-	# create instance of Playlist class
-	new_playlist = playlist.create_playlist()
-	
-
 	## list to store the songs and similarity rating. this will then be sorted
 	all_song_similarities = []
 
@@ -350,7 +345,7 @@ def get_similar_songs(user_1, user_2, song_count_max):
 			acousticness_z, danceability_z, energy_z, loudness_z])
 
 
-		song_similarity = [item[1].song_title, similarity_score]
+		song_similarity = [item[1].song_title, similarity_score, item[1].song_id]
 		all_song_similarities.append(song_similarity)
 
 	sorted_list = playlist.sort_songs(all_song_similarities)
@@ -359,13 +354,14 @@ def get_similar_songs(user_1, user_2, song_count_max):
 	matching_songs = []
 	i = 0
 	while i < song_count_max:
-		matching_songs.append(sorted_list[i][0])
+		matching_songs.append(sorted_list[i])
 		i += 1
 
 	return matching_songs
 
 def get_all_similar_songs(user_1, user_2, target_songs):
 	"""Runs the get similar songs both ways to return all shared and similar songs for both users."""
+	
 	list_1 = get_similar_songs(user_1, user_2, target_songs)
 	list_2 = get_similar_songs(user_2, user_1, target_songs)
 	list_3 = get_shared_tracks(user_1, user_2)
@@ -380,7 +376,23 @@ def get_all_similar_songs(user_1, user_2, target_songs):
 	for item in list_3:
 		shared_list.append(item)
 
-	return shared_list
+	# create instance of Playlist class
+	new_playlist = playlist.create_playlist()
+
+	# creates playlist user instances
+	playlist_user.create_playlist_user(user_1, new_playlist.playlist_id)
+	playlist_user.create_playlist_user(user_2, new_playlist.playlist_id)
+
+	#adds shared songs to playlist
+	song_titles = []
+	for item in shared_list:
+
+		# adds playlist song with song ID and playlist ID as arguments
+		playlist_song.creat_playlist_song(item[2], new_playlist.playlist_id)
+		song_titles.append(item[0])
+
+
+	return song_titles
 
 
 
