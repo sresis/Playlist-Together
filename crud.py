@@ -310,9 +310,7 @@ def get_similar_songs(user_1, user_2, song_count_max):
 	user_1_acousticness = user_1_avg['acousticness']
 	user_1_danceability = user_1_avg['danceability']
 	user_1_energy = user_1_avg['energy']
-
-	#sets z-score to get in range +/- 10%
-	z_score = 1
+	user_1_loudness = user_1_avg['loudness']
 
 
 	# gets stdev for each attribute
@@ -322,14 +320,9 @@ def get_similar_songs(user_1, user_2, song_count_max):
 	user_1_acousticness_sd = user_1_stdev['acousticness']
 	user_1_danceability_sd = user_1_stdev['danceability']
 	user_1_energy_sd = user_1_stdev['energy']
+	user_1_loudness_sd = user_1_stdev['loudness']
 
-	#songs must be within this range of the average
-	tempo_range = z_score * user_1_tempo_sd
-	valence_range = z_score * user_1_valence_sd
-	speechiness_range = z_score * user_1_speechiness_sd
-	acousticness_range = z_score * user_1_acousticness_sd
-	danceability_range = z_score * user_1_danceability_sd
-	energy_range = z_score * user_1_energy_sd
+
 
 	#joins the Song and Song_Rec table for user 2
 	q = db.session.query(Song_Rec, Song).join(Song).filter(Song_Rec.user_id == user_2).all()
@@ -350,9 +343,11 @@ def get_similar_songs(user_1, user_2, song_count_max):
 		acousticness_z = abs((item[1].acousticness - user_1_acousticness) / user_1_acousticness_sd)
 		danceability_z = abs((item[1].danceability - user_1_danceability) / user_1_danceability_sd)
 		energy_z = abs((item[1].energy - user_1_energy) / user_1_energy_sd)
+		loudness_z = abs((item[1].loudness - user_1_loudness) / user_1_loudness_sd)
 
 		# calculates the average of the z-scores to give a "similarity score"
-		similarity_score = statistics.mean([valence_z, speechiness_z, acousticness_z, danceability_z, energy_z])
+		similarity_score = statistics.mean([valence_z, speechiness_z, 
+			acousticness_z, danceability_z, energy_z, loudness_z])
 
 
 		song_similarity = [item[1].song_title, similarity_score]
@@ -370,9 +365,10 @@ def get_similar_songs(user_1, user_2, song_count_max):
 	return matching_songs
 
 def get_all_similar_songs(user_1, user_2, target_songs):
-	"""Runs the get similar songs both ways to return all similar songs for both users."""
+	"""Runs the get similar songs both ways to return all shared and similar songs for both users."""
 	list_1 = get_similar_songs(user_1, user_2, target_songs)
 	list_2 = get_similar_songs(user_2, user_1, target_songs)
+	list_3 = get_shared_tracks(user_1, user_2)
 
 
 	shared_list = []
@@ -380,6 +376,8 @@ def get_all_similar_songs(user_1, user_2, target_songs):
 		shared_list.append(item)
 
 	for item in list_2:
+		shared_list.append(item)
+	for item in list_3:
 		shared_list.append(item)
 
 	return shared_list
