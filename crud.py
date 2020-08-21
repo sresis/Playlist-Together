@@ -388,7 +388,7 @@ def get_all_similar_songs(user_1, user_2, target_songs):
 	for item in shared_list:
 
 		# adds playlist song with song ID and playlist ID as arguments
-		playlist_song.creat_playlist_song(item[2], new_playlist.playlist_id)
+		playlist_song.create_playlist_song(item[2], new_playlist.playlist_id)
 		song_titles.append(item[0])
 
 
