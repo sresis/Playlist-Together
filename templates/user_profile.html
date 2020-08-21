@@ -11,9 +11,7 @@
 		<li>Favorite Songs:  </li>
 		<ul class="song">
 			{% for song in song_prefs %}
-				{% if song.user_id == user.user_id %}
-					<li>{{ song.song_title }}</li>
-				{% endif %}
+				<li>{{ song.song_title }}</li>
 			{% endfor %}
 
 
@@ -21,9 +19,7 @@
 		<li>Favorite Artists: </li>
 		<ul class="artist">
 			{% for artist in artist_prefs %}
-				{% if artist.user_id == user.user_id %}
-					<li>{{ artist.artist_name }}</li>
-				{% endif %}
+				<li>{{ artist.artist_name }}</li>
 			{% endfor %}
 			
 		</ul>

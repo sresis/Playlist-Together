@@ -92,8 +92,8 @@ def login_user():
 		#adds user to session
 		session['user'] = user.user_id
 		flash('you are logged in!')
-		artist_prefs = crud.get_all_artist_prefs()
-		song_prefs = crud.get_all_song_prefs()
+		artist_prefs = crud.get_user_artist_prefs(user.user_id)
+		song_prefs = crud.get_user_song_prefs(user.user_id)
 		return render_template('user_profile.html', user=user, artist_prefs=artist_prefs,
 			song_prefs=song_prefs)
 			## here you would pass in a  jsnonified dict. all the info for this user. make dict with that in it
