@@ -42,10 +42,15 @@ $('#view-prof').on('click', () => {
 	// show name, email, songs
 	$.get('/api/profile', (response) => {
 		console.log(response);
-		// $('#name').html(`Name: ${response.fname} ${response.lname}`);
-		// $('#name').show();
-		// $('#email').html(`Email: ${response.email}`);
-		// $('#email').show();
+		$('#name').html(`Name: ${response.user.fname} ${response.user.lname}`);
+		$('#name').show();
+		$('#email').html(`Email: ${response.user.email}`);
+		$('#email').show();
+		$('#fav-songs').html(`Fave Songs`);
+		$('#fav-songs').show();
+		for (const item of Object.values(response.song_pref)) {
+			$('#fav-songs').append(`<ul>${item.song_title}</ul>`);
+		}
 
 
 	});
