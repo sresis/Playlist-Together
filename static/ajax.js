@@ -8,6 +8,7 @@ $('#view-users').on('click', () => {
 	$('#name').hide();
 	$('#email').hide();
 	$('#fav-songs').hide();
+	$('#fav-artists').hide();
 
 	$.get('/api/users', (response) => {
 
@@ -47,10 +48,17 @@ $('#view-prof').on('click', () => {
 		$('#name').show();
 		$('#email').html(`Email: ${response.user.email}`);
 		$('#email').show();
+		// add all fave songs
 		$('#fav-songs').html(`Fave Songs`);
 		$('#fav-songs').show();
 		for (const item of Object.values(response.song_pref)) {
 			$('#fav-songs').append(`<ul>${item.song_title}</ul>`);
+		}
+		// add all fave artists
+		$('#fav-artists').html(`Fave Artists`);
+		$('#fav-artists').show();
+		for (const item of Object.values(response.artist_pref)) {
+			$('#fav-artists').append(`<ul>${item.artist_name}</ul>`);	
 		}
 
 
