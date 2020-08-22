@@ -116,6 +116,16 @@ class Song_Pref(db.Model):
     user = db.relationship('User', backref='song_prefs')
     song = db.relationship('Song', backref='song_prefs')
 
+    def as_dict(self):
+        return {
+        'song_pref_id': self.song_pref_id,
+        'song_title': self.song_title,
+        'user_id': self.user_id,
+        'song_uri': self.song_uri,
+        'song_id': self.song_id
+
+        }
+
 
     def __repr__(self):
         return f'<song_pref_id={self.song_pref_id} song_title={self.song_title}>'

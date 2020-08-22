@@ -40,11 +40,12 @@ $('#view-prof').on('click', () => {
 	$('#view-prof').attr('disabled', true);
 
 	// show name, email, songs
-	$.get('api/profile', (response) => {
-		$('#name').html(`Name: ${response.fname} ${response.lname}`);
-		$('#name').show();
-		$('#email').html(`Email: ${response.email}`);
-		$('#email').show();
+	$.get('/api/profile', (response) => {
+		console.log(response);
+		// $('#name').html(`Name: ${response.fname} ${response.lname}`);
+		// $('#name').show();
+		// $('#email').html(`Email: ${response.email}`);
+		// $('#email').show();
 
 
 	});

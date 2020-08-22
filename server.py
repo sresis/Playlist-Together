@@ -2,7 +2,7 @@
 
 from flask import (Flask, render_template, request, flash, session, jsonify,
                    redirect)
-from model import connect_to_db, User
+from model import connect_to_db, User, Song_Pref
 import crud ##comment out if you want to -i into crud.py
 import api
 
@@ -95,7 +95,24 @@ def show_user_prof():
     #jsonifies user info
     json_user = User.as_dict(user)
 
-    return jsonify(json_user)
+    # gets the user song prefs and jsonifies
+    user_song_prefs = crud.get_user_song_prefs(user_id)
+    # goes through all user song prefs and adds to list
+    # song_list = []
+    song_dict = []
+    for song in user_song_prefs:
+    	x = Song_Pref.as_dict(song)
+    	song_dict.append(x)
+
+
+
+    combined_dict = {
+    'user': json_user,
+    'song_pref': song_dict
+    }
+    
+
+    return jsonify(combined_dict)
 
 
 
