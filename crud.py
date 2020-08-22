@@ -129,7 +129,16 @@ def get_all_song_recs():
 
     return Song_Rec.query.all()
 
+def jsonify_user_info(user):
+	"""pass in the users table and then returns dict of their info """
+	user_dict = {
+	'user_id': {'xx'},
+	'user_email': {'xx'},
+	'f_name': {'hiii'},
+	'lname': {'dfsg'}
+	}
 
+	return user_dict
 
 def return_users_artist_prefs(user_id):
 	"""Returns all artist prefs for a user in a list format."""

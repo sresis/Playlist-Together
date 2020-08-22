@@ -15,7 +15,7 @@ os.system('createdb playlist_combiner')
 
 model.connect_to_db(server.app)
 model.db.create_all()
-
+## encrpyt the passwords you are storing
 first_names = ['Mike', 'Melanie', 'Adam', 'Eve', 'Jenny', 'Jason', 'Mitch', 'Yolanda', 'Avery', 'Pat', 'Meg', 'Luke']
 last_names = ['Roberts', 'Lee', 'Garcia', 'Smith', 'Jones', 'Yee', 'Washington', 'Williams', 'Lopez', 'Kirk', 'Henry']
 passwords = ['testing123', 'cantguessit12', 'random321']

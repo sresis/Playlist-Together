@@ -2,7 +2,7 @@
 
 from flask import (Flask, render_template, request, flash, session, jsonify,
                    redirect)
-from model import connect_to_db
+from model import connect_to_db, User
 import crud ##comment out if you want to -i into crud.py
 import api
 
@@ -19,7 +19,13 @@ def homepage():
 
 	
 
-	return render_template('homepage.html')
+	return render_template('index.html')
+	#return render_template('homepage.html')
+
+# @app.route('api/create_prof', methods=['POST'])
+# def create_profile():
+# 	"""returns the results from create profile form."""
+
 
 
 @app.route('/users')
@@ -27,6 +33,7 @@ def all_users():
     """View all users."""
 
     users = crud.get_users()
+
 
     return render_template('all_users.html', users=users)
 
@@ -62,15 +69,18 @@ def get_users():
 
     # gets all users and jsonifies it
 
-    top_posts = [
-    {"id": 93, "title": "why kiwis are the best fruit, part 9", "body": " body text for p1"},
-    {"id": 783, "title": "typsetting in the 19th century", "body": " body text for p2"},
-    {"id": 1383, "title": "debugging, a lifes tale", "body": " body text for p3"}
-    ]
+    user = crud.get_user_by_id(1)
+
+    users = crud.get_users()
+    users_dict = []
+    for user in users:
+    	x = User.as_dict(user)
+    	users_dict.append(x)
+
 
     #users = crud.get_users()
 
-    return jsonify(top_posts)
+    return jsonify(users_dict)
 
 
 
@@ -94,8 +104,9 @@ def login_user():
 		flash('you are logged in!')
 		artist_prefs = crud.get_user_artist_prefs(user.user_id)
 		song_prefs = crud.get_user_song_prefs(user.user_id)
+		x = user.as_dict
 		return render_template('user_profile.html', user=user, artist_prefs=artist_prefs,
-			song_prefs=song_prefs)
+			song_prefs=song_prefs, x=x)
 			## here you would pass in a  jsnonified dict. all the info for this user. make dict with that in it
 			# parse json string. use info from that to build out components
 			#maybe do request.__.get
@@ -116,7 +127,7 @@ def show_user(user_id):
     artist_prefs = crud.get_user_artist_prefs(user_id)
     song_prefs = crud.get_user_song_prefs(user_id)
     rec_tracks = crud.get_recommended_tracks(user_id)
-    x = crud.get_all_song_recs()
+
     rec_names = []
     for track in rec_tracks:
     	text_format = api.get_song_title(track)
@@ -135,8 +146,13 @@ def show_user(user_id):
     stdev = crud.get_stdev(song_attributes)
 
     similar_songs = crud.get_all_similar_songs(session['user'], user_id, 10)
+    	# sQLAlchemy objects is not JSON serializable
+    	#potentially JSON.dumps?
+    	#maybe look for a library
 
+    	# start with one route to turn into JSOn and modify on the front end
 
+## dict of dictorionaries that I am
     return render_template('user_details.html', user=user, artist_prefs=artist_prefs, song_prefs=song_prefs,
     	rec_names=rec_names, shared_prefs=shared_prefs,
     	song_attributes=song_attributes, averages=averages, stdev=stdev, 
@@ -172,6 +188,8 @@ def add_users_prefs():
 	artist_prefs = crud.get_all_artist_prefs()
 	song_prefs = crud.get_all_song_prefs()
 	song_recs = crud.get_all_song_recs()
+
+
 	return render_template('updated_profile.html', artist_prefs=artist_prefs, 
 		song_prefs=song_prefs, user=user, song_recs=song_recs)
 

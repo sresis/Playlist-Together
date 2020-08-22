@@ -8,7 +8,7 @@
 	<ul class="main">
 		<li>Name: {{ user.fname }} {{ user.lname }}
 		<li>Email: {{ user.email }}</li>
-		<li>Favorite Songs: </li>
+		<li>Favorite Songs:  </li>
 		<li>Favorite Artists: </li>
 		<ul class="subcat">
 			{% for artist in artist_prefs %}
@@ -19,6 +19,7 @@
 			
 		</ul>
 		<li>Recommended Songs: </li>
+
 		<ul class="subcat">
 			{% for song in song_prefs %}
 				{% if song.user_id == user.user_id %}

@@ -19,6 +19,16 @@ class User(db.Model):
     lname = db.Column(db.String(50))
     password = db.Column(db.String(50))
 
+
+    def as_dict(self):
+        return {
+        'user_id': self.user_id,
+        'email': self.email,
+        'fname': self.fname,
+        'lname': self.lname
+
+        }
+
     def __repr__(self):
         return f'<user_id={self.user_id} email={self.email} fname={self.fname}>'
 
