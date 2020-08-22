@@ -7,6 +7,7 @@ $('#view-users').on('click', () => {
 	// hide the other sections
 	$('#name').hide();
 	$('#email').hide();
+	$('#fav-songs').hide();
 
 	$.get('/api/users', (response) => {
 
@@ -39,7 +40,7 @@ $('#view-prof').on('click', () => {
 	// disable button 
 	$('#view-prof').attr('disabled', true);
 
-	// show name, email, songs
+	// show name, email, fave songs, fave artists
 	$.get('/api/profile', (response) => {
 		console.log(response);
 		$('#name').html(`Name: ${response.user.fname} ${response.user.lname}`);

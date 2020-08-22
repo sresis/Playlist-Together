@@ -142,6 +142,14 @@ class Artist_Pref(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'))
     artist_uri = db.Column(db.String())
 
+    def as_dict(self):
+        return {
+        'artist_pref_id': self.artist_pref_id,
+        'artist_name': self.artist_name,
+        'artist_uri': self.artist_uri,
+
+        }
+
     user = db.relationship('User', backref='artist_prefs')
 
 
