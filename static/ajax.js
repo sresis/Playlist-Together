@@ -3,6 +3,11 @@
 // how to remove and only show some items ... div class container
 
 $('#view-users').on('click', () => {
+	
+	// hide the other sections
+	$('#name').hide();
+	$('#email').hide();
+
 	$.get('/api/users', (response) => {
 
 		// disable button 
@@ -23,3 +28,28 @@ $('#view-users').on('click', () => {
 
 
 });
+
+$('#view-prof').on('click', () => {
+
+	// clear existing info in here
+
+	// hide the other sections
+	$('#users-container').hide();
+
+	// disable button 
+	$('#view-prof').attr('disabled', true);
+
+	// show name, email, songs
+	$.get('api/profile', (response) => {
+		$('#name').html(`Name: ${response.fname} ${response.lname}`);
+		$('#name').show();
+		$('#email').html(`Email: ${response.email}`);
+		$('#email').show();
+
+
+	});
+
+	// show user details
+	
+});
+

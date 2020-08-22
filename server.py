@@ -83,6 +83,21 @@ def get_users():
     return jsonify(users_dict)
 
 
+@app.route('/api/profile')
+def show_user_prof():
+    """Lets logged in user view their profile."""
+
+    # gets the user info and jsonifies it 
+
+    user_id = session['user']
+    user = crud.get_user_by_id(user_id)
+
+    #jsonifies user info
+    json_user = User.as_dict(user)
+
+    return jsonify(json_user)
+
+
 
 @app.route('/profile', methods=['POST'])
 def login_user():
