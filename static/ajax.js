@@ -11,6 +11,7 @@ $('#view-users').on('click', () => {
 	$('#fav-songs').hide();
 	$('#fav-artists').hide();
 	$('#user-info-container').hide();
+	$('#song-rec').html('');
 
 	$.get('/api/users', (response) => {
 		$('#users-container').html(`<h3>All Users</h3>`);
@@ -68,6 +69,7 @@ $('#view-prof').on('click', () => {
 	// hide the other sections
 	$('#users-container').hide();
 	$('#user-info-container').hide();
+	$('#song-rec').html('');
 
 	// disable button 
 	$('#view-prof').attr('disabled', true);
@@ -110,19 +112,21 @@ $('#view-prof').on('click', () => {
 $('#view-shared-playlist').on('click', () => {
 	$('#login container').hide();
 	$('#song-rec').html('');
+
+	// gets the email to be passed in
 	var user_info = $('#user-email').text();
 	var user_email = user_info.substring(7, user_info.length);
-	const user_id = 2;
+	
 	
 	// some variable that refers to user id. pass in the variable
-	$.post('/api/shared_playlist/'+ user_email, (response) => {
-		console.log(user_email)
+	$.post(`/api/shared_playlist/${user_email}`, (response) => {
 
 		for (const item of response['shared songs']) {
 		$('#song-rec').append(`<li>${item}</li>`);
 		}
 
 	});
+
 
 });
 
@@ -131,12 +135,16 @@ $('#login').on('submit', (evt) => {
 	evt.preventDefault();
 	console.log('hiiiii');
 
+
+
+
 	// clear existing info in here
 
 	// hide the other sections
 
 
 	// disable button 
+
 
 
 	// show name, email, fave songs, fave artists
@@ -165,4 +173,10 @@ $('#login').on('submit', (evt) => {
 	// show user details
 	
 });
+$('#logout').on('click', (evt) => {
+	evt.preventDefault();
+	
+	console.log('hello');
+});
+
 

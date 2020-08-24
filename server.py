@@ -178,6 +178,7 @@ def logout():
 	"""enables user to logout."""
 	if 'user_id' in session:
 		session.pop('username', None)
+		alert('you have logged out!')
 	return jsonify({'nessage': 'you have logged out'})
 
 @app.route('/profile', methods=['POST'])
