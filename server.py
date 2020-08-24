@@ -210,31 +210,34 @@ def login_user():
 		flash('incorrect login.')
 		return redirect('/')
 
-@app.route('/api/shared_playlist')
-def show_shared_songs():
+@app.route('/api/shared_playlist/<user_email>', methods=['POST'])
+def show_shared_songs(user_email):
     """Show shared playlist for current user and selected user."""
     ## how to feed in user id here
     ## probably need to get and post
-
-
+   
     session_user = session['user']
+    ## get the user id
+    user = crud.get_user_by_email(user_email)
+    user_id = user.user_id
+
 
 
     # gets attributes of user's recommended tracks
 
-    shared_prefs = crud.get_shared_tracks(2, 3)
-    song_attributes = crud.get_song_attributes(2)
+    shared_prefs = crud.get_shared_tracks(session_user, user_id)
+    song_attributes = crud.get_song_attributes(session_user)
 
     averages = crud.get_average(song_attributes)
     stdev = crud.get_stdev(song_attributes)
 
-    similar_songs = crud.get_all_similar_songs(2, 3, 10)
+    similar_songs = crud.get_all_similar_songs(session_user, user_id, 10)
 
 
 
 
     return jsonify({'shared songs': similar_songs})
-
+## separate route to let them share it
 ## only one HTML template with Root component
 # server routes would no longer render templates. they would all be returning JSON
 # be processing this data in javascript

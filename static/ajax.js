@@ -13,7 +13,7 @@ $('#view-users').on('click', () => {
 	$('#user-info-container').hide();
 
 	$.get('/api/users', (response) => {
-		$('#users-container').html('');
+		$('#users-container').html(`<h3>All Users</h3>`);
 
 		// disable button 
 		$('#view-users').attr('disabled', true);
@@ -24,12 +24,15 @@ $('#view-users').on('click', () => {
 		for (const item of Object.values(response)) {
 			$('#users-container').append
 			(`<li id='${item.email}'><a id='${item.user_id}'>${item.email}</li></a>`);
-			var id = item.user_id
+			// could set class and make event handler on the class
 
 			// upon clicking link, show user name and email
+			// called as a result of click on user id
+			// put ID somewhere in HTML so you can access on 
 			$('#' + item.user_id).on('click', () => {
 				$('#users-container').hide();
 				$('#user-info-container').show();
+				$('user-info-container').html(`<h3>User Info</h3>`);
 
 				// shows name, email, songs
 				$('#user-name').html('Name: ' + item.fname + ' ' + item.lname);
@@ -43,6 +46,8 @@ $('#view-users').on('click', () => {
 			});
 		}
 		// how to make sure that it doesn't keep adding to list if you click
+		// have route take in user ID so you can get whatever user
+		// make it ID on a button
 
 		// show the users list
 		$('#users-container').show();	
@@ -94,10 +99,25 @@ $('#view-prof').on('click', () => {
 	
 });
 
+// shows the shared playlist when you click on button.
+// make user id accessable 
+// make it the users id
+// can post user ID as request.args.get (on the server side) 
+// could template id into route /profile/<user_id>
+// template in the user id . can template in values
+// try to use event object
+// define functions to call into for loop
 $('#view-shared-playlist').on('click', () => {
 	$('#login container').hide();
 	$('#song-rec').html('');
-	$.get('/api/shared_playlist', (response) => {
+	var user_info = $('#user-email').text();
+	var user_email = user_info.substring(7, user_info.length);
+	const user_id = 2;
+	
+	// some variable that refers to user id. pass in the variable
+	$.post('/api/shared_playlist/'+ user_email, (response) => {
+		console.log(user_email)
+
 		for (const item of response['shared songs']) {
 		$('#song-rec').append(`<li>${item}</li>`);
 		}
