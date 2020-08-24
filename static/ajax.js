@@ -93,6 +93,20 @@ $('#view-prof').on('click', () => {
 	//show user details
 	
 });
+
+$('#view-shared-playlist').on('click', () => {
+	$('#login container').hide();
+	$('#song-rec').html('');
+	$.get('/api/shared_playlist', (response) => {
+		for (const item of response['shared songs']) {
+		$('#song-rec').append(`<li>${item}</li>`);
+		}
+
+	});
+
+});
+
+
 $('#login').on('submit', (evt) => {
 	evt.preventDefault();
 	console.log('hiiiii');
