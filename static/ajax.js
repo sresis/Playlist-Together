@@ -9,6 +9,7 @@ $('#view-users').on('click', () => {
 	$('#email').hide();
 	$('#fav-songs').hide();
 	$('#fav-artists').hide();
+	$('#user-info-container').hide();
 
 	$.get('/api/users', (response) => {
 
@@ -20,10 +21,18 @@ $('#view-users').on('click', () => {
 		const info_array = [];
 		for (const item of Object.values(response)) {
 			$('#users-container').append
-			(`<li><a id='${item.user_id}'>${item.email}</li></a>`);
+			(`<li id='${item.email}'><a id='${item.user_id}'>${item.email}</li></a>`);
 			var id = item.user_id
+
+			// upon clicking link, show user name and email
 			$('#' + item.user_id).on('click', () => {
-				alert(item.user_id);
+				$('#users-container').hide();
+				$('#user-info-container').show();
+				// shows name, email, songs
+				$('#user-name').html('Name: ' + item.fname + ' ' + item.lname);
+				$('#user-email').html('Email: ' + item.email);
+				// then show the user details
+				// hide the rest of the items
 			});
 		}
 		// how to make sure that it doesn't keep adding to list if you click
@@ -46,6 +55,7 @@ $('#view-prof').on('click', () => {
 
 	// hide the other sections
 	$('#users-container').hide();
+	$('#user-info-container').hide();
 
 	// disable button 
 	$('#view-prof').attr('disabled', true);
