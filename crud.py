@@ -129,16 +129,6 @@ def get_all_song_recs():
 
     return Song_Rec.query.all()
 
-def jsonify_user_info(user):
-	"""pass in the users table and then returns dict of their info """
-	user_dict = {
-	'user_id': {'xx'},
-	'user_email': {'xx'},
-	'f_name': {'hiii'},
-	'lname': {'dfsg'}
-	}
-
-	return user_dict
 
 def return_users_artist_prefs(user_id):
 	"""Returns all artist prefs for a user in a list format."""
@@ -162,28 +152,31 @@ def get_recommended_tracks(user_id):
 	"""Makes recommended tracks for a user given Spotify's ability to generate based on 
 	up to 5 seeds."""
 
-	# number of songs and artists to be included as seeds
-	num_songs = choice([2, 3])
-	num_artists = 5 - num_songs
+	# run this 5 times
+	while i < 5:
+		# number of songs and artists to be included as seeds
+		num_songs = choice([2, 3])
+		num_artists = 5 - num_songs
 
-	# chooses random songs and artists to be used in the Spotify API query
-	user_artists = return_users_artist_prefs(user_id)
-	user_tracks = return_users_track_prefs(user_id)
-	artist_list = sample(user_artists, num_artists)
-	track_list = sample(user_tracks, num_songs)
+		# chooses random songs and artists to be used in the Spotify API query
+		user_artists = return_users_artist_prefs(user_id)
+		user_tracks = return_users_track_prefs(user_id)
+		artist_list = sample(user_artists, num_artists)
+		track_list = sample(user_tracks, num_songs)
 
 
-	# get IDs for each track in track list
-	track_ids_list = []
-	for track in track_list:
-		track_id = api.get_song_id(track)
-		track_ids_list.append(track_id)
+		# get IDs for each track in track list
+		track_ids_list = []
+		for track in track_list:
+			track_id = api.get_song_id(track)
+			track_ids_list.append(track_id)
 
-	# gets ID for each artist in artist list
-	artist_ids_list = []
-	for artist in artist_list:
-		artist_id = api.get_artist_id(artist)
-		artist_ids_list.append(artist_id)
+		# gets ID for each artist in artist list
+		artist_ids_list = []
+		for artist in artist_list:
+			artist_id = api.get_artist_id(artist)
+			artist_ids_list.append(artist_id)
+		i += 1
 
 	recommended_tracks = api.get_recs_based_on_seed(track_ids_list, artist_ids_list)
 
