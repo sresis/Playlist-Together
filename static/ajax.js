@@ -3,6 +3,7 @@
 // how to remove and only show some items ... div class container
 
 $('#view-users').on('click', () => {
+
 	
 	// hide the other sections
 	$('#name').hide();
@@ -12,6 +13,7 @@ $('#view-users').on('click', () => {
 	$('#user-info-container').hide();
 
 	$.get('/api/users', (response) => {
+		$('#users-container').html('');
 
 		// disable button 
 		$('#view-users').attr('disabled', true);
@@ -28,11 +30,16 @@ $('#view-users').on('click', () => {
 			$('#' + item.user_id).on('click', () => {
 				$('#users-container').hide();
 				$('#user-info-container').show();
+
 				// shows name, email, songs
 				$('#user-name').html('Name: ' + item.fname + ' ' + item.lname);
 				$('#user-email').html('Email: ' + item.email);
 				// then show the user details
 				// hide the rest of the items
+
+				$('#view-users').attr('disabled', false);
+			
+				// how to make it not show it again
 			});
 		}
 		// how to make sure that it doesn't keep adding to list if you click
