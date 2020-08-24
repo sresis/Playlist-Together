@@ -20,16 +20,25 @@ $('#view-users').on('click', () => {
 		const info_array = [];
 		for (const item of Object.values(response)) {
 			$('#users-container').append
-			(`<li><a id='${item.user_id}' href='/users/${item.user_id}'>${item.email}</li></a>`);
+			(`<li><a id='${item.user_id}'>${item.email}</li></a>`);
+			var id = item.user_id
+			$('#' + item.user_id).on('click', () => {
+				alert(item.user_id);
+			});
 		}
 		// how to make sure that it doesn't keep adding to list if you click
 
 		// show the users list
-		$('#users-container').show();		
+		$('#users-container').show();	
+
 	});
 
 
 });
+
+
+
+
 
 $('#view-prof').on('click', () => {
 
@@ -67,7 +76,8 @@ $('#view-prof').on('click', () => {
 	//show user details
 	
 });
-$('#login').on('submit', () => {
+$('#login').on('submit', (evt) => {
+	evt.preventDefault();
 	console.log('hiiiii');
 
 	// clear existing info in here
