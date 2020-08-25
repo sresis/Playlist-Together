@@ -51,6 +51,9 @@ def create_recommended_track(user_id, song_uri, song_title, song_id):
 	"""Creates a recommended track for the user and adds it to the database."""
 	# to implement
 
+
+	# makes sure it isn't in there
+
 	rec_track = Song_Rec(user_id=user_id, song_uri=song_uri, song_title=song_title, song_id=song_id)
 
 	db.session.add(rec_track)
@@ -66,16 +69,32 @@ def create_song(song_title, song_uri, tempo, valence, danceability,
 		danceability=danceability, energy=energy, loudness=loudness, 
 		acousticness=acousticness, speechiness=speechiness, song_artist=song_artist)
 
-	db.session.add(song)
-	db.session.commit()
+	# makes sure the song isn't already in the db
+	if get_song_id(song_uri):
 
-	return song 
+		db.session.add(song)
+		db.session.commit()
+
+		return song 
+	else:
+		return None
 
 def get_song_id(uri):
 	"""Returns the song ID for a given URI."""
 
 
 	song = Song.query.filter(Song.song_uri == uri).first()
+	return_value = song.song_id
+
+	return return_value
+
+
+def get_song_rec_id(uri, user_id):
+	"""Returns the song rec ID for a given URI and user ID."""
+
+
+	song = Song_Rec.query.filter_by(Song_Rec.song_uri.like(uri), 
+		Song_Rec.user_id.like(user_id)).first()
 	return_value = song.song_id
 
 	return return_value
@@ -151,9 +170,16 @@ def return_users_track_prefs(user_id):
 def get_recommended_tracks(user_id):
 	"""Makes recommended tracks for a user given Spotify's ability to generate based on 
 	up to 5 seeds."""
-
+	i = 0
 	# run this 5 times
+	rec_list = []
 	while i < 5:
+
+		#reset each loop
+		track_ids_list = []
+		artist_ids_list = []
+		artist_list = []
+		track_list = []
 		# number of songs and artists to be included as seeds
 		num_songs = choice([2, 3])
 		num_artists = 5 - num_songs
@@ -163,6 +189,7 @@ def get_recommended_tracks(user_id):
 		user_tracks = return_users_track_prefs(user_id)
 		artist_list = sample(user_artists, num_artists)
 		track_list = sample(user_tracks, num_songs)
+		recommended_tracks = []
 
 
 		# get IDs for each track in track list
@@ -176,13 +203,18 @@ def get_recommended_tracks(user_id):
 		for artist in artist_list:
 			artist_id = api.get_artist_id(artist)
 			artist_ids_list.append(artist_id)
+		recommended_tracks = api.get_recs_based_on_seed(track_ids_list, artist_ids_list)
+		for item in recommended_tracks:
+			rec_list.append(item)
 		i += 1
+	print(rec_list)
 
-	recommended_tracks = api.get_recs_based_on_seed(track_ids_list, artist_ids_list)
+
+	
 
 
 	# returns songs in ID format
-	return recommended_tracks
+	return rec_list
 
 
 
@@ -299,7 +331,7 @@ def get_similar_songs(user_1, user_2, song_count_max):
 	"""Gets similar songs from user_2 based on user_1 averages."""
 
 
-
+	## make it so it doesn't sort everything
 	# pulls attributes for each of the user's songs
 	user_1_attributes = get_song_attributes(user_1)
 
@@ -361,8 +393,13 @@ def get_similar_songs(user_1, user_2, song_count_max):
 	matching_songs = []
 	i = 0
 	while i < song_count_max:
-		matching_songs.append(sorted_list[i])
-		i += 1
+		if sorted_list[i] not in matching_songs:
+			print(sorted_list[i])
+			matching_songs.append(sorted_list[i])
+			i += 1
+		else:
+			song_count_max += 1
+			i += 1
 
 	return matching_songs
 
@@ -378,28 +415,25 @@ def get_all_similar_songs(user_1, user_2, target_songs):
 	for item in list_1:
 		shared_list.append(item)
 
+
 	for item in list_2:
 		shared_list.append(item)
 	for item in list_3:
 		shared_list.append(item)
 
-	# create instance of Playlist class
-	new_playlist = playlist.create_playlist()
 
-	# creates playlist user instances
-	playlist_user.create_playlist_user(user_1, new_playlist.playlist_id)
-	playlist_user.create_playlist_user(user_2, new_playlist.playlist_id)
+
+
 
 	#adds shared songs to playlist
 	song_titles = []
 	for item in shared_list:
+		print('xx')
+		print(item[0])
+		song_titles.append(item[2])
 
-		# adds playlist song with song ID and playlist ID as arguments
-		playlist_song.create_playlist_song(item[2], new_playlist.playlist_id)
-		song_titles.append(item[0])
 
-
-	return song_titles
+	return shared_list
 
 
 
