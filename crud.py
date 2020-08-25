@@ -329,9 +329,8 @@ def get_shared_tracks(user_1, user_2):
 	shared_songs = []
 	for item1 in user_1_songs:
 		for item2 in user_2_songs:
-			if item1.song_uri == item2.song_uri:
-				name = api.get_song_title(item1.song_uri)
-				shared_songs.append(name)
+			if item1.song_id == item2.song_id:
+				shared_songs.append(item1.song_id)
 					# add to playlist songs db
 
 	return shared_songs
@@ -423,11 +422,11 @@ def get_all_similar_songs(user_1, user_2, target_songs):
 
 	shared_list = []
 	for item in list_1:
-		shared_list.append(item)
+		shared_list.append(item[2])
 
 
 	for item in list_2:
-		shared_list.append(item)
+		shared_list.append(item[2])
 	for item in list_3:
 		shared_list.append(item)
 
@@ -436,16 +435,14 @@ def get_all_similar_songs(user_1, user_2, target_songs):
 
 
 	#adds shared songs to playlist
-	song_titles = []
+	song_uris = []
 	for item in shared_list:
-		if item in list_3:
-			song_titles.append(item)
-		else:
-			print(item[0])
-			song_titles.append(item[0])
 
+		song_uris.append(item)
+	
 
-	return song_titles
+	# return the song_ids and then do something with the total
+	return song_uris
 
 
 

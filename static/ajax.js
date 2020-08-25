@@ -129,6 +129,18 @@ $('#view-shared-playlist').on('click', () => {
 
 
 });
+$('#add-song-pref').on('click', (evt) => {
+	evt.preventDefault();
+	$('#name').hide();
+	$('#email').hide();
+	$('#fav-songs').hide();
+	$('#fav-artists').hide();
+	$('#user-info-container').hide();
+	$('#song-rec').html('');
+	$('#login').hide();
+	$('#login-header').hide();
+	alert('hello');
+});
 
 
 $('#login').on('submit', (evt) => {
