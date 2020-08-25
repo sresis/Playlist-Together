@@ -55,10 +55,12 @@ def create_recommended_track(user_id, song_uri, song_title, song_id):
 	# makes sure it isn't in there
 
 	rec_track = Song_Rec(user_id=user_id, song_uri=song_uri, song_title=song_title, song_id=song_id)
-
-	db.session.add(rec_track)
-	db.session.commit()
-	return rec_track
+	if get_song_rec_id(song_uri, user_id) == None:
+		db.session.add(rec_track)
+		db.session.commit()
+		return rec_track
+	else:
+		return None
 
 def create_song(song_title, song_uri, tempo, valence, danceability, 
 	energy, loudness, acousticness, speechiness, song_artist):
@@ -92,6 +94,19 @@ def get_song_id(uri):
 
 
 
+def get_song_rec_id(uri, user_id):
+	"""Returns the song rec ID for a given URI and user ID."""
+
+
+	song = Song_Rec.query.filter(Song_Rec.song_uri==uri, 
+		Song_Rec.user_id==user_id).first()
+	
+
+	if song:
+		return song.song_rec_id
+
+	else:
+		return None
 
 
 def get_users():
@@ -165,7 +180,7 @@ def get_recommended_tracks(user_id):
 	"""Makes recommended tracks for a user given Spotify's ability to generate based on 
 	up to 5 seeds."""
 	i = 0
-	# run this 5 times
+	# run this 2 times
 	rec_list = []
 	while i < 2:
 
@@ -314,8 +329,8 @@ def get_shared_tracks(user_1, user_2):
 	shared_songs = []
 	for item1 in user_1_songs:
 		for item2 in user_2_songs:
-			if item1 == item2 and item1 not in shared_songs:
-				name = api.get_song_title(item1)
+			if item1.song_uri == item2.song_uri:
+				name = api.get_song_title(item1.song_uri)
 				shared_songs.append(name)
 					# add to playlist songs db
 
@@ -404,6 +419,7 @@ def get_all_similar_songs(user_1, user_2, target_songs):
 	list_2 = get_similar_songs(user_2, user_1, target_songs)
 	list_3 = get_shared_tracks(user_1, user_2)
 
+	# make sure shared songs are showing up!!
 
 	shared_list = []
 	for item in list_1:
@@ -422,12 +438,14 @@ def get_all_similar_songs(user_1, user_2, target_songs):
 	#adds shared songs to playlist
 	song_titles = []
 	for item in shared_list:
-		print('xx')
-		print(item[0])
-		song_titles.append(item[2])
+		if item in list_3:
+			song_titles.append(item)
+		else:
+			print(item[0])
+			song_titles.append(item[0])
 
 
-	return shared_list
+	return song_titles
 
 
 
