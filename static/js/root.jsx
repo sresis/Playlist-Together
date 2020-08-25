@@ -18,16 +18,20 @@ function App() {
 	              <Link to="/login">Login</Link>
 	            </li>
 	            <li>
+	              <Link to="/create-account">Create Account</Link>
+	            </li>
+	            <li>
 	              <Link to="/users">Users</Link>
 	            </li>
 	          </ul>
 	        </nav>
 
-	        {/* A <Switch> looks through its children <Route>s and
-	            renders the first one that matches the current URL. */}
 	        <Switch>
 	          <Route path="/login" component={Login}>
 	            <Login />
+	          </Route>
+	          <Route path="/create-account">
+	            <CreateAccount />
 	          </Route>
 	          <Route path="/users">
 	            <Users />
@@ -47,31 +51,55 @@ function Homepage() {
 	return <div> Welcome to my site </div>;
 }
 
-function Users() {
-	// get info from server and make components out of it
-    // get the info from the server
-    // make componenets out of it 
-    // render them 
+function CreateAccount(props) {
 
-    const [users, setUsers] = React.useState([])
-
-    React.useEffect(() => {
-    fetch('/api/users', (result) => {
-    	setUsers(result);
-    });
-}, [])
-
-
-
-
-
-		
-
-
-
-		
-
+	console.log("test");
+	return<h1>Create Account</h1>;
 }
+
+
+function Users(props) {
+
+	// formats the data so we can send it to server
+	const user_details = {'email': props.email, 'user_id': props.user_id, 
+	'fname': props.fname, 'lname': props.lname};
+
+	console.log("user prps", props);
+	const [users, setUsers] = React.useState([]);
+	React.useEffect(() => {
+		fetch('/api/users', {
+			method: 'POST',
+			body: JSON.stringify(user_details),
+			headers: {
+				'Content-Type': 'application/json'
+			},
+		})
+		.then(response => response.json())
+		.then(data => {
+			const users_array = []
+
+			for (const idx in data) {
+				users_array.push(
+						<li key={data[idx]['user_id']} id={data[idx]['user_id']}>{data[idx]['email']}</li>
+					);
+			}
+			setUsers(users_array);
+			
+		})
+
+	}, [props.email, props.user_id, props.fname, props.lname])
+
+
+
+	return(
+		<React.Fragment>
+			<div>{users}</div>
+
+		</React.Fragment>
+		) 
+}
+
+
 function Login() {
 
 
@@ -104,19 +132,35 @@ function Login() {
 		
 		.then(res => res.json())
 		.then(data => {
-		        if (data === "correct") {
+		        if (data.status === "correct") {
 
-		            alert('correct!');
+		            alert('correct!')
+		            setLoggedIn(true);
+		        } else if(data.status === "email error") {
+
+		        	alert('Error: Email not registered');
+
 		        } else {
-		            alert('Email/Password combination is incorrect.');
-		    }
+		            alert('Error: Incorrect password');
+
+		    	}
 		});
 		}
-		// renders login form
+	// if login is successful, redirect them to ** users page**
+	if (loggedIn === true) {
+		return <Redirect to='/users' />
+	}
+
+	
+	// renders login form
 	return (
 		<form id="login-form">
 			<label>Email:</label>
-			<input type = "text" name="email" value = {email} onChange={e => setEmail(e.target.value)} ></input>
+			<input type = "text" 
+				name="email" 
+				value = {email} 
+				onChange={e => setEmail(e.target.value)} >		
+			</input>
 			<label>Password:</label>
 			<input type="text"
 					name="password"

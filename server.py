@@ -63,7 +63,7 @@ def register_user():
 	return redirect('/')
 
 
-@app.route('/api/users')
+@app.route('/api/users', methods=['POST'])
 def get_users():
     """View all users."""
 
@@ -133,8 +133,11 @@ def login():
 	# get the user based on the email
 	user = crud.get_user_by_email(email)
 
+	#adds user to session
+	
+
 	#checks if email is registered
-	if not user.email:
+	if not user:
 		return jsonify({'status': 'email error'})
 
 	#checks if password is correct
@@ -143,45 +146,9 @@ def login():
 
 	# if password/email combo is correct, return 'correct' status
 	else:
+		session['user'] = user.user_id
 		return jsonify({'status': 'correct'})
 
-	##
-
-	# gets user info based on email
-	# user = crud.get_user_by_email(email)
-	# session['user'] = []
-	# # checks if pasword in db matches form pasword
-	# if user.password == password:
-	# 	#adds user to session
-	# 	session['user'] = user.user_id
-	# 	flash('you are logged in!')
-	# 	#jsonifies user info
-	# 	json_user = User.as_dict(user)
-	# 	# gets the user song prefs and jsonifies
-	# 	user_song_prefs = crud.get_user_song_prefs(user_id)
-	# 	# goes through all user song prefs and adds to list
-	# 	song_dict = []
-	# 	for song in user_song_prefs:
-	# 		x = Song_Pref.as_dict(song)
-	# 		song_dict.append(x)
-	# 	# gets the user artist prefs and jsonifies
-	# 	user_artist_prefs = crud.get_user_artist_prefs(user_id)
-	# 	# goes through all user artist prefs and adds to list
-	# 	# song_list = []
-	# 	artist_list = []
-	# 	for artist in user_artist_prefs:
-	# 		x = Artist_Pref.as_dict(artist)
-	# 		artist_list.append(x)
-
-	# 	combined_dict = {
-	# 		'user': json_user,
-	# 		'song_pref': song_dict,
-	# 		'artist_pref': artist_list
-	# 	}
-	# 	return jsonify(combined_dict)
-
-	# else:
-	# 	flash('incorrect login.')
 		
 @app.route('/api/logout')
 
