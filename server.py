@@ -14,12 +14,12 @@ app.jinja_env.undefined = StrictUndefined
 
 
 @app.route('/')
-def homepage():
+def root():
 	"""view the homepage."""
 
 	
-
-	return render_template('index.html')
+	return render_template('root.html')
+	#return render_template('index.html')
 	#return render_template('homepage.html')
 
 # @app.route('api/create_prof', methods=['POST'])
@@ -124,13 +124,26 @@ def show_user_prof():
 
 @app.route('/api/login', methods=['POST'])
 def login():
-	## right now it only lets you log in with existing
-	#session['show_login'] == True
-	# gets email and password from form
-	email = request.form['email']
-	password = request.form['password']
-	print('xxx')
-	return jsonify({'test': 'hello'})
+	"""Enables user to log in."""
+
+	user_data = request.get_json()
+	email = user_data['email']
+	password = user_data['password']
+
+	# get the user based on the email
+	user = crud.get_user_by_email(email)
+
+	#checks if email is registered
+	if not user.email:
+		return jsonify({'status': 'email error'})
+
+	#checks if password is correct
+	elif user.password != password:
+		return jsonify({'status': 'password error'})
+
+	# if password/email combo is correct, return 'correct' status
+	else:
+		return jsonify({'status': 'correct'})
 
 	##
 

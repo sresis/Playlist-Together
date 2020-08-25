@@ -72,26 +72,64 @@ function Users() {
 		
 
 }
-function Login(props){
-	// look out for changes in the form. onChange function that is updating props to reflect current value
-	// when ready to post, bundle it into a javascript object. send it as object , one of arguments
-	return (
-	<div>
-		<p>
-			Email:
-			<input type="text" name="email"></input>
-		</p>
-		<p>
-			Password:
-			<input type="text" name="password"></input>
-		</p>
-		<p>
-			<button name="login">Login</button>
-		</p>
-	</div>
-	);
-}
+function Login() {
 
+
+	// tracks the user response for email/password
+
+	const [email, setEmail] = React.useState('');
+	const [password, setPassword] = React.useState('');
+
+	// tracks if user is logged in. Defaults to false.
+	const [loggedIn, setLoggedIn] =React.useState(false);
+
+
+	// verifies if login input is correct
+	const loginUser = (evt) => {
+		evt.preventDefault();
+
+		
+		
+		// formats the user input so we can send it to server
+		const user_input = {'email': email, 'password': password};
+
+		// validates from server
+		fetch('/api/login', {method: 'POST',
+							body: JSON.stringify(user_input),
+							credentials: 'include',
+							headers: {
+								'Content-Type': 'application/json'
+							},
+					})
+		
+		.then(res => res.json())
+		.then(data => {
+		        if (data === "correct") {
+
+		            alert('correct!');
+		        } else {
+		            alert('Email/Password combination is incorrect.');
+		    }
+		});
+		}
+		// renders login form
+	return (
+		<form id="login-form">
+			<label>Email:</label>
+			<input type = "text" name="email" value = {email} onChange={e => setEmail(e.target.value)} ></input>
+			<label>Password:</label>
+			<input type="text"
+					name="password"
+					onChange= {e => setPassword(e.target.value)}
+					value={password}>
+			</input>
+			<button id="login-button" onClick={loginUser}>Log In</button>
+
+		</form>
+
+
+		);
+	}
 
 
 
