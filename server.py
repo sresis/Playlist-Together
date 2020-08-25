@@ -69,8 +69,6 @@ def get_users():
 
     # gets all users and jsonifies it
 
-    user = crud.get_user_by_id(1)
-
     users = crud.get_users()
     users_dict = []
     for user in users:

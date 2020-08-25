@@ -58,7 +58,6 @@ def create_recommended_track(user_id, song_uri, song_title, song_id):
 
 	db.session.add(rec_track)
 	db.session.commit()
-
 	return rec_track
 
 def create_song(song_title, song_uri, tempo, valence, danceability, 
@@ -70,7 +69,7 @@ def create_song(song_title, song_uri, tempo, valence, danceability,
 		acousticness=acousticness, speechiness=speechiness, song_artist=song_artist)
 
 	# makes sure the song isn't already in the db
-	if get_song_id(song_uri):
+	if get_song_id(song_uri) == None:
 
 		db.session.add(song)
 		db.session.commit()
@@ -84,20 +83,15 @@ def get_song_id(uri):
 
 
 	song = Song.query.filter(Song.song_uri == uri).first()
-	return_value = song.song_id
+	if song:
+		return song.song_id
+	else:
+		return None
 
-	return return_value
+	
 
 
-def get_song_rec_id(uri, user_id):
-	"""Returns the song rec ID for a given URI and user ID."""
 
-
-	song = Song_Rec.query.filter_by(Song_Rec.song_uri.like(uri), 
-		Song_Rec.user_id.like(user_id)).first()
-	return_value = song.song_id
-
-	return return_value
 
 
 def get_users():
@@ -173,7 +167,7 @@ def get_recommended_tracks(user_id):
 	i = 0
 	# run this 5 times
 	rec_list = []
-	while i < 5:
+	while i < 2:
 
 		#reset each loop
 		track_ids_list = []
