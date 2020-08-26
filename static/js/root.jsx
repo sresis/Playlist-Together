@@ -128,10 +128,12 @@ function CreateAccount(props) {
 
 function YourProfile(props) {
 	// return their info
-	const profile_info = {'user': props.user, 'song_pref': props.song_pref }
+	const profile_info = {'user': props.user, 'song_pref': props.song_pref,
+						'artist_pref': props.artist_pref}
 
-	// stores the current user details (displayed in HTMl)
+	// stores the current user details (to be displayed in HTMl)
 	const[favSongs, setFavSongs] = React.useState([]);
+	const[favArtists, setFavArtists] = React.useState([]);
 
 	React.useEffect(() => {
 		fetch('/api/profile', {
@@ -143,24 +145,38 @@ function YourProfile(props) {
 		})
 		.then(response => response.json())
 		.then(data => {
+			// arrays to store the song/artists prefs in HTML
 			const fav_songs = []
+			const fav_artists = []
+
+			// get the song pref and artist pref data
 			const song_prefs = data.song_pref;
+			const artist_prefs = data.artist_pref;
+
 			for (const item of song_prefs) {
 				fav_songs.push(
 					<li key={item.song_pref_id}>{item.song_title}</li>
 				);
 			}
+			for (const item of artist_prefs) {
+				fav_artists.push(
+					<li key={item.artist_pref_id}>{item.artist_name}</li>
+				);
+			}
 			setFavSongs(fav_songs);
+			setFavArtists(fav_artists);
 			
 		})
 		// reset to avoid infinite loop
-	}, [props.user, props.song_pref])
+	}, [props.user, props.song_pref, props.artist_pref])
 
 	return(
 		<React.Fragment>
 			<h2>Your Profile</h2>
 			<h4>Favorite Songs</h4>
 			<div>{favSongs}</div>
+			<h4>Favorite Artists</h4>
+			<div>{favArtists}</div>
 
 		</React.Fragment>
 		) 
