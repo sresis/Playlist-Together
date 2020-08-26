@@ -178,7 +178,7 @@ def logout():
 	if 'user_id' in session:
 		session.pop('username', None)
 		alert('you have logged out!')
-	return jsonify({'nessage': 'you have logged out'})
+	return jsonify({'message': 'you have logged out'})
 
 @app.route('/profile', methods=['POST'])
 def login_user():
@@ -291,6 +291,22 @@ def show_prefs_form():
 	user = crud.get_user_by_id(user_id)
 
 	return render_template('add_prefs.html')
+
+@app.route('/api/add_song_pref', methods=['POST'])
+def add_song_pref_1():
+	"""enables user to add a song preference."""
+
+	user_id = session['user']
+
+	# gets song URI from title in form
+	user_data = request.get_json()
+	song_title = user_data['songPref']
+	song_uri = api.get_song_id(song_title)
+
+	#adds song pref to db
+	song_pref = crud.create_song_pref(song_title, user_id, song_uri)
+
+	return jsonify({'status': 'song pref added'})
 
 @app.route('/profile/add_prefs', methods=['POST'])
 def add_users_prefs():
