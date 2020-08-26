@@ -61,7 +61,33 @@ def register_user():
 
 	#redirects back to homepage
 	return redirect('/')
+	
+@app.route('/api/login', methods=['POST'])
+def login():
+	"""Enables user to log in."""
 
+	user_data = request.get_json()
+	email = user_data['email']
+	password = user_data['password']
+
+	# get the user based on the email
+	user = crud.get_user_by_email(email)
+
+	#adds user to session
+	
+
+	#checks if email is registered
+	if not user:
+		return jsonify({'status': 'email error'})
+
+	#checks if password is correct
+	elif user.password != password:
+		return jsonify({'status': 'password error'})
+
+	# if password/email combo is correct, return 'correct' status
+	else:
+		session['user'] = user.user_id
+		return jsonify({'status': 'correct'})
 
 @app.route('/api/users', methods=['POST'])
 def get_users():
@@ -122,32 +148,7 @@ def show_user_prof():
 
     return jsonify(combined_dict)
 
-@app.route('/api/login', methods=['POST'])
-def login():
-	"""Enables user to log in."""
 
-	user_data = request.get_json()
-	email = user_data['email']
-	password = user_data['password']
-
-	# get the user based on the email
-	user = crud.get_user_by_email(email)
-
-	#adds user to session
-	
-
-	#checks if email is registered
-	if not user:
-		return jsonify({'status': 'email error'})
-
-	#checks if password is correct
-	elif user.password != password:
-		return jsonify({'status': 'password error'})
-
-	# if password/email combo is correct, return 'correct' status
-	else:
-		session['user'] = user.user_id
-		return jsonify({'status': 'correct'})
 
 		
 @app.route('/api/logout')

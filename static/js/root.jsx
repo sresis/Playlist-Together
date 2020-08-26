@@ -33,7 +33,7 @@ function App() {
 	          <Route path="/create-account">
 	            <CreateAccount />
 	          </Route>
-	          <Route path="/users">
+	          <Route path="/users" component={Users}>
 	            <Users />
 	          </Route>
 	          <Route path="/">
@@ -44,11 +44,9 @@ function App() {
 	    </Router>
   );
 }
-function PostListItem(props) {
-  return <li>{props.email}</li>
-}
+
 function Homepage() {
-	return <div> Welcome to my site </div>;
+	return <div> Welcome to Combined Playlist Generator! </div>;
 }
 
 function CreateAccount(props) {
@@ -60,12 +58,14 @@ function CreateAccount(props) {
 
 function Users(props) {
 
-	// formats the data so we can send it to server
+	// formats the data 
 	const user_details = {'email': props.email, 'user_id': props.user_id, 
 	'fname': props.fname, 'lname': props.lname};
 
-	console.log("user prps", props);
+	// this will store the user details (displayed in HTML)
 	const [users, setUsers] = React.useState([]);
+
+	// get the user data from server
 	React.useEffect(() => {
 		fetch('/api/users', {
 			method: 'POST',
@@ -76,23 +76,24 @@ function Users(props) {
 		})
 		.then(response => response.json())
 		.then(data => {
-			const users_array = []
+			const users_info = []
 
 			for (const idx in data) {
-				users_array.push(
+				users_info.push(
 						<li key={data[idx]['user_id']} id={data[idx]['user_id']}>{data[idx]['email']}</li>
 					);
 			}
-			setUsers(users_array);
+			setUsers(users_info);
 			
 		})
-
+		// reset to avoid infinite loop
 	}, [props.email, props.user_id, props.fname, props.lname])
 
 
 
 	return(
 		<React.Fragment>
+			<h3>All Users</h3>
 			<div>{users}</div>
 
 		</React.Fragment>
