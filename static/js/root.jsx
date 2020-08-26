@@ -30,7 +30,7 @@ function App() {
 	          <Route path="/login" component={Login}>
 	            <Login />
 	          </Route>
-	          <Route path="/create-account">
+	          <Route path="/create-account" component={CreateAccount}>
 	            <CreateAccount />
 	          </Route>
 	          <Route path="/users" component={Users}>
@@ -51,8 +51,85 @@ function Homepage() {
 
 function CreateAccount(props) {
 
-	console.log("test");
-	return<h1>Create Account</h1>;
+	// inputs for name, email, password
+	const[fname, setFname] = React.useState("");
+	const[lname, setLname] = React.useState("");
+	const[email, setEmail] = React.useState("");
+	const[password, setPassword] = React.useState("");
+
+
+	// registers user
+	const createUser = (evt) => {
+
+		evt.preventDefault();
+		const user = {"fname": fname, "lname": lname,
+					"email": email, "password": password}
+		fetch('/api/register', {
+			method: 'POST',
+			body: JSON.stringify(user),
+			headers: {
+				'Content-Type': 'application/json'
+			},
+
+		})
+		.then(res => res.json())
+		.then(data => {
+			if(data.status === 'email already exists') {
+				alert('This email is already registered.');
+			} else {
+				alert('Success! Account created');
+			}
+		})
+	}
+	
+
+
+
+
+	console.log("xoxo");
+	return(
+		<React.Fragment>
+			<form id="create-account-form">
+				<div>First Name: </div>
+				<input type="text"
+						name="fname"
+						value = {fname}
+						onChange={e => setFname(e.target.value)}>
+				</input>
+				<div>Last Name: </div>
+				<input type="text"
+						name="lname"
+						value = {lname}
+						onChange={e => setLname(e.target.value)}>
+				</input>
+				<div>Email: </div>
+				<input type="text"
+						name="email"
+						value = {email}
+						onChange={e => setEmail(e.target.value)}>
+				</input>
+				<div>Password: </div>
+				<input type="text"
+						name="password"
+						value = {password}
+						onChange={e => setPassword(e.target.value)}>
+				</input>
+				<div>
+					<button id="register-button" onClick={createUser}>
+						Create Account
+					</button>
+				</div>
+
+
+
+			</form>
+
+
+
+
+		</React.Fragment>
+
+	)
 }
 
 
@@ -117,8 +194,6 @@ function Login() {
 	const loginUser = (evt) => {
 		evt.preventDefault();
 
-		
-		
 		// formats the user input so we can send it to server
 		const user_input = {'email': email, 'password': password};
 

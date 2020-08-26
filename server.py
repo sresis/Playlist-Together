@@ -37,6 +37,26 @@ def all_users():
 
     return render_template('all_users.html', users=users)
 
+@app.route('/api/register', methods=['POST'])
+def create_user():
+	""" creates a new user."""
+	user_data = request.get_json()
+	fname = user_data['fname']
+	lname = user_data['lname']
+	email = user_data['email']
+	password = user_data['password']
+	
+	# checks if email is already registered
+	# if registered, tell them account is already registered
+	user = crud.get_user_by_email(email)
+	if user:
+		return jsonify({'status': 'email already exists'})
+
+	#if not registered, create a new instance of user
+	else:
+		crud.create_user(email, fname, lname, password)
+		return jsonify({'status': 'created user'})
+
 @app.route('/users', methods=['POST'])
 def register_user():
 	"""Creates a new user."""
@@ -107,7 +127,7 @@ def get_users():
     return jsonify(users_dict)
 
 
-@app.route('/api/profile')
+@app.route('/api/profile', methods=['POST'])
 def show_user_prof():
     """Lets logged in user view their profile."""
 

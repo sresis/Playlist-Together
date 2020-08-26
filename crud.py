@@ -78,7 +78,7 @@ def create_song(song_title, song_uri, tempo, valence, danceability,
 
 		return song 
 	else:
-		return None
+		return song
 
 def get_song_id(uri):
 	"""Returns the song ID for a given URI."""
@@ -195,10 +195,12 @@ def get_recommended_tracks(user_id):
 
 		# chooses random songs and artists to be used in the Spotify API query
 		user_artists = return_users_artist_prefs(user_id)
+		import pdb; pdb.set_trace()
 		user_tracks = return_users_track_prefs(user_id)
 		artist_list = sample(user_artists, num_artists)
 		track_list = sample(user_tracks, num_songs)
 		recommended_tracks = []
+		import pdb; pdb.set_trace()
 
 
 		# get IDs for each track in track list
@@ -217,6 +219,7 @@ def get_recommended_tracks(user_id):
 			rec_list.append(item)
 		i += 1
 	print(rec_list)
+	import pdb; pdb.set_trace()
 
 
 	
@@ -324,13 +327,14 @@ def get_shared_tracks(user_1, user_2):
 	# gets recommended songs for each user
 	user_1_songs = Song_Rec.query.filter(Song_Rec.user_id == user_1)
 	user_2_songs = Song_Rec.query.filter(Song_Rec.user_id == user_2)
-
+	# take inner join or 2 sets
+	#use song id as comparator 
 	# checks if there are any songs in common
 	shared_songs = []
 	for item1 in user_1_songs:
 		for item2 in user_2_songs:
 			if item1.song_id == item2.song_id:
-				shared_songs.append(item1.song_id)
+				shared_songs.append(item1.song_title)
 					# add to playlist songs db
 
 	return shared_songs
@@ -422,11 +426,11 @@ def get_all_similar_songs(user_1, user_2, target_songs):
 
 	shared_list = []
 	for item in list_1:
-		shared_list.append(item[2])
+		shared_list.append(item[0])
 
 
 	for item in list_2:
-		shared_list.append(item[2])
+		shared_list.append(item[0])
 	for item in list_3:
 		shared_list.append(item)
 
