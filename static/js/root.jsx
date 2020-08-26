@@ -23,6 +23,9 @@ function App() {
 	            <li>
 	              <Link to="/users">Users</Link>
 	            </li>
+				<li>
+	              <Link to="/your-profile">View Your Profile</Link>
+	            </li>
 	          </ul>
 	        </nav>
 
@@ -35,6 +38,9 @@ function App() {
 	          </Route>
 	          <Route path="/users" component={Users}>
 	            <Users />
+	          </Route>
+			  <Route path="/your-profile">
+	            <YourProfile />
 	          </Route>
 	          <Route path="/">
 	            <Homepage />
@@ -82,11 +88,7 @@ function CreateAccount(props) {
 		})
 	}
 	
-
-
-
-
-	console.log("xoxo");
+	// returns create account form
 	return(
 		<React.Fragment>
 			<form id="create-account-form">
@@ -119,17 +121,49 @@ function CreateAccount(props) {
 						Create Account
 					</button>
 				</div>
-
-
-
 			</form>
+		</React.Fragment>
+	)
+}
 
+function YourProfile(props) {
+	// return their info
+	const profile_info = {'user': props.user, 'song_pref': props.song_pref }
 
+	// stores the current user details (displayed in HTMl)
+	const[favSongs, setFavSongs] = React.useState([]);
 
+	React.useEffect(() => {
+		fetch('/api/profile', {
+			method: 'POST',
+			body: JSON.stringify(profile_info),
+			headers: {
+				'Content-Type': 'application/json'
+			},
+		})
+		.then(response => response.json())
+		.then(data => {
+			const fav_songs = []
+			const song_prefs = data.song_pref;
+			for (const item of song_prefs) {
+				fav_songs.push(
+					<li key={item.song_pref_id}>{item.song_title}</li>
+				);
+			}
+			setFavSongs(fav_songs);
+			
+		})
+		// reset to avoid infinite loop
+	}, [props.user, props.song_pref])
+
+	return(
+		<React.Fragment>
+			<h2>Your Profile</h2>
+			<h4>Favorite Songs</h4>
+			<div>{favSongs}</div>
 
 		</React.Fragment>
-
-	)
+		) 
 }
 
 
@@ -141,7 +175,7 @@ function Users(props) {
 
 	// this will store the user details (displayed in HTML)
 	const [users, setUsers] = React.useState([]);
-
+	
 	// get the user data from server
 	React.useEffect(() => {
 		fetch('/api/users', {
