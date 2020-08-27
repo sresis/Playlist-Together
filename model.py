@@ -96,6 +96,7 @@ class Song(db.Model):
     acousticness = db.Column(db.Float())
     speechiness = db.Column(db.Float())
     song_artist = db.Column(db.String())
+    song_spotify_link = db.Column(db.String())
 
     def __repr__(self):
         return f'<song_id={self.song_id} song_title={self.song_title} song_artist ={self.song_artist} >'

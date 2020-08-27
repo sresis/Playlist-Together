@@ -127,6 +127,9 @@ def get_users():
     return jsonify(users_dict)
 
 
+
+
+
 @app.route('/api/profile')
 def show_user_prof():
     """Lets logged in user view their profile."""
@@ -168,10 +171,39 @@ def show_user_prof():
 
     return jsonify(combined_dict)
 
-@app.route('/api/user-detail')
-def show_user_detail():
+@app.route('/api/user-detail/<user_id>')
+def view_user(user_id):
+	"""Returns the selected user's profile data."""
 
-	return({'test': '123'})
+	user = crud.get_user_by_id(user_id)
+
+	#jsonifies user info
+	json_user = User.as_dict(user)
+
+    # gets the user song prefs and jsonifies
+	user_song_prefs = crud.get_user_song_prefs(user_id)
+    # goes through all user song prefs and adds to list
+    # song_list = []
+	song_dict = []
+	for song in user_song_prefs:
+		x = Song_Pref.as_dict(song)
+		song_dict.append(x)
+
+    # gets the user artist prefs and jsonifies
+	user_artist_prefs = crud.get_user_artist_prefs(user_id)
+    # goes through all user artist prefs and adds to list
+    # song_list = []
+	artist_list = []
+	for artist in user_artist_prefs:
+		x = Artist_Pref.as_dict(artist)
+		artist_list.append(x)
+		
+	combined_dict = {
+		'user': json_user,
+		'song_pref': song_dict,
+		'artist_pref': artist_list
+		}
+	return jsonify(combined_dict)
 
 		
 @app.route('/api/logout')
