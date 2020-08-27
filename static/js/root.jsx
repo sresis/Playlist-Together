@@ -33,9 +33,6 @@ function App() {
 				<li>
 	              <Link to="/add-artist-pref">Add Artist Pref</Link>
 	            </li>
-				<li>
-	              <Link to="/user-detail/:user_id">User Detail</Link>
-	            </li>
 				
 	          </ul>
 	        </nav>
@@ -60,7 +57,7 @@ function App() {
 	            <AddArtistPref />
 	          </Route>
 			
-			  <Route path="/user-detail:user_id">
+			  <Route path="/user-detail/:user_id">
 	            <UserDetail />
 				</Route>
 	          <Route path="/">
@@ -77,7 +74,11 @@ function Homepage() {
 }
 
 function UserDetail() {
-	return <div> User Details: test </div>;
+
+	// pulls the user ID from the "route"
+	const {user_id} = ReactRouterDOM.useParams()
+
+	return <div> User Details: User {user_id} </div>;
 }
 
 
