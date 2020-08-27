@@ -195,12 +195,10 @@ def get_recommended_tracks(user_id):
 
 		# chooses random songs and artists to be used in the Spotify API query
 		user_artists = return_users_artist_prefs(user_id)
-		import pdb; pdb.set_trace()
 		user_tracks = return_users_track_prefs(user_id)
 		artist_list = sample(user_artists, num_artists)
 		track_list = sample(user_tracks, num_songs)
 		recommended_tracks = []
-		import pdb; pdb.set_trace()
 
 
 		# get IDs for each track in track list
@@ -219,7 +217,6 @@ def get_recommended_tracks(user_id):
 			rec_list.append(item)
 		i += 1
 	print(rec_list)
-	import pdb; pdb.set_trace()
 
 
 	

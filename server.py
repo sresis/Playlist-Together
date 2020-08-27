@@ -109,7 +109,7 @@ def login():
 		session['user'] = user.user_id
 		return jsonify({'status': 'correct'})
 
-@app.route('/api/users', methods=['POST'])
+@app.route('/api/users')
 def get_users():
     """View all users."""
 
@@ -127,7 +127,7 @@ def get_users():
     return jsonify(users_dict)
 
 
-@app.route('/api/profile', methods=['POST'])
+@app.route('/api/profile')
 def show_user_prof():
     """Lets logged in user view their profile."""
 
@@ -168,7 +168,10 @@ def show_user_prof():
 
     return jsonify(combined_dict)
 
+@app.route('/api/user-detail')
+def show_user_detail():
 
+	return({'test': '123'})
 
 		
 @app.route('/api/logout')
@@ -307,6 +310,22 @@ def add_song_pref_1():
 	song_pref = crud.create_song_pref(song_title, user_id, song_uri)
 
 	return jsonify({'status': 'song pref added'})
+
+@app.route('/api/add_artist_pref', methods=['POST'])
+def add_artist_pref():
+	"""enables user to add an artist preference."""
+
+	user_id = session['user']
+
+	# gets artist input from the form
+	user_data = request.get_json()
+	artist = user_data['artistPref']
+	
+
+	#adds artist pref to db
+	artist_pref = crud.create_artist_pref(artist, user_id)
+
+	return jsonify({'status': 'artist pref added'})
 
 @app.route('/profile/add_prefs', methods=['POST'])
 def add_users_prefs():

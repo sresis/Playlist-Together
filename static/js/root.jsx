@@ -30,6 +30,13 @@ function App() {
 				<li>
 	              <Link to="/add-song-pref">Add Song Pref</Link>
 	            </li>
+				<li>
+	              <Link to="/add-artist-pref">Add Artist Pref</Link>
+	            </li>
+				<li>
+	              <Link to="/user-detail/:user_id">User Detail</Link>
+	            </li>
+				
 	          </ul>
 	        </nav>
 
@@ -49,6 +56,13 @@ function App() {
 			  <Route path="/add-song-pref" component={AddSongPref}>
 	            <AddSongPref />
 	          </Route>
+			  <Route path="/add-artist-pref" component={AddArtistPref}>
+	            <AddArtistPref />
+	          </Route>
+			
+			  <Route path="/user-detail:user_id">
+	            <UserDetail />
+				</Route>
 	          <Route path="/">
 	            <Homepage />
 	          </Route>
@@ -61,6 +75,11 @@ function App() {
 function Homepage() {
 	return <div> Welcome to Combined Playlist Generator! </div>;
 }
+
+function UserDetail() {
+	return <div> User Details: test </div>;
+}
+
 
 function CreateAccount(props) {
 
@@ -218,8 +237,7 @@ function YourProfile(props) {
 
 	React.useEffect(() => {
 		fetch('/api/profile', {
-			method: 'POST',
-			body: JSON.stringify(profile_info),
+			
 			headers: {
 				'Content-Type': 'application/json'
 			},
@@ -275,12 +293,13 @@ function Users(props) {
 
 	// this will store the user details (displayed in HTML)
 	const [users, setUsers] = React.useState([]);
-	
+
+	const history = ReactRouterDOM.useHistory();
+
 	// get the user data from server
 	React.useEffect(() => {
 		fetch('/api/users', {
-			method: 'POST',
-			body: JSON.stringify(user_details),
+		
 			headers: {
 				'Content-Type': 'application/json'
 			},
@@ -289,9 +308,13 @@ function Users(props) {
 		.then(data => {
 			const users_info = []
 
+			// adds list of links for each user. handle each click
 			for (const idx in data) {
+				//history.push(`/user-detail/${data[idx]['user_id']}`);
 				users_info.push(
-						<li key={data[idx]['user_id']} id={data[idx]['user_id']}>{data[idx]['email']}</li>
+						<li key={data[idx]['user_id']} id={data[idx]['user_id']}>
+							<Link onClick={()=>{history.push(`/user-detail/${data[idx]['user_id']}`)}}>{data[idx]['email']}</Link>
+							</li>
 					);
 			}
 			setUsers(users_info);
@@ -310,6 +333,9 @@ function Users(props) {
 		</React.Fragment>
 		) 
 }
+
+
+
 function AddSongPref(props) {
 	// lets user add song pref to profile
 
@@ -321,7 +347,6 @@ function AddSongPref(props) {
 	const addSong = (evt) => {
 		evt.preventDefault();
 
-		
 		console.log('testerrrr');
 
 		fetch('/api/add_song_pref', {
@@ -332,9 +357,6 @@ function AddSongPref(props) {
 				'Content-Type': 'application/json'
 			},
 		})
-
-
-	
 
 		.then(res => res.json())
 		.then(data => {
@@ -347,15 +369,12 @@ function AddSongPref(props) {
 				alert('error');
 			}
 			
-		
 	});
 	}
 
 	if (setAddedPref === true) {
 		return <Redirect to='/your-profile' />
 	}
-
-
 		// renders song pref form
 	return (
 		<form id="song_pref-form">
@@ -375,10 +394,61 @@ function AddSongPref(props) {
 
 	
 }
+function AddArtistPref(props) {
+	// lets user add artist pref to profile
 
+	// input for artist pref title
+	const[artistPref, setArtistPref] = React.useState("");
+	const[addedPref, setAddedPref] = React.useState(false);
 
+	// formats the user input
+	const user_input = {"artistPref": artistPref};
 
+	const addArtist = (evt) => {
+		evt.preventDefault();
 
+		fetch('/api/add_artist_pref', {
+			method: 'POST',
+			body: JSON.stringify(user_input),
+			credentials: 'include',
+			headers: {
+				'Content-Type': 'application/json'
+			},
+		})
+		.then(res => res.json())
+		.then(data => {
+			if(data.status === "artist pref added") {
+				alert('Artist pref added!');
+				setAddedPref(true);
+				
+			}
+			else{
+				alert('error');
+			}
+			
+	});
+	}
+
+	if (setAddedPref === true) {
+		return <Redirect to='/your-profile' />
+	}
+
+		// renders song pref form
+	return (
+		<form id="artist-pref-form">
+			<label>Artist Name:</label>
+			<input type = "text" 
+				name="artistPref" 
+				value = {artistPref} 
+				onChange={e => setArtistPref(e.target.value)} >		
+			</input>
+	
+			<button id="artist-pref-but" onClick={addArtist}>Add Artist Pref</button>
+
+		</form>
+
+		);
+}
 
 
 
