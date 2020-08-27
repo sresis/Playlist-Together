@@ -318,8 +318,6 @@ function Users(props) {
 		// reset to avoid infinite loop
 	}, [props.email, props.user_id, props.fname, props.lname])
 
-
-
 	return(
 		<React.Fragment>
 			<h3>All Users</h3>
@@ -329,31 +327,45 @@ function Users(props) {
 		) 
 }
 
-
 function UserDetail(props) {
 	// pulls the user ID from the "route"
 	const {user_id} = ReactRouterDOM.useParams();
 	const profile_info = {'user': props.user, 'song_pref': props.song_pref,
-						'artist_pref': props.artist_pref}
+						'artist_pref': props.artist_pref, 'playlist': props.playlist}
 
 	// stores the current user details (to be displayed in HTMl)
 	const[favSongs, setFavSongs] = React.useState([]);
 	const[favArtists, setFavArtists] = React.useState([]);
 	const[fname, setFname] = React.useState([]);
-
-	
+	const[playlist, setPlaylist] = React.useState([]);
+	const[playlistSongs, setPlaylistSongs] = React.useState([]);
 
 	const user = {"user_id": {user_id}}
+	const showPlaylist = () => {
 
+		// array to store the songs in playlist
+		const playlistItems = [];
+		playlistItems.push(
+			<h3>Shared Playlist:</h3>
+		);
+		console.log(playlist);
+		for (const item of playlist) {
+			playlistItems.push(
+				<li key={item}>{item}</li>
+			);
+		}
+		setPlaylistSongs(playlistItems);
+	}
 	React.useEffect(() => {
 		fetch(`/api/user-detail/${user_id}`, {
 			
 			headers: {
-				'Content-Type': '/applicaton/json'
+				'Content-Type': '/application/json'
 			},
 		})
 		.then(res => res.json())
 		.then(data => {
+			console.log(data);
 			// arrays to store the song/artists prefs in HTML
 			const fav_songs = []
 			const fav_artists = []
@@ -362,6 +374,7 @@ function UserDetail(props) {
 			const song_prefs = data.song_pref;
 			const artist_prefs = data.artist_pref;
 			const f_name = data.user.fname;
+			const playlist = data.playlist
 
 			// add each song pref and artist pref to a li
 			for (const item of song_prefs) {
@@ -377,10 +390,13 @@ function UserDetail(props) {
 		setFavSongs(fav_songs);
 		setFavArtists(fav_artists);
 		setFname(f_name);
+		setPlaylist(playlist)
+		
+		
 			
 		})
 		// reset to avoid infinite loop
-	}, [props.user, props.song_pref, props.artist_pref])
+	}, [props.user, props.song_pref, props.artist_pref, props.playlist])
 
 	return(
 		<React.Fragment>
@@ -389,8 +405,9 @@ function UserDetail(props) {
 			<div>{favSongs}</div>
 			<h4>Favorite Artists</h4>
 			<div>{favArtists}</div>
-			<button id="make-playlist">Generate Shared Playlist with {fname}</button>
-
+			<button id="make-playlist" onClick={showPlaylist}>Generate Shared Playlist with {fname}</button>
+			<div>{playlistSongs}</div>
+			
 		</React.Fragment>
 		) 
 }

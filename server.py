@@ -197,12 +197,26 @@ def view_user(user_id):
 	for artist in user_artist_prefs:
 		x = Artist_Pref.as_dict(artist)
 		artist_list.append(x)
-		
+
+	session_user = session['user']
+    ## get the user id
+	
+
+
+    # gets attributes of user's recommended tracks
+	shared_prefs = crud.get_shared_tracks(session_user, user_id)
+	song_attributes = crud.get_song_attributes(session_user)
+	averages = crud.get_average(song_attributes)
+	stdev = crud.get_stdev(song_attributes)
+	
+	similar_songs = crud.get_all_similar_songs(session_user, user_id, 10)
+	
 	combined_dict = {
 		'user': json_user,
 		'song_pref': song_dict,
-		'artist_pref': artist_list
-		}
+		'artist_pref': artist_list,
+		'playlist': similar_songs
+	}
 	return jsonify(combined_dict)
 
 		
@@ -298,7 +312,7 @@ def show_user(user_id):
 
     # gets attributes of user's recommended tracks
 
-    shared_prefs = crud.get_shared_tracks(user_id,1)
+    shared_prefs = crud.get_shared_tracks(user_id, session['user'])
     song_attributes = crud.get_song_attributes(user_id)
 
     averages = crud.get_average(song_attributes)
