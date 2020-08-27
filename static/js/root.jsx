@@ -50,6 +50,9 @@ function App() {
 	          <Route path="/users" component={Users}>
 	            <Users />
 	          </Route>
+			  <Route path="/get-recs" component={GetSongRecs}>
+	            <GetSongRecs />
+	          </Route>
 			  <Route path="/your-profile">
 	            <YourProfile />
 	          </Route>
@@ -59,10 +62,10 @@ function App() {
 			  <Route path="/add-artist-pref" component={AddArtistPref}>
 	            <AddArtistPref />
 	          </Route>
-			
 			  <Route path="/user-detail/:user_id">
 	            <UserDetail />
 				</Route>
+			
 	          <Route path="/">
 	            <Homepage />
 	          </Route>
@@ -149,7 +152,6 @@ function CreateAccount(props) {
 
 function Login() {
 
-
 	// tracks the user response for email/password
 
 	const [email, setEmail] = React.useState('');
@@ -157,7 +159,6 @@ function Login() {
 
 	// tracks if user is logged in. Defaults to false.
 	const [loggedIn, setLoggedIn] =React.useState(false);
-
 
 	// verifies if login input is correct
 	const loginUser = (evt) => {
@@ -196,7 +197,6 @@ function Login() {
 		return <Redirect to='/your-profile' />
 	}
 
-	
 	// renders login form
 	return (
 		<form id="login-form">
@@ -216,7 +216,6 @@ function Login() {
 
 		</form>
 
-
 		);
 	}
 
@@ -229,6 +228,21 @@ function YourProfile(props) {
 	const[favSongs, setFavSongs] = React.useState([]);
 	const[favArtists, setFavArtists] = React.useState([]);
 	const[fname, setFname] = React.useState([]);
+
+	const createSongRecs = () => {
+		console.log('hi')
+
+		fetch('/api/get_song_recs', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json'
+			},
+		})
+		.then(res => res.json())
+		.then(data => {
+			console.log(data);
+		})
+	}
 
 	React.useEffect(() => {
 		fetch('/api/profile', {
@@ -262,7 +276,6 @@ function YourProfile(props) {
 			setFavSongs(fav_songs);
 			setFavArtists(fav_artists);
 			setFname(f_name);
-			
 		})
 		// reset to avoid infinite loop
 	}, [props.user, props.song_pref, props.artist_pref])
@@ -274,9 +287,18 @@ function YourProfile(props) {
 			<div>{favSongs}</div>
 			<h4>Favorite Artists</h4>
 			<div>{favArtists}</div>
+			<button id="generate-song-recs" onClick={createSongRecs}>Get Song Recs</button>
+
 
 		</React.Fragment>
 		) 
+}
+function GetSongRecs() {
+
+	
+
+	console.log('test');
+	return <h2>hi</h2>
 }
 
 

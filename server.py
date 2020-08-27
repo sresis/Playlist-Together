@@ -399,8 +399,9 @@ def add_users_prefs():
 		song_prefs=song_prefs, user=user, song_recs=song_recs)
 
 
-@app.route('/profile/get_recs', methods=['POST'])
-def get_recs():
+
+@app.route('/api/get_song_recs', methods=['POST'])
+def get_song_recs():
 	"""Gets song recommendations for user."""
 
 	# # how to make this so it will update when user updates songs? automatic?
@@ -413,8 +414,9 @@ def get_recs():
 	for song_uri in song_recs:
 		#gets song title
 		title = api.get_song_title(song_uri)
-		## how to get song id
-		# create song then get song ID to make rec track
+		
+
+		# gets adio features for song
 		audio_fx = api.get_audio_features(song_uri)
 		tempo = audio_fx['tempo']
 		valence = audio_fx['valence']
@@ -423,25 +425,26 @@ def get_recs():
 		loudness = audio_fx['loudness']
 		acousticness = audio_fx['acousticness']
 		speechiness = audio_fx['speechiness']
+
+		# gets song artist
 		artist = api.get_song_artist(song_uri)
+
+		#creates instance of song in song db
 		crud.create_song(title, song_uri, tempo, valence, danceability, 
 			energy, loudness, acousticness, speechiness, artist)
-		song_id = crud.get_song_id(song_uri) 
+
+		#gets song id
+		song_id = crud.get_song_id(song_uri)
+
+		#creates instance of rec track in rec track db 
 		crud.create_recommended_track(user_id, song_uri, title, song_id)
-	user_song_recs = crud.get_all_song_recs(user_id)
+
+	# gets all rec tracks for user	
+	user_song_recs = crud.get_user_song_recs(user_id)
+
+	return jsonify({'status': 'success'})
 
 
-
-	return render_template('prof_2.html', user=user, user_song_recs=user_song_recs)
-
-
-
-
-## Jinja displays existing artists. Updated list of Artists. Make an Ajax call to get existing data
-## Ajax call can return JSON
-## route to take in what user typed in. in the end, return JSON that will be appended to the page
-#something similar to 106. passing in artist preferences for the user
-#look at crud and see what it does if there isn't any preferred
 
 if __name__ == '__main__':
 	connect_to_db(app)

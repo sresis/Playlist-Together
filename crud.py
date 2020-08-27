@@ -369,7 +369,8 @@ def get_similar_songs(user_1, user_2, song_count_max):
 	user_1_danceability_sd = user_1_stdev['danceability']
 	user_1_energy_sd = user_1_stdev['energy']
 	user_1_loudness_sd = user_1_stdev['loudness']
-
+	## could denormalize these potentially?
+	# would have to recalculate when they add a new song
 
 
 	#joins the Song and Song_Rec table for user 2
@@ -427,9 +428,11 @@ def get_all_similar_songs(user_1, user_2, target_songs):
 
 
 	for item in list_2:
-		shared_list.append(item[0])
+		if item not in list_3 and item not in list_1:
+			shared_list.append(item[0])
 	for item in list_3:
-		shared_list.append(item)
+		if item not in list_1 and item not in list_2:
+			shared_list.append(item)
 
 
 
