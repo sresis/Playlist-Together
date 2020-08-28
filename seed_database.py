@@ -10,6 +10,8 @@ import model
 import server
 import api
 
+from DB import user
+
 os.system('dropdb playlist_combiner')
 os.system('createdb playlist_combiner')
 
@@ -109,24 +111,23 @@ for n in range(1):
 
 	# gets averages for each attribute and adds to db
 	valence_avg = user_1_avg['valence']
-	
-	crud.update_attribute_value(user.user_id, valence_avg )
+	user.update_valence_value(user, valence_avg)
 
 
 	user_speechiness = user_1_avg['speechiness']
-	user.user_speechiness = user_speechiness
+	user.update_speechiness_value(user, speechiness_avg)
 
 	user_acousticness = user_1_avg['acousticness']
-	user.user_acousticness = user_acousticness
+	user.update_acousticness_value(use, acousticness_avg)
 
 	user_danceability = user_1_avg['danceability']
-	user.user_danceability = user_danceability
+	user.update_danceability_value(user, danceability_avg)
 
 	user_energy = user_1_avg['energy']
-	user.user_energy = user_energy
+	user.update_energy_value(user, energy_avg)
 
 	user_loudness = user_1_avg['loudness']
-	user.user_loudness = user_loudness
+	user.update_loudness_value(user, loudness_avg)
 	
 
 	
