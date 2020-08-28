@@ -243,7 +243,8 @@ function YourProfile(props) {
 			console.log(data);
 		})
 	}
-
+	// buildFaveSongs, buildFave artists as functions
+	// can declare function in the component
 	React.useEffect(() => {
 		fetch('/api/profile', {
 			
@@ -373,11 +374,16 @@ function UserDetail(props) {
 		console.log(playlist);
 		for (const item of playlist) {
 			playlistItems.push(
-				<li key={item}>{item}</li>
+				<div>
+					<li key={item[1]}>{item[0]}</li>
+					<iframe src= {`https://open.spotify.com/embed/track/${item[1]}`}
+						width="300" height="100" frameBorder="0" allowtransparency="true" allow="encrypted-media"></iframe>
+				</div>
 			);
 		}
 		setPlaylistSongs(playlistItems);
 	}
+	// call another function to do the loop
 	React.useEffect(() => {
 		fetch(`/api/user-detail/${user_id}`, {
 			
@@ -539,6 +545,7 @@ function AddArtistPref(props) {
 	if (setAddedPref === true) {
 		return <Redirect to='/your-profile' />
 	}
+	// can replace line 472 to true with history.push(/your-profile)
 
 		// renders song pref form
 	return (

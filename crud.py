@@ -331,7 +331,7 @@ def get_shared_tracks(user_1, user_2):
 	for item1 in user_1_songs:
 		for item2 in user_2_songs:
 			if item1.song_id == item2.song_id:
-				shared_songs.append(item1.song_title)
+				shared_songs.append([(item1.song_title), (item1.song_uri)])
 					# add to playlist songs db
 
 	return shared_songs
@@ -394,7 +394,7 @@ def get_similar_songs(user_1, user_2, song_count_max):
 			acousticness_z, danceability_z, energy_z, loudness_z])
 
 
-		song_similarity = [item[1].song_title, similarity_score, item[1].song_id]
+		song_similarity = [item[1].song_title, similarity_score, item[1].song_uri]
 		all_song_similarities.append(song_similarity)
 
 	sorted_list = playlist.sort_songs(all_song_similarities)
@@ -421,26 +421,28 @@ def get_all_similar_songs(user_1, user_2, target_songs):
 	list_3 = get_shared_tracks(user_1, user_2)
 
 	# make sure shared songs are showing up!!
-
+	song_uris = []
 	shared_list = []
 	for item in list_1:
-		shared_list.append(item[0])
+		shared_list.append([(item[0]), (item[2])])
+		
 
 
 	for item in list_2:
 		if item not in list_3 and item not in list_1:
-			shared_list.append(item[0])
+			shared_list.append([(item[0]), (item[2])])
 	for item in list_3:
 		if item not in list_1 and item not in list_2:
-			shared_list.append(item)
+			shared_list.append([(item[0]), (item[1])])
 
 
 
 
 
 	#adds shared songs to playlist
-	song_uris = []
+
 	for item in shared_list:
+		
 
 		song_uris.append(item)
 	
