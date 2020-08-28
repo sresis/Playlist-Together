@@ -381,8 +381,10 @@ function UserDetail(props) {
 	React.useEffect(() => {
 		fetch(`/api/user-detail/${user_id}`, {
 			
+			method: 'POST',
+			credentials: 'include',
 			headers: {
-				'Content-Type': '/application/json'
+				'Content-Type': 'application/json'
 			},
 		})
 		.then(res => res.json())
@@ -400,8 +402,13 @@ function UserDetail(props) {
 
 			// add each song pref and artist pref to a li
 			for (const item of song_prefs) {
+				console.log(item.song_uri)
 				fav_songs.push(
-					<li key={item.song_pref_id}>{item.song_title}</li>
+					<div>
+						<li key={item.song_pref_id}>{item.song_title}</li>
+						<iframe src= {`https://open.spotify.com/embed/track/${item.song_uri}`}
+						width="300" height="100" frameBorder="0" allowtransparency="true" allow="encrypted-media"></iframe>
+					</div>
 				);
 			}
 			for (const item of artist_prefs) {

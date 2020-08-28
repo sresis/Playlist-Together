@@ -171,7 +171,7 @@ def show_user_prof():
 
     return jsonify(combined_dict)
 
-@app.route('/api/user-detail/<user_id>')
+@app.route('/api/user-detail/<user_id>', methods=['POST'])
 def view_user(user_id):
 	"""Returns the selected user's profile data."""
 
