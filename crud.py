@@ -92,6 +92,15 @@ def get_song_id(uri):
 
 	
 
+def update_attribute_value(user_id, attribute_val):
+	""" updates attribute value."""
+
+	# get user
+	user = get_user_by_id(user_id)
+	print('cruddddddddddd')
+	print(attribute_val)
+	user.user_valence = attribute_val
+	db.session.commit()
 
 
 def get_song_rec_id(uri, user_id):

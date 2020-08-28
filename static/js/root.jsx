@@ -377,7 +377,7 @@ function UserDetail(props) {
 				<div>
 					<li key={item[1]}>{item[0]}</li>
 					<iframe src= {`https://open.spotify.com/embed/track/${item[1]}`}
-						width="300" height="100" frameBorder="0" allowtransparency="true" allow="encrypted-media"></iframe>
+						width="300" height="50" frameBorder="0" allowtransparency="true" allow="encrypted-media"></iframe>
 				</div>
 			);
 		}
@@ -413,7 +413,7 @@ function UserDetail(props) {
 					<div>
 						<li key={item.song_pref_id}>{item.song_title}</li>
 						<iframe src= {`https://open.spotify.com/embed/track/${item.song_uri}`}
-						width="300" height="100" frameBorder="0" allowtransparency="true" allow="encrypted-media"></iframe>
+						width="300" height="50" frameBorder="0" allowtransparency="true" allow="encrypted-media"></iframe>
 					</div>
 				);
 			}

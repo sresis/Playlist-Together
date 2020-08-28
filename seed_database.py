@@ -18,7 +18,7 @@ model.db.create_all()
 ## encrpyt the passwords you are storing
 first_names = ['Mike', 'Melanie', 'Adam', 'Eve', 'Jenny', 'Jason', 'Mitch', 'Yolanda', 'Avery', 'Pat', 'Meg', 'Luke']
 last_names = ['Roberts', 'Lee', 'Garcia', 'Smith', 'Jones', 'Yee', 'Washington', 'Williams', 'Lopez', 'Kirk', 'Henry']
-passwords = ['testing123', 'cantguessit12', 'random321']
+passwords = ['123']
 
 artists = ['Lil Wayne', 'Lizzo', 'Fleetwood Mac', 'Adele', 
 		'Kanye West', 'Avicii', 'Eminem', 'Selena Gomez', 'Justin Bieber', 
@@ -97,6 +97,39 @@ for n in range(1):
 		# get song ID and use to create recommended track
 		song_id = crud.get_song_id(song)
 		crud.create_recommended_track(user.user_id, song, title, song_id)
+
+	# assign valence, danceable, etc values to the user
+	# pulls attributes for each of the user's songs
+	user_1_attributes = crud.get_song_attributes(user.user_id)
+
+	#gets the avg and stdev for user
+	user_1_avg = crud.get_average(user_1_attributes)
+	user_1_stdev = crud.get_stdev(user_1_attributes)
+
+
+	# gets averages for each attribute and adds to db
+	valence_avg = user_1_avg['valence']
+	
+	crud.update_attribute_value(user.user_id, valence_avg )
+
+
+	user_speechiness = user_1_avg['speechiness']
+	user.user_speechiness = user_speechiness
+
+	user_acousticness = user_1_avg['acousticness']
+	user.user_acousticness = user_acousticness
+
+	user_danceability = user_1_avg['danceability']
+	user.user_danceability = user_danceability
+
+	user_energy = user_1_avg['energy']
+	user.user_energy = user_energy
+
+	user_loudness = user_1_avg['loudness']
+	user.user_loudness = user_loudness
+	
+
+	
 
 
 

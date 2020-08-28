@@ -19,6 +19,14 @@ class User(db.Model):
     lname = db.Column(db.String(50))
     password = db.Column(db.String(50))
 
+    user_tempo = db.Column(db.Float())
+    user_valence = db.Column(db.Float())
+    user_speechiness = db.Column(db.Float())
+    user_acousticness = db.Column(db.Float())
+    user_danceability = db.Column(db.Float())
+    user_energy = db.Column(db.Float())
+    user_loudness = db.Column(db.Float())
+
 
     def as_dict(self):
         return {
