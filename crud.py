@@ -92,15 +92,6 @@ def get_song_id(uri):
 
 	
 
-def update_attribute_value(user_id, attribute_val):
-	""" updates attribute value."""
-
-	# get user
-	user = get_user_by_id(user_id)
-	print('cruddddddddddd')
-	print(attribute_val)
-	user.user_valence = attribute_val
-	db.session.commit()
 
 
 def get_song_rec_id(uri, user_id):
@@ -348,26 +339,25 @@ def get_shared_tracks(user_1, user_2):
 def get_similar_songs(user_1, user_2, song_count_max):
 	"""Gets similar songs from user_2 based on user_1 averages."""
 
-
 	## make it so it doesn't sort everything
 	# pulls attributes for each of the user's songs
 	user_1_attributes = get_song_attributes(user_1)
 
-	#gets the avg and stdev for user
-	user_1_avg = get_average(user_1_attributes)
 	user_1_stdev = get_stdev(user_1_attributes)
 
 	#stores similar songs in a list
 	similar_songs = []
 
+	user_1x = get_user_by_id(user_1)
+
 	# gets averages for each attribute
-	user_1_tempo = user_1_avg['tempo']
-	user_1_valence = user_1_avg['valence']
-	user_1_speechiness = user_1_avg['speechiness']
-	user_1_acousticness = user_1_avg['acousticness']
-	user_1_danceability = user_1_avg['danceability']
-	user_1_energy = user_1_avg['energy']
-	user_1_loudness = user_1_avg['loudness']
+	user_1_tempo = user_1x.user_tempo
+	user_1_valence = user_1x.user_valence
+	user_1_speechiness = user_1x.user_speechiness
+	user_1_acousticness = user_1x.user_acousticness
+	user_1_danceability = user_1x.user_danceability
+	user_1_energy = user_1x.user_energy
+	user_1_loudness = user_1x.user_loudness
 
 
 	# gets stdev for each attribute
@@ -434,8 +424,6 @@ def get_all_similar_songs(user_1, user_2, target_songs):
 	shared_list = []
 	for item in list_1:
 		shared_list.append([(item[0]), (item[2])])
-		
-
 
 	for item in list_2:
 		if item not in list_3 and item not in list_1:
@@ -444,17 +432,11 @@ def get_all_similar_songs(user_1, user_2, target_songs):
 		if item not in list_1 and item not in list_2:
 			shared_list.append([(item[0]), (item[1])])
 
-
-
-
-
 	#adds shared songs to playlist
 
 	for item in shared_list:
 		
-
 		song_uris.append(item)
-	
 
 	# return the song_ids and then do something with the total
 	return song_uris

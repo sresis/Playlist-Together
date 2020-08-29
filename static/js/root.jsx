@@ -36,6 +36,9 @@ function App() {
 				<li>
 	              <Link to="/add-artist-pref">Add Artist Pref</Link>
 	            </li>
+				<li>
+	              <Link to="/view-similar-users">View Similar Users</Link>
+	            </li>
 				
 	          </ul>
 	        </nav>
@@ -62,6 +65,9 @@ function App() {
 			  <Route path="/add-artist-pref" component={AddArtistPref}>
 	            <AddArtistPref />
 	          </Route>
+			  <Route path="/view-similar-users">
+	            <SimilarUsers />
+				</Route>
 			  <Route path="/user-detail/:user_id">
 	            <UserDetail />
 				</Route>
@@ -230,7 +236,7 @@ function YourProfile(props) {
 	const[fname, setFname] = React.useState([]);
 
 	const createSongRecs = () => {
-		console.log('hi')
+	
 
 		fetch('/api/get_song_recs', {
 			method: 'POST',
@@ -447,6 +453,41 @@ function UserDetail(props) {
 		) 
 }
 
+function SimilarUsers() {
+
+
+	// get session user and pull the most similar
+	const[similarUser, setSimilarUser] = React.useState([]);
+
+	const return_user = '';
+	React.useEffect(() => {
+
+		fetch('/api/similar-users', {
+
+			headers: {
+				'Content-Type': 'application/json'
+			},
+		})
+		.then(response => response.json())
+		.then(data => {
+			setSimilarUser(data.similar_user)
+			
+
+			
+		})
+	})
+
+	
+	// add a graph comparing each of their songs for each attr?
+
+	return(
+		<React.Fragment>
+			<h3>Similar User:</h3>
+			<li>{similarUser}</li>
+		</React.Fragment>
+		
+	)
+}
 
 
 function AddSongPref(props) {
@@ -459,8 +500,6 @@ function AddSongPref(props) {
 
 	const addSong = (evt) => {
 		evt.preventDefault();
-
-		console.log('testerrrr');
 
 		fetch('/api/add_song_pref', {
 			method: 'POST',
@@ -501,7 +540,6 @@ function AddSongPref(props) {
 			<button id="song-pref-but" onClick={addSong}>Add Song Pref</button>
 
 		</form>
-
 
 		);
 

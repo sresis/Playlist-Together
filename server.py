@@ -128,15 +128,11 @@ def get_users():
 	return jsonify(users_dict)
 
 
-
-
-
 @app.route('/api/profile')
 def show_user_prof():
 	"""Lets logged in user view their profile."""
 
 	# gets the user info and jsonifies it 
-
 	user_id = session['user']
 	user = crud.get_user_by_id(user_id)
 
@@ -160,8 +156,6 @@ def show_user_prof():
 	for artist in user_artist_prefs:
 		x = Artist_Pref.as_dict(artist)
 		artist_list.append(x)
-
-
 
 	combined_dict = {
 	'user': json_user,
@@ -202,12 +196,9 @@ def view_user(user_id):
 	session_user = session['user']
 	## get the user id
 	
-
-
 	# gets attributes of user's recommended tracks
 	shared_prefs = crud.get_shared_tracks(session_user, user_id)
 	song_attributes = crud.get_song_attributes(session_user)
-	averages = crud.get_average(song_attributes)
 	stdev = crud.get_stdev(song_attributes)
 	
 	similar_songs = crud.get_all_similar_songs(session_user, user_id, 10)
@@ -219,6 +210,33 @@ def view_user(user_id):
 		'playlist': similar_songs
 	}
 	return jsonify(combined_dict)
+
+@app.route('/api/similar-users')
+def get_similar_user():
+	"""Returns the users that are most similar to the session user."""
+
+	# gets session user's info
+	user_id = session['user']
+	user = crud.get_user_by_id(user_id)
+
+
+	# get all users
+	all_users = crud.get_users()
+
+
+	#stores min difference
+	min_diff = [100, '']
+	# iterate through all users that are not the session user.
+	for user_x in all_users:
+		if user_x != user:
+			user_diff = abs(user.user_valence - user_x.user_valence)
+			# if the difference is smaller, update the array with the difference and ID
+			if user_diff < min_diff[0]:
+				min_diff = [user_diff, user_x.email]
+	
+	similar_user = min_diff[1]
+
+	return jsonify({'similar_user': similar_user})
 
 		
 @app.route('/api/logout')
