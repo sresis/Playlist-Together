@@ -369,7 +369,7 @@ function UserDetail(props) {
 	const[fname, setFname] = React.useState([]);
 	const[playlist, setPlaylist] = React.useState([]);
 	const[playlistSongs, setPlaylistSongs] = React.useState([]);
-	var ctx = document.getElementById('myChart').getContext('2d');
+	
 	
 	const user = {"user_id": {user_id}}
 
@@ -443,26 +443,7 @@ function UserDetail(props) {
 		// reset to avoid infinite loop
 	}, [props.user, props.song_pref, props.artist_pref, props.playlist])
 
-	var chart = new Chart(ctx, {
-		// The type of chart we want to create
-		type: 'radar',
 	
-		// The data for our dataset
-		data: {
-			labels: ["Valence", "February", "March", "April", "May", "June", "July"],
-			datasets: [{
-				label: `${fname}`,
-				backgroundColor: "rgba(200,0,0,0.2)",
-				data: [65, 75, 70, 80, 60, 80]
-			  }, {
-				label: "You",
-				backgroundColor: "rgba(0,0,200,0.2)",
-				data: [54, 65, 60, 70, 70, 75]
-			  }]
-		},
-	
-		
-	});
 
 	return(
 		<React.Fragment>
@@ -483,8 +464,12 @@ function SimilarUsers() {
 
 	// get session user and pull the most similar
 	const[similarUser, setSimilarUser] = React.useState([]);
-
-	const return_user = '';
+	const[currentUserValence, setCurrentUserValence] = React.useState([]);
+	const[currentUserSpeechiness, setCurrentUserSpeechiness] = React.useState([]);
+	const[currentUserAcousticness, setCurrentUserAcousticness] = React.useState([]);
+	const[currentUserEnergy, setCurrentUserEnergy] = React.useState([]);
+	const[currentUserDanceability, setCurrentUserDanceability] = React.useState([]);
+	const[currentUserLoudness, setCurrentUserLoudness] = React.useState([]);
 	React.useEffect(() => {
 
 		fetch('/api/similar-users', {
@@ -493,18 +478,47 @@ function SimilarUsers() {
 				'Content-Type': 'application/json'
 			},
 		})
+		
 		.then(response => response.json())
 		.then(data => {
-			setSimilarUser(data.similar_user)
-			
+			console.log(data.current_user_info)
+			setSimilarUser(data.similar_user);
+			setCurrentUserValence(data.current_user_info[0]);
+			setCurrentUserSpeechiness(data.current_user_info[1]);
+			setCurrentUserAcousticness(data.current_user_info[2]);
+			setCurrentUserEnergy(data.current_user_info[3]);
+			setCurrentUserDanceability(data.current_user_info[4]);
+			setCurrentUserLoudness(data.current_user_info[5]);
 
 			
+
 		})
 	})
 
 	
 	// add a graph comparing each of their songs for each attr?
-
+	var ctx = document.getElementById('myChart').getContext('2d');
+	var chart = new Chart(ctx, {
+		// The type of chart we want to create
+		type: 'radar',
+	
+		// The data for our dataset
+		data: {
+			labels: ["Valence", "Speechiness", "Acousticness", "Energy", "Danceability", "Loudness"],
+			datasets: [{
+				label: "You",
+				backgroundColor: "rgba(200,0,0,0.2)",
+				data: [`${currentUserValence}`, `${currentUserSpeechiness}`, `${currentUserAcousticness}`,
+				`${currentUserEnergy}`, `${currentUserDanceability}`, `${currentUserLoudness}`]
+			  }, {
+				label: `${similarUser}`,
+				backgroundColor: "rgba(0,0,200,0.2)",
+				data: [.1, .3, .4, .5, .5, .5]
+			  }]
+		},
+	
+		
+	});
 	return(
 		<React.Fragment>
 			<h3>Similar User:</h3>

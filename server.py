@@ -229,14 +229,19 @@ def get_similar_user():
 	# iterate through all users that are not the session user.
 	for user_x in all_users:
 		if user_x != user:
-			user_diff = abs(user.user_valence - user_x.user_valence)
+			user_diff = abs(user.user_valence - user_x.user_valence) + abs(user.user_speechiness - user_x.user_speechiness)
+			+ abs(user.user_acousticness - user_x.user_acousticness) + abs(user.user_energy - user_x.user_energy) 
+			+ abs(user.user_danceability - user_x.user_danceability) + abs(user.user_loudness - user_x.user_loudness)
 			# if the difference is smaller, update the array with the difference and ID
 			if user_diff < min_diff[0]:
 				min_diff = [user_diff, user_x.email]
 	
 	similar_user = min_diff[1]
-
-	return jsonify({'similar_user': similar_user})
+	adj_user_loudness = abs(user.user_loudness)/10
+	return jsonify({'similar_user': similar_user,
+					'current_user_info': [user.user_valence, user.user_speechiness, 
+					user.user_acousticness, user.user_energy, user.user_danceability, adj_user_loudness]}
+					)
 
 		
 @app.route('/api/logout')
