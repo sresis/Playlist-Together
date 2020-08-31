@@ -278,6 +278,7 @@ def get_average(attribute_dict):
 	}
 	# get the mean and add it to the dict
 	for item in attribute_dict:
+		print('xxxxxx')
 		averages['tempo'] = statistics.mean(attribute_dict['tempo'])
 		averages['valence'] = statistics.mean(attribute_dict['valence'])
 		averages['danceability'] = statistics.mean(attribute_dict['danceability'])
@@ -346,7 +347,6 @@ def get_similar_songs(user_1, user_2, song_count_max):
 	user_1_stdev = get_stdev(user_1_attributes)
 
 	#stores similar songs in a list
-	similar_songs = []
 
 	user_1x = get_user_by_id(user_1)
 

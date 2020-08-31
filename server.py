@@ -245,7 +245,6 @@ def logout():
 	"""enables user to logout."""
 	if 'user_id' in session:
 		session.pop('username', None)
-		alert('you have logged out!')
 	return jsonify({'message': 'you have logged out'})
 
 @app.route('/profile', methods=['POST'])
@@ -293,8 +292,6 @@ def show_shared_songs(user_email):
 
 	shared_prefs = crud.get_shared_tracks(session_user, user_id)
 	song_attributes = crud.get_song_attributes(session_user)
-
-	averages = crud.get_average(song_attributes)
 	stdev = crud.get_stdev(song_attributes)
 
 	similar_songs = crud.get_all_similar_songs(session_user, user_id, 10)
@@ -306,54 +303,9 @@ def show_shared_songs(user_email):
 # be processing this data in javascript
 
 # be using react. fetch function to get things back from .jsx
-@app.route('/users/<user_id>')
-def show_user(user_id):
-	"""Show details on a particular user."""
 
-	user = crud.get_user_by_id(user_id)
-	artist_prefs = crud.get_user_artist_prefs(user_id)
-	song_prefs = crud.get_user_song_prefs(user_id)
-	rec_tracks = crud.get_recommended_tracks(user_id)
 
-	rec_names = []
-	for track in rec_tracks:
-		text_format = api.get_song_title(track)
-		rec_names.append(text_format)
 
-	session_user = session['user']
-	x = crud.get_user_by_id(session_user)
-	fname = x.fname
-
-	# gets attributes of user's recommended tracks
-
-	shared_prefs = crud.get_shared_tracks(user_id, session['user'])
-	song_attributes = crud.get_song_attributes(user_id)
-
-	averages = crud.get_average(song_attributes)
-	stdev = crud.get_stdev(song_attributes)
-
-	similar_songs = crud.get_all_similar_songs(session['user'], user_id, 10)
-		# sQLAlchemy objects is not JSON serializable
-		#potentially JSON.dumps?
-		#maybe look for a library
-
-		# start with one route to turn into JSOn and modify on the front end
-
-## dict of dictorionaries that I am
-	return render_template('user_details.html', user=user, artist_prefs=artist_prefs, song_prefs=song_prefs,
-		rec_names=rec_names, shared_prefs=shared_prefs,
-		song_attributes=song_attributes, averages=averages, stdev=stdev, 
-		similar_songs=similar_songs, fname=fname)
-
-@app.route('/profile/add_prefs')
-def show_prefs_form():
-	"""Shows form for user to input their preferences."""
-
-	# ## next: how to add this to the table
-	user_id = session['user']
-	user = crud.get_user_by_id(user_id)
-
-	return render_template('add_prefs.html')
 
 @app.route('/api/add_song_pref', methods=['POST'])
 def add_song_pref_1():
@@ -383,34 +335,9 @@ def add_artist_pref():
 	
 
 	#adds artist pref to db
-	artist_pref = crud.create_artist_pref(artist, user_id)
+	crud.create_artist_pref(artist, user_id)
 
 	return jsonify({'status': 'artist pref added'})
-
-@app.route('/profile/add_prefs', methods=['POST'])
-def add_users_prefs():
-	"""enables users to add their preferences."""
-
-	#gets artist and songs from input form
-	artist = request.form.get('artist')
-	song_title = request.form.get('song')
-
-	# Adds song and artist prefs to the User
-	user_id = session['user']
-	user = crud.get_user_by_id(user_id)
-	if artist:
-		artist_pref = crud.create_artist_pref(artist, user_id)
-	if song_title:
-		#gets song id
-		song_uri = api.get_song_id(song_title)
-		song_pref = crud.create_song_pref(song_title, user_id, song_uri)
-	artist_prefs = crud.get_all_artist_prefs()
-	song_prefs = crud.get_all_song_prefs()
-	song_recs = crud.get_all_song_recs()
-
-
-	return render_template('updated_profile.html', artist_prefs=artist_prefs, 
-		song_prefs=song_prefs, user=user, song_recs=song_recs)
 
 
 
@@ -460,8 +387,8 @@ def get_song_recs():
 	user_1_attributes = crud.get_song_attributes(user_id)
 
 	#gets the avg and stdev for user
-	user_1_avg = crud.get_average(user_1_attributes)
 	user_1_stdev = crud.get_stdev(user_1_attributes)
+	user_1_avg = crud.get_average(user_1_attributes)
 
 
 	# gets averages for each attribute and adds to db
