@@ -381,7 +381,6 @@ function UserDetail(props) {
 		playlistItems.push(
 			<h3>Shared Playlist:</h3>
 		);
-		console.log(playlist);
 		for (const item of playlist) {
 			playlistItems.push(
 				<div>
@@ -512,35 +511,40 @@ function SimilarUsers() {
 		})
 	})
 
-	
-	// add a graph comparing each of their songs for each attr?
-	var ctx = document.getElementById('myChart').getContext('2d');
-	var chart = new Chart(ctx, {
-		// The type of chart we want to create
-		type: 'radar',
-	
-		// The data for our dataset
-		data: {
-			labels: ["Valence", "Speechiness", "Acousticness", "Energy", "Danceability", "Loudness"],
-			datasets: [{
-				label: "You",
-				backgroundColor: "rgba(200,0,0,0.2)",
-				data: [`${currentUserValence}`, `${currentUserSpeechiness}`, `${currentUserAcousticness}`,
-				`${currentUserEnergy}`, `${currentUserDanceability}`, `${currentUserLoudness}`]
-			  }, {
-				label: `${similarUser}`,
-				backgroundColor: "rgba(0,0,200,0.2)",
-				data: [`${similarUserValence}`, `${similarUserSpeechiness}`, `${similarUserAcousticness}`,
-				`${similarUserEnergy}`, `${similarUserDanceability}`, `${similarUserLoudness}`]
-			  }]
-		},
-	
+	const makeGraph = () => {
 		
-	});
+	
+		// add a graph comparing each of their songs for each attr?
+		var ctx = document.getElementById('myChart').getContext('2d');
+		var chart = new Chart(ctx, {
+			// The type of chart we want to create
+			type: 'radar',
+		
+			// The data for our dataset
+			data: {
+				labels: ["Valence", "Speechiness", "Acousticness", "Energy", "Danceability", "Loudness"],
+				datasets: [{
+					label: "You",
+					backgroundColor: "rgba(200,0,0,0.2)",
+					data: [`${currentUserValence}`, `${currentUserSpeechiness}`, `${currentUserAcousticness}`,
+					`${currentUserEnergy}`, `${currentUserDanceability}`, `${currentUserLoudness}`]
+				}, {
+					label: `${similarUser}`,
+					backgroundColor: "rgba(0,0,200,0.2)",
+					data: [`${similarUserValence}`, `${similarUserSpeechiness}`, `${similarUserAcousticness}`,
+					`${similarUserEnergy}`, `${similarUserDanceability}`, `${similarUserLoudness}`]
+				}]
+			},
+		
+		
+		});
+	}
 	return(
 		<React.Fragment>
 			<h3>Similar User:</h3>
 			<li>{similarUser}</li>
+			<button id="user-graph" onClick={makeGraph}>See Graph</button>
+			<canvas id="myChart"></canvas>	
 		</React.Fragment>
 		
 	)
