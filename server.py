@@ -113,14 +113,17 @@ def login():
 @app.route('/api/users')
 def get_users():
 	"""View all users."""
-
+	user_id = session['user']
+	current_user = crud.get_user_by_id(user_id)
 	# gets all users and jsonifies it
 
 	users = crud.get_users()
 	users_dict = []
 	for user in users:
-		x = User.as_dict(user)
-		users_dict.append(x)
+		#doesn't show current user
+		if user != current_user:
+			x = User.as_dict(user)
+			users_dict.append(x)
 
 
 	#users = crud.get_users()
@@ -225,7 +228,7 @@ def get_similar_user():
 
 
 	#stores min difference
-	min_diff = [100, '']
+	min_diff = [1000, '']
 	# iterate through all users that are not the session user.
 	for user_x in all_users:
 		if user_x != user:
