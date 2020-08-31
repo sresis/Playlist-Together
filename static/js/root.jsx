@@ -7,7 +7,6 @@ const Redirect = ReactRouterDOM.Redirect;
 
 
 
-
 function App() {
 	return (
 	    <Router>
@@ -158,6 +157,7 @@ function CreateAccount(props) {
 
 function Login() {
 
+	
 	// tracks the user response for email/password
 
 	const [email, setEmail] = React.useState('');
@@ -218,6 +218,7 @@ function Login() {
 					onChange= {e => setPassword(e.target.value)}
 					value={password}>
 			</input>
+			
 			<button id="login-button" onClick={loginUser}>Log In</button>
 
 		</form>
@@ -368,8 +369,11 @@ function UserDetail(props) {
 	const[fname, setFname] = React.useState([]);
 	const[playlist, setPlaylist] = React.useState([]);
 	const[playlistSongs, setPlaylistSongs] = React.useState([]);
-
+	var ctx = document.getElementById('myChart').getContext('2d');
+	
 	const user = {"user_id": {user_id}}
+
+	
 	const showPlaylist = () => {
 
 		// array to store the songs in playlist
@@ -438,6 +442,27 @@ function UserDetail(props) {
 		})
 		// reset to avoid infinite loop
 	}, [props.user, props.song_pref, props.artist_pref, props.playlist])
+
+	var chart = new Chart(ctx, {
+		// The type of chart we want to create
+		type: 'radar',
+	
+		// The data for our dataset
+		data: {
+			labels: ["Valence", "February", "March", "April", "May", "June", "July"],
+			datasets: [{
+				label: `${fname}`,
+				backgroundColor: "rgba(200,0,0,0.2)",
+				data: [65, 75, 70, 80, 60, 80]
+			  }, {
+				label: "You",
+				backgroundColor: "rgba(0,0,200,0.2)",
+				data: [54, 65, 60, 70, 70, 75]
+			  }]
+		},
+	
+		
+	});
 
 	return(
 		<React.Fragment>
@@ -601,6 +626,8 @@ function AddArtistPref(props) {
 
 		);
 }
+
+
 
 
 
