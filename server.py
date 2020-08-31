@@ -236,11 +236,18 @@ def get_similar_user():
 			if user_diff < min_diff[0]:
 				min_diff = [user_diff, user_x.email]
 	
-	similar_user = min_diff[1]
+	similar_user_email = min_diff[1]
+	similar_user = crud.get_user_by_email(similar_user_email)
+
+	# adjust loudness for graph
 	adj_user_loudness = abs(user.user_loudness)/10
-	return jsonify({'similar_user': similar_user,
+	adj_similar_user_loudness = abs(similar_user.user_loudness)/10
+	return jsonify({'similar_user': similar_user_email,
 					'current_user_info': [user.user_valence, user.user_speechiness, 
-					user.user_acousticness, user.user_energy, user.user_danceability, adj_user_loudness]}
+					user.user_acousticness, user.user_energy, user.user_danceability, adj_user_loudness],
+					'similar_user_info': [similar_user.user_valence, similar_user.user_speechiness, 
+					similar_user.user_acousticness, similar_user.user_energy, 
+					similar_user.user_danceability, adj_similar_user_loudness]}
 					)
 
 		

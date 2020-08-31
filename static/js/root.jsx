@@ -464,12 +464,21 @@ function SimilarUsers() {
 
 	// get session user and pull the most similar
 	const[similarUser, setSimilarUser] = React.useState([]);
+
+	// variables to store current user attributes
 	const[currentUserValence, setCurrentUserValence] = React.useState([]);
 	const[currentUserSpeechiness, setCurrentUserSpeechiness] = React.useState([]);
 	const[currentUserAcousticness, setCurrentUserAcousticness] = React.useState([]);
 	const[currentUserEnergy, setCurrentUserEnergy] = React.useState([]);
 	const[currentUserDanceability, setCurrentUserDanceability] = React.useState([]);
 	const[currentUserLoudness, setCurrentUserLoudness] = React.useState([]);
+	// variables to store similar user attributes
+	const[similarUserValence, setSimilarUserValence] = React.useState([]);
+	const[similarUserSpeechiness, setSimilarUserSpeechiness] = React.useState([]);
+	const[similarUserAcousticness, setSimilarUserAcousticness] = React.useState([]);
+	const[similarUserEnergy, setSimilarUserEnergy] = React.useState([]);
+	const[similarUserDanceability, setSimilarUserDanceability] = React.useState([]);
+	const[similarUserLoudness, setSimilarUserLoudness] = React.useState([]);
 	React.useEffect(() => {
 
 		fetch('/api/similar-users', {
@@ -481,7 +490,7 @@ function SimilarUsers() {
 		
 		.then(response => response.json())
 		.then(data => {
-			console.log(data.current_user_info)
+			// set current user attributes
 			setSimilarUser(data.similar_user);
 			setCurrentUserValence(data.current_user_info[0]);
 			setCurrentUserSpeechiness(data.current_user_info[1]);
@@ -489,6 +498,14 @@ function SimilarUsers() {
 			setCurrentUserEnergy(data.current_user_info[3]);
 			setCurrentUserDanceability(data.current_user_info[4]);
 			setCurrentUserLoudness(data.current_user_info[5]);
+
+			// set similar user attributes
+			setSimilarUserValence(data.similar_user_info[0]);
+			setSimilarUserSpeechiness(data.similar_user_info[1]);
+			setSimilarUserAcousticness(data.similar_user_info[2]);
+			setSimilarUserEnergy(data.similar_user_info[3]);
+			setSimilarUserDanceability(data.similar_user_info[4]);
+			setSimilarUserLoudness(data.similar_user_info[5]);
 
 			
 
@@ -513,7 +530,8 @@ function SimilarUsers() {
 			  }, {
 				label: `${similarUser}`,
 				backgroundColor: "rgba(0,0,200,0.2)",
-				data: [.1, .3, .4, .5, .5, .5]
+				data: [`${similarUserValence}`, `${similarUserSpeechiness}`, `${similarUserAcousticness}`,
+				`${similarUserEnergy}`, `${similarUserDanceability}`, `${similarUserLoudness}`]
 			  }]
 		},
 	
