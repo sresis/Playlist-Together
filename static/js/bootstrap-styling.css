@@ -1,38 +1,33 @@
 
 section {
-    margin-top: 50px;
+    margin-top: 5px;
 }
-body {
-    background: #222831;
-    color: #EEEEEE;
-}
+
 
 a {
     color: #00adb5;
 }
 
 div {
-    border: 1px solid #EEEEEE;
     background-color: #393e46;
-    opacity: 0.9;
+    opacity: 0.92;
     width: 80%;
     margin-left: auto;
     margin-right: auto;
     margin-top: auto;
     margin-bottom: auto;
+    text-align: center;
     
 }
 
-form {
-    
-}
+
 
 body {
     background: url("https://images.unsplash.com/photo-1470225620780-dba8ba36b745?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&dl=marcela-laskoski-YrtFlrLo2DQ-unsplash.jpg");
     background-size: cover;
-    font-family: 'Helvetica Neue';
+    color: white;
 
-  }
+}
 
 #logo {
     height: 100px;
@@ -44,11 +39,11 @@ button {
     border: 1px solid rgb(146, 148, 248);
     position: relative;
     overflow: hidden;
-  }
+}
   
 button:hover {
     box-shadow: 1px 1px 25px 10px rgba(146, 148, 248, 0.4);
-  }
+}
 button:before {
     content: "";
     position: absolute;
@@ -63,13 +58,35 @@ button:before {
       transparent
     );
     transition: all 650ms;
-  }
+}
   
 button:hover:before {
     left: 100%;
   }
 
 canvas#myChart {
+    opacity: 0.87;
     background-color: white;
-    opacity: 0.75;
-  }
+}
+
+.navdiv{
+    
+}
+.navdiv a{
+	float: left;
+    text-align: center;
+    padding: 5px 5px;
+    color: white
+}
+.navdiv a:hover {
+ 
+    color: #00adb5;
+}
+#chart-div {
+   
+    margin-left: 0;
+    width: 50%;
+    height: 50%;
+    align-content: center;
+   
+}

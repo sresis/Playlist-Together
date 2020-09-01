@@ -12,37 +12,37 @@ function App() {
 	
 	return (
 	    <Router>
-	      <div>
-		  	<nav className="navbar navbar-expand-lg navbar-light bg-light">
-                <div className="collapse navbar-collapse">
+	      
+		  	<nav className="navbar navbar-expand-lg">
+                <div className="collapse navbar-collapse" class="navdiv">
                     <ul className ="navbar-nav">
 						<li>
-						<Link to="/">Home</Link>
+						<Link to="/">Home </Link>
 						</li>
 						<li>
-						<Link to="/create-account">Create Account</Link>
+						<Link to="/create-account">Create Account </Link>
 						</li>
 						<li>
-						<Link to="/login">Login</Link>
+						<Link to="/login">Login </Link>
 						</li>
 
 						<li>
-						<Link to="/users">Users</Link>
+						<Link to="/users">Users </Link>
 						</li>
 						<li>
-						<Link to="/your-profile">View Your Profile</Link>
+						<Link to="/your-profile">View Your Profile </Link>
 						</li>
 						<li>
-						<Link to="/add-song-pref">Add Song Pref</Link>
+						<Link to="/add-song-pref">Add Song Pref </Link>
 						</li>
 						<li>
-						<Link to="/add-artist-pref">Add Artist Pref</Link>
+						<Link to="/add-artist-pref">Add Artist Pref </Link>
 						</li>
 						<li>
-						<Link to="/view-similar-users">View Similar Users</Link>
+						<Link to="/view-similar-users">View Similar Users </Link>
 						</li>
 						<li>
-						<Link to="/logout">Logout</Link>
+						<Link to="/logout">Logout </Link>
 						</li>
 	          		</ul>
 				</div>
@@ -85,7 +85,7 @@ function App() {
 	            <Homepage />
 	          </Route>
 	        </Switch>
-	      </div>
+	     
 	    </Router>
   );
 }
@@ -459,7 +459,7 @@ function UserDetail(props) {
 					<div>
 						<li key={item.song_pref_id}>{item.song_title}</li>
 						<iframe src= {`https://open.spotify.com/embed/track/${item.song_uri}`}
-						width="300" height="50" frameBorder="0" allowtransparency="true" allow="encrypted-media"></iframe>
+						width="300" height="60" frameBorder="0" allowtransparency="true" allow="encrypted-media"></iframe>
 					</div>
 				);
 			}
@@ -584,7 +584,9 @@ function SimilarUsers() {
 			<h3>Similar User:</h3>
 			<li>{similarUser}</li>
 			<button id="user-graph" onClick={makeGraph}>See Graph</button>
-			<canvas id="myChart"></canvas>	
+			<div id="chart-div">
+				<canvas id="myChart"></canvas>
+			</div>	
 		</React.Fragment>
 		
 	)
