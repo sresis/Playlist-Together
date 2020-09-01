@@ -17,12 +17,12 @@ a {
 div {
     border: 1px solid #EEEEEE;
     background-color: #393e46;
-    opacity: 0.75;
+    opacity: 0.9;
     
 }
 
 form {
-    background-color: red;
+    background-color: red;git comm
 }
 
 body {
@@ -34,4 +34,9 @@ body {
 #logo {
     height: 100px;
     width: 500px;
+}
+canvas {
+    height: 150px;
+    width: 150px;
+    opacity: 0.9;
 }
