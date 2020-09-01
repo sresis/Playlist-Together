@@ -41,12 +41,16 @@ def create_song_pref(song_title, user_id, song_uri):
 	"""Creates a song preference for a user."""
 	song_uri = api.get_song_id(song_title)
 
-	song_pref = Song_Pref(song_title=song_title, user_id=user_id, song_uri=song_uri)
+	# make sure song pref is not already added for this user
+	if song_title in return_users_track_prefs(user_id):
+		return 'error'
 
-	db.session.add(song_pref)
-	db.session.commit()
+	else: 
 
-	return song_pref
+		song_pref = Song_Pref(song_title=song_title, user_id=user_id, song_uri=song_uri)
+		db.session.add(song_pref)
+		db.session.commit()
+		return song_pref
 
 def create_recommended_track(user_id, song_uri, song_title, song_id):
 	"""Creates a recommended track for the user and adds it to the database."""

@@ -282,10 +282,15 @@ def add_song_pref_1():
 	song_title = user_data['songPref']
 	song_uri = api.get_song_id(song_title)
 
-	#adds song pref to db
-	song_pref = crud.create_song_pref(song_title, user_id, song_uri)
+	#make sure song pref for user is not already in db
+	result = crud.create_song_pref(song_title, user_id, song_uri)
 
-	return jsonify({'status': 'song pref added'})
+	if result == 'error':
+		return jsonify({'status': 'error - already added'})
+	else:
+		
+		return jsonify({'status': 'song pref added'})
+
 
 @app.route('/api/add_artist_pref', methods=['POST'])
 def add_artist_pref():
