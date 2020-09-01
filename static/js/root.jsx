@@ -13,37 +13,39 @@ function App() {
 	return (
 	    <Router>
 	      <div>
-	        <nav>
-	          <ul>
-	            <li>
-	              <Link to="/">Home</Link>
-	            </li>
-				<li>
-	              <Link to="/create-account">Create Account</Link>
-	            </li>
-	            <li>
-	              <Link to="/login">Login</Link>
-	            </li>
+		  	<nav className="navbar navbar-expand-lg navbar-light bg-light">
+                <div className="collapse navbar-collapse">
+                    <ul className ="navbar-nav">
+						<li>
+						<Link to="/">Home</Link>
+						</li>
+						<li>
+						<Link to="/create-account">Create Account</Link>
+						</li>
+						<li>
+						<Link to="/login">Login</Link>
+						</li>
 
-	            <li>
-	              <Link to="/users">Users</Link>
-	            </li>
-				<li>
-	              <Link to="/your-profile">View Your Profile</Link>
-	            </li>
-				<li>
-	              <Link to="/add-song-pref">Add Song Pref</Link>
-	            </li>
-				<li>
-	              <Link to="/add-artist-pref">Add Artist Pref</Link>
-	            </li>
-				<li>
-	              <Link to="/view-similar-users">View Similar Users</Link>
-	            </li>
-				<li>
-	              <Link to="/logout">Logout</Link>
-	            </li>
-	          </ul>
+						<li>
+						<Link to="/users">Users</Link>
+						</li>
+						<li>
+						<Link to="/your-profile">View Your Profile</Link>
+						</li>
+						<li>
+						<Link to="/add-song-pref">Add Song Pref</Link>
+						</li>
+						<li>
+						<Link to="/add-artist-pref">Add Artist Pref</Link>
+						</li>
+						<li>
+						<Link to="/view-similar-users">View Similar Users</Link>
+						</li>
+						<li>
+						<Link to="/logout">Logout</Link>
+						</li>
+	          		</ul>
+				</div>
 	        </nav>
 
 	        <Switch>
