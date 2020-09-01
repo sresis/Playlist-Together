@@ -93,7 +93,7 @@ function App() {
 function Homepage() {
 	return(
 		<React.Fragment>
-			<h2> Welcome to Combined Playlist Generator! </h2>
+			<h2> Welcome to Play[list] Together! <span class="icon music"></span> </h2>
 		</React.Fragment> 
 		
 	)
