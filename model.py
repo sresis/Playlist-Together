@@ -195,6 +195,12 @@ def connect_to_db(flask_app, db_uri='postgresql:///playlist_combiner', echo=True
     print('Connected to the db!')
 
 
+def example_data():
+    """ Create some sample data."""
+    user1 = User(email="sample@google.com", fname="Sally", lname="Smith", password="123")
+    db.session.add(user1)
+    db.session.commit()
+
 if __name__ == '__main__':
     from server import app
 
