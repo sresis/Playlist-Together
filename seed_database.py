@@ -27,12 +27,14 @@ artists = ['Lil Wayne', 'Lizzo', 'Fleetwood Mac', 'Adele',
 		'The Killers', 'Coldplay', 'Future', 'Tyga', 'The Rolling Stones',
 		'Rihanna', 'Tim McGraw', 'Kane Brown', 'Carrie Underwood', 
 		'Taylor Swift', 'Spice Girls', 'Metallica', 'Kendrick Lamar',
-		'Green Day', 'Alesso', '50 Cent', 'Justin Timberlake']
+		'Green Day', 'Alesso', '50 Cent', 'Justin Timberlake', 'U2', 'Eric Clapton', 'Adele',
+		'Vance Joy', 'Ron Pope', 'Howie Day', 'Sublime'
+		]
 
 songs = ['Miracle Mile', 'A Milli', 'Hollaback Girl', 'Get Low', 'Night Moves', 'Paint It, Black',
 		'Hey There Delilah', 'Eye of the Tiger', 'Red Red Wine', '1985', 'Badd', 'Skinny Love', 
 		'Whatever You Like', 'No Diggity', 'Budapest', 'Babel', 'Location', 'Grillz', 'Country Sh*t',
-		'Trap Queen', 'Watermelon Sugar', 'Savage Love', 'Something I Need' ]
+		'Trap Queen', 'Watermelon Sugar', 'Savage Love', 'Something I Need', 'Layla', 'No Diggity' ]
 # make  random users
 for n in range(1):
 	fname = choice(first_names)

@@ -8,6 +8,8 @@ const Redirect = ReactRouterDOM.Redirect;
 
 
 function App() {
+
+	
 	return (
 	    <Router>
 	      <div>
@@ -38,7 +40,9 @@ function App() {
 				<li>
 	              <Link to="/view-similar-users">View Similar Users</Link>
 	            </li>
-				
+				<li>
+	              <Link to="/logout">Logout</Link>
+	            </li>
 	          </ul>
 	        </nav>
 
@@ -64,12 +68,16 @@ function App() {
 			  <Route path="/add-artist-pref" component={AddArtistPref}>
 	            <AddArtistPref />
 	          </Route>
+			  <Route path="/logout">
+	            <Logout />
+				</Route>
 			  <Route path="/view-similar-users">
 	            <SimilarUsers />
 				</Route>
 			  <Route path="/user-detail/:user_id">
 	            <UserDetail />
 				</Route>
+			
 			
 	          <Route path="/">
 	            <Homepage />
@@ -82,6 +90,28 @@ function App() {
 
 function Homepage() {
 	return <div> Welcome to Combined Playlist Generator! </div>;
+}
+
+function Logout() {
+
+	React.useEffect(() => {
+		fetch('/api/logout', {
+			
+			headers: {
+				'Content-Type': 'application/json'
+			},
+		})
+		.then(response => response.json())
+		.then(data => {
+			// arrays to store the song/artists prefs in HTML
+			console.log(data);
+		});
+		
+	})
+		
+	 
+
+	return <div>logout</div>
 }
 
 function CreateAccount(props) {

@@ -305,14 +305,13 @@ def get_stdev(attribute_dict):
 
 	}
 	# get the stdev and add it to the dict
-	for item in attribute_dict:
-		stdev['tempo'] = statistics.stdev(attribute_dict['tempo'])
-		stdev['valence'] = statistics.stdev(attribute_dict['valence'])
-		stdev['danceability'] = statistics.stdev(attribute_dict['danceability'])
-		stdev['energy'] = statistics.stdev(attribute_dict['energy'])
-		stdev['loudness'] = statistics.stdev(attribute_dict['loudness'])
-		stdev['acousticness'] = statistics.stdev(attribute_dict['acousticness'])
-		stdev['speechiness'] = statistics.stdev(attribute_dict['speechiness'])
+	stdev['tempo'] = statistics.stdev(attribute_dict['tempo'])
+	stdev['valence'] = statistics.stdev(attribute_dict['valence'])
+	stdev['danceability'] = statistics.stdev(attribute_dict['danceability'])
+	stdev['energy'] = statistics.stdev(attribute_dict['energy'])
+	stdev['loudness'] = statistics.stdev(attribute_dict['loudness'])
+	stdev['acousticness'] = statistics.stdev(attribute_dict['acousticness'])
+	stdev['speechiness'] = statistics.stdev(attribute_dict['speechiness'])
 
 
 	return stdev

@@ -23,20 +23,6 @@ def root():
 	#return render_template('index.html')
 	#return render_template('homepage.html')
 
-# @app.route('api/create_prof', methods=['POST'])
-# def create_profile():
-# 	"""returns the results from create profile form."""
-
-
-
-@app.route('/users')
-def all_users():
-	"""View all users."""
-
-	users = crud.get_users()
-
-
-	return render_template('all_users.html', users=users)
 
 @app.route('/api/register', methods=['POST'])
 def create_user():
@@ -58,30 +44,7 @@ def create_user():
 		crud.create_user(email, fname, lname, password)
 		return jsonify({'status': 'created user'})
 
-@app.route('/users', methods=['POST'])
-def register_user():
-	"""Creates a new user."""
 
-	# gets the email, password, fname and lastname for user
-	email = request.form.get('email')
-	fname = request.form.get('fname')
-	lname = request.form.get('lname')
-	password = request.form.get('password')
-
-
-	# checks if email is already registered
-	# if registered, tell them account is already registered
-	user = crud.get_user_by_email(email)
-	if user:
-		flash('This email is already registered. Please try again.')
-	#if not registered, create a new instance of user
-	else:
-	
-		crud.create_user(email, fname, lname, password)
-		flash('Success! You can now log in.')
-
-	#redirects back to homepage
-	return redirect('/')
 	
 @app.route('/api/login', methods=['POST'])
 def login():
@@ -221,8 +184,13 @@ def get_similar_user():
 	# gets session user's info
 	user_id = session['user']
 	user = crud.get_user_by_id(user_id)
+	
 
+	# get stdev data for user
+	session_user_attributes = crud.get_song_attributes(user_id)
 
+	session_user_stdev = crud.get_stdev(session_user_attributes)
+	print(session_user_stdev)
 	# get all users
 	all_users = crud.get_users()
 
@@ -232,9 +200,12 @@ def get_similar_user():
 	# iterate through all users that are not the session user.
 	for user_x in all_users:
 		if user_x != user:
-			user_diff = abs(user.user_valence - user_x.user_valence) + abs(user.user_speechiness - user_x.user_speechiness)
-			+ abs(user.user_acousticness - user_x.user_acousticness) + abs(user.user_energy - user_x.user_energy) 
-			+ abs(user.user_danceability - user_x.user_danceability) + abs(user.user_loudness - user_x.user_loudness)
+			user_diff = (abs(user.user_valence - user_x.user_valence)/session_user_stdev['valence']) 
+			+ (abs(user.user_speechiness - user_x.user_speechiness)/session_user_stdev['speechiness'])
+			+ (abs(user.user_acousticness - user_x.user_acousticness)/session_user_stdev['acousticness'])
+			+ (abs(user.user_energy - user_x.user_energy)/session_user_stdev['energy'])
+			+ (abs(user.user_danceability - user_x.user_danceability)/session_user_stdev['danceability'])
+			+ (abs(user.user_loudness - user_x.user_loudness)/session_user_stdev['loudness'])
 			# if the difference is smaller, update the array with the difference and ID
 			if user_diff < min_diff[0]:
 				min_diff = [user_diff, user_x.email]
@@ -258,39 +229,17 @@ def get_similar_user():
 
 def logout():
 	"""enables user to logout."""
-	if 'user_id' in session:
-		session.pop('username', None)
+	session.pop('user')
+	session.pop('rating')
+	session.pop('show_create_account')
+	session.pop('show_form')
+	session.pop('show_login')
+	for key in session.keys():
+		print(key)
+		
 	return jsonify({'message': 'you have logged out'})
 
-@app.route('/profile', methods=['POST'])
-def login_user():
-	## right now it only lets you log in with existing
-	#session['show_login'] == True
-	# gets email and password from form
-	email = request.form['email']
-	password = request.form['password']
 
-	##
-
-	# gets user info based on email
-	user = crud.get_user_by_email(email)
-	session['user'] = []
-	# checks if pasword in db matches form pasword
-	if user.password == password:
-		#adds user to session
-		session['user'] = user.user_id
-		flash('you are logged in!')
-		artist_prefs = crud.get_user_artist_prefs(user.user_id)
-		song_prefs = crud.get_user_song_prefs(user.user_id)
-		x = user.as_dict
-		return render_template('user_profile.html', user=user, artist_prefs=artist_prefs,
-			song_prefs=song_prefs, x=x)
-			## here you would pass in a  jsnonified dict. all the info for this user. make dict with that in it
-			# parse json string. use info from that to build out components
-			#maybe do request.__.get
-	else:
-		flash('incorrect login.')
-		return redirect('/')
 
 @app.route('/api/shared_playlist/<user_email>', methods=['POST'])
 def show_shared_songs(user_email):
