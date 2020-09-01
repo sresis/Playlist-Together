@@ -91,7 +91,7 @@ function App() {
 function Homepage() {
 	return(
 		<React.Fragment>
-			<div> Welcome to Combined Playlist Generator! </div>
+			<h2> Welcome to Combined Playlist Generator! </h2>
 		</React.Fragment> 
 		
 	)
@@ -554,22 +554,25 @@ function SimilarUsers() {
 		var chart = new Chart(ctx, {
 			// The type of chart we want to create
 			type: 'radar',
-		
+			
+			
 			// The data for our dataset
 			data: {
+				
 				labels: ["Valence", "Speechiness", "Acousticness", "Energy", "Danceability", "Loudness"],
 				datasets: [{
 					label: "You",
-					backgroundColor: "rgba(200,0,0,0.2)",
+					backgroundColor: "rgba(200,0,50,0.8)",
 					data: [`${currentUserValence}`, `${currentUserSpeechiness}`, `${currentUserAcousticness}`,
 					`${currentUserEnergy}`, `${currentUserDanceability}`, `${currentUserLoudness}`]
 				}, {
 					label: `${similarUser}`,
-					backgroundColor: "rgba(0,0,200,0.2)",
+					backgroundColor: "rgba(0,50,200,0.8)",
 					data: [`${similarUserValence}`, `${similarUserSpeechiness}`, `${similarUserAcousticness}`,
 					`${similarUserEnergy}`, `${similarUserDanceability}`, `${similarUserLoudness}`]
 				}]
 			},
+			
 		
 		
 		});
