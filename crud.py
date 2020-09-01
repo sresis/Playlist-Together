@@ -28,13 +28,14 @@ def create_artist_pref(artist_name, user_id):
 	"""Creates an artist preference for a given user."""
 
 	artist_uri = api.get_artist_id(artist_name)
-
+	# make sure no duplicate artists
 	artist_pref = Artist_Pref(artist_name=artist_name, user_id=user_id, artist_uri=artist_uri)
-
-	db.session.add(artist_pref)
-	db.session.commit()
-
-	return artist_pref
+	if get_artist_pref_id(artist_uri, user_id):
+		return 'error'
+	else:
+		db.session.add(artist_pref)
+		db.session.commit()
+		return artist_pref
 
 def create_song_pref(song_title, user_id, song_uri):
 	"""Creates a song preference for a user."""
@@ -104,6 +105,20 @@ def get_song_rec_id(uri, user_id):
 
 	if song:
 		return song.song_rec_id
+
+	else:
+		return None
+
+def get_artist_pref_id(artist_uri, user_id):
+	"""Returns the artist rec pref for a given URI and user ID."""
+
+
+	artist = Artist_Pref.query.filter(Artist_Pref.artist_uri==artist_uri, 
+		Artist_Pref.user_id==user_id).first()
+	
+
+	if artist:
+		return artist.artist_pref_id
 
 	else:
 		return None

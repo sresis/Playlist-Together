@@ -299,9 +299,15 @@ def add_artist_pref():
 	
 
 	#adds artist pref to db
-	crud.create_artist_pref(artist, user_id)
+	result = crud.create_artist_pref(artist, user_id)
+	if result == 'error':
+		return jsonify({'status': 'error - already added'})
+	else:
+		
+		return jsonify({'status': 'artist pref added'})
+	
+	
 
-	return jsonify({'status': 'artist pref added'})
 
 
 

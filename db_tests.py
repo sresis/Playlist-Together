@@ -21,8 +21,8 @@ class DBTests(unittest.TestCase):
         user1 = User(email="sally@google.com", fname="Sally", lname="Smith", password="123")
         user2 = User(email="mike@google.com", fname="Mike", lname="Jones", password="123")
         ## create song pref
-        s_songpref_1 = crud.create_song_pref('Ride wit Me', 1,'3Gf5nttwcX9aaSQXRWidEZ')
-        s_songpref_1 = crud.create_song_pref('Lonely Boy', 1,'31hQmFcwAtlUeMp6iXW0u9')
+        #s_songpref_1 = crud.create_song_pref('Ride wit Me', 1,'3Gf5nttwcX9aaSQXRWidEZ')
+        #s_songpref_1 = crud.create_song_pref('Lonely Boy', 1,'31hQmFcwAtlUeMp6iXW0u9')
         db.session.add_all([user1, user2])
         db.session.commit()
         
