@@ -89,7 +89,12 @@ function App() {
 }
 
 function Homepage() {
-	return <div> Welcome to Combined Playlist Generator! </div>;
+	return(
+		<React.Fragment>
+			<div> Welcome to Combined Playlist Generator! </div>
+		</React.Fragment> 
+		
+	)
 }
 
 function Logout() {
