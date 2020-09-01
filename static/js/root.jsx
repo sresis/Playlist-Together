@@ -374,7 +374,7 @@ function Users(props) {
 			for (const idx in data) {
 				//history.push(`/user-detail/${data[idx]['user_id']}`);
 				users_info.push(
-						<li key={data[idx]['user_id']} id={data[idx]['user_id']}>
+						<li key={data[idx]['user_id']} id={data[idx]['user_id']}><span class="icon users"></span>
 							<Link onClick={()=>{history.push(`/user-detail/${data[idx]['user_id']}`)}}>{data[idx]['email']}</Link>
 							</li>
 					);
@@ -388,7 +388,7 @@ function Users(props) {
 	return(
 		<React.Fragment>
 			<h3>All Users</h3>
-			<div>{users}</div>
+			<ul className="user-container">{users}</ul>
 
 		</React.Fragment>
 		) 
@@ -582,7 +582,7 @@ function SimilarUsers() {
 	return(
 		<React.Fragment>
 			<h3>Similar User:</h3>
-			<li>{similarUser}</li>
+			<li>{similarUser}<span class="icon similar-user"></span></li>
 			<button id="user-graph" onClick={makeGraph}>See Graph</button>
 			<div id="chart-div">
 				<canvas id="myChart"></canvas>

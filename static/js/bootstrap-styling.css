@@ -90,3 +90,15 @@ canvas#myChart {
     align-content: center;
    
 }
+ul li {
+    list-style-type: none;
+
+}
+.users::before {
+    font-family: "Font Awesome 5 Free"; font-weight: 900; content: "\f007";
+    
+  }
+.similar-user::after {
+    font-family: "Font Awesome 5 Free"; font-weight: 900; content: "\f2bb";
+    
+  }
