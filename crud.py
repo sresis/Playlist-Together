@@ -95,9 +95,25 @@ def get_song_id(uri):
 	else:
 		return None
 
-	
+def get_song_title(song_id):
+	"""Returns the song title for a given song id."""
 
 
+	song = Song.query.filter(Song.song_id == song_id).first()
+	if song:
+		return song.song_title
+	else:
+		return None
+
+def get_song(song_id):
+	"""Returns the song for a given song id."""
+
+
+	song = Song.query.filter(Song.song_id == song_id).first()
+	if song:
+		return song
+	else:
+		return None
 
 def get_song_rec_id(uri, user_id):
 	"""Returns the song rec ID for a given URI and user ID."""
@@ -297,7 +313,6 @@ def get_average(attribute_dict):
 	}
 	# get the mean and add it to the dict
 	for item in attribute_dict:
-		print('xxxxxx')
 		averages['tempo'] = statistics.mean(attribute_dict['tempo'])
 		averages['valence'] = statistics.mean(attribute_dict['valence'])
 		averages['danceability'] = statistics.mean(attribute_dict['danceability'])

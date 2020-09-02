@@ -590,6 +590,7 @@ function PlaylistDetail(props) {
 	// pulls the user ID from the "route"
 	const {playlist_id} = ReactRouterDOM.useParams();
 	const[playlistSongs, setPlaylistSongs] = React.useState([]);
+	const[songTitles, setSongTitles] = React.useState([]);
 
 
 	// stores the current user details (to be displayed in HTMl)
@@ -606,22 +607,24 @@ function PlaylistDetail(props) {
 		})
 		.then(res => res.json())
 		.then(data => {
-			console.log(data);
-			const playlist = data.playlist;
+		
+			const songs = data.songs;
+			console.log(songs);
 	
 			// array to store the songs in playlist
 			const playlistItems = [];
 			
-			for (const item of playlist) {
+			for (const item in songs) {
+				console.log(data['songs'][item]['song_title']);
+				
 				playlistItems.push(
 					<div>
-						<li key={item}>{item}</li>
+						<li key={item}>{data['songs'][item]['song_title']}</li>
 						
 					</div>
 				);
 			}
 			setPlaylistSongs(playlistItems);
-			
 			
 			})
 		// reset to avoid infinite loop

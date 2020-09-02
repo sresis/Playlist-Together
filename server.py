@@ -2,10 +2,10 @@
 
 from flask import (Flask, render_template, request, flash, session, jsonify,
 				   redirect)
-from model import connect_to_db, User, Song_Pref, Artist_Pref
+from model import connect_to_db, User, Song_Pref, Artist_Pref, Song
 import crud ##comment out if you want to -i into crud.py
 import api
-from DB import user_details, playlist, playlist_user
+from DB import user_details, playlist, playlist_user, playlist_song
 
 from jinja2 import StrictUndefined
 
@@ -194,6 +194,8 @@ def view_combined_playlist(user_id):
 		'playlist': similar_songs
 	}
 	return jsonify(combined_dict)
+
+
 @app.route('/api/saved-playlists')
 def view_saved_playlists():
 	"""Shows the user's saved playlists."""
@@ -205,15 +207,21 @@ def view_saved_playlists():
 @app.route('/api/playlist-detail/<playlist_id>')
 def view_playlist_details(playlist_id):
 	"""Returns the playlist details."""
-
+	
 	#get songs in playlist
-	
-	
-	combined_dict = {
-		'playlist': 'testing',
-		
-	}
-	return jsonify(combined_dict)
+	song_ids = playlist_song.get_playlist_songs(playlist_id)
+	songs_list = []
+	for item in song_ids:
+		song = crud.get_song(item)
+		songs_list.append(song)
+
+	#store in the dict
+	song_dict = []
+	for song in songs_list:
+		x = Song.as_dict(song)
+		song_dict.append(x)
+
+	return jsonify({'songs': song_dict})
 
 @app.route('/api/similar-users')
 def get_similar_user():

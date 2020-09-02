@@ -104,6 +104,15 @@ class Song(db.Model):
     acousticness = db.Column(db.Float())
     speechiness = db.Column(db.Float())
     song_artist = db.Column(db.String())
+
+    def as_dict(self):
+        return {
+        'song_id': self.song_id,
+        'song_title': self.song_title,
+        'song_uri': self.song_uri
+
+        }
+
     
     def __repr__(self):
         return f'<song_id={self.song_id} song_title={self.song_title} song_artist ={self.song_artist} >'
@@ -197,6 +206,7 @@ def connect_to_db(flask_app, db_uri='postgresql:///playlist_combiner', echo=True
 
 def example_data():
     """ Create some sample data."""
+    
     user1 = User(email="sally@google.com", fname="Sally", lname="Smith", password="123")
     user2 = User(email="xo@google.com", fname="Sally", lname="Smith", password="123")
     db.session.add_all([user1, user2])
