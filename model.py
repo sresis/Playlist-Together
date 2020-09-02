@@ -197,8 +197,9 @@ def connect_to_db(flask_app, db_uri='postgresql:///playlist_combiner', echo=True
 
 def example_data():
     """ Create some sample data."""
-    user1 = User(email="sample@google.com", fname="Sally", lname="Smith", password="123")
-    db.session.add(user1)
+    user1 = User(email="sally@google.com", fname="Sally", lname="Smith", password="123")
+    user2 = User(email="xo@google.com", fname="Sally", lname="Smith", password="123")
+    db.session.add_all([user1, user2])
     db.session.commit()
 
 if __name__ == '__main__':
@@ -217,6 +218,3 @@ if __name__ == '__main__':
 
 
     connect_to_db(app)
-
-
-

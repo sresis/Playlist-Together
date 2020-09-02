@@ -70,15 +70,20 @@ function App() {
 			  <Route path="/add-artist-pref" component={AddArtistPref}>
 	            <AddArtistPref />
 	          </Route>
-			  <Route path="/logout">
+			  <Route path="/logout" component={Login}>
 	            <Logout />
-				</Route>
+	          </Route>
 			  <Route path="/view-similar-users">
 	            <SimilarUsers />
 				</Route>
-			  <Route path="/user-detail/:user_id">
-	            <UserDetail />
+			  <Route path="/combined-playlist/:user_id">
+	            <CombinedPlaylist />
 				</Route>
+			<Route path="/user-detail/:user_id" component={UserDetail}>
+	            <UserDetail />
+	        </Route>	
+		
+			
 			
 			
 	          <Route path="/">
@@ -393,7 +398,64 @@ function Users(props) {
 		</React.Fragment>
 		) 
 }
+function CombinedPlaylist(props) {
+	// pulls the user ID from the "route"
+	const {user_id} = ReactRouterDOM.useParams();
+	const profile_info = {'user': props.user, 'playlist': props.playlist}
+	const[playlist, setPlaylist] = React.useState([]);
+	const[playlistSongs, setPlaylistSongs] = React.useState([]);
 
+
+
+	
+	
+	React.useEffect(() => {
+		fetch(`/api/user-detail/${user_id}`, {
+			
+			method: 'POST',
+			credentials: 'include',
+			headers: {
+				'Content-Type': 'application/json'
+			},
+		})
+		.then(res => res.json())
+		.then(data => {
+			console.log(data);
+			// arrays to store the song/artists prefs in HTML
+			
+			const playlist = data.playlist
+			console.log(playlist);
+
+		// array to store the songs in playlist
+		const playlistItems = [];
+		playlistItems.push(
+			<h3>Shared Playlist:</h3>
+		);
+		for (const item of playlist) {
+			console.log('xxxx');
+			console.log(item);
+			playlistItems.push(
+				<div>
+					<li key={item[1]}>{item[0]}</li>
+					<iframe src= {`https://open.spotify.com/embed/track/${item[1]}`}
+						width="300" height="50" frameBorder="0" allowtransparency="true" allow="encrypted-media"></iframe>
+				</div>
+			);
+		}
+		setPlaylistSongs(playlistItems);
+		
+		})
+		// reset to avoid infinite loop
+	}, [props.user, props.playlist])
+
+	
+
+	return (
+		<React.Fragment>
+			<div>{playlistSongs}</div>
+		</React.Fragment>
+	)
+}
 function UserDetail(props) {
 	// pulls the user ID from the "route"
 	const {user_id} = ReactRouterDOM.useParams();
@@ -409,7 +471,7 @@ function UserDetail(props) {
 	
 	
 	const user = {"user_id": {user_id}}
-
+	const history = ReactRouterDOM.useHistory();
 	
 	const showPlaylist = () => {
 
@@ -441,7 +503,6 @@ function UserDetail(props) {
 		})
 		.then(res => res.json())
 		.then(data => {
-			console.log(data);
 			// arrays to store the song/artists prefs in HTML
 			const fav_songs = []
 			const fav_artists = []
@@ -490,10 +551,12 @@ function UserDetail(props) {
 			<div>{favArtists}</div>
 			<button id="make-playlist" onClick={showPlaylist}>Generate Shared Playlist with {fname}</button>
 			<div>{playlistSongs}</div>
+			<button id="generate-playlist" onClick={()=>{history.push(`/combined-playlist/${user_id}`)}}>Generate Shared Playlist</button>
 			
 		</React.Fragment>
 		) 
 }
+
 
 function SimilarUsers() {
 

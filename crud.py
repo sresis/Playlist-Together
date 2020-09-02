@@ -10,7 +10,7 @@ from DB import playlist_song, playlist, playlist_user
 
 #import pdb; pdb.set_trace()
 #model.connect_to_db(server.app)
-
+# make an if name = main
 
 
 
@@ -458,9 +458,6 @@ def get_all_similar_songs(user_1, user_2, target_songs):
 
 	# return the song_ids and then do something with the total
 	return song_uris
-
-
-
 
 
 

@@ -282,7 +282,7 @@ def add_song_pref_1():
 	song_title = user_data['songPref']
 	song_uri = api.get_song_id(song_title)
 
-	#make sure song pref for user is not already in db
+	#make sure song pref for user is not already
 	result = crud.create_song_pref(song_title, user_id, song_uri)
 
 	if result == 'error':
