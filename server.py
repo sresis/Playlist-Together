@@ -202,6 +202,18 @@ def view_saved_playlists():
 
 	return jsonify({'playlists': user_playlists})
 
+@app.route('/api/playlist-detail/<playlist_id>')
+def view_playlist_details(playlist_id):
+	"""Returns the playlist details."""
+
+	#get songs in playlist
+	
+	
+	combined_dict = {
+		'playlist': 'testing',
+		
+	}
+	return jsonify(combined_dict)
 
 @app.route('/api/similar-users')
 def get_similar_user():

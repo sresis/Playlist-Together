@@ -85,6 +85,9 @@ function App() {
 			<Route path="/user-detail/:user_id" component={UserDetail}>
 	            <UserDetail />
 	        </Route>
+			<Route path="/playlist-detail/:playlist_id" component={PlaylistDetail}>
+	            <PlaylistDetail />
+	        </Route>
 			<Route path="/view-saved-playlists" component={ViewSavedPlaylists}>
 	            <ViewSavedPlaylists />
 	        </Route>
@@ -92,9 +95,6 @@ function App() {
 	            <SavePlaylist />
 	        </Route>	
 		
-			
-			
-			
 	          <Route path="/">
 	            <Homepage />
 	          </Route>
@@ -484,6 +484,7 @@ function SavePlaylist(props) {
 }
 function ViewSavedPlaylists(props){
 	const[playlistList, setPlaylistList] = React.useState([]);
+	const history = ReactRouterDOM.useHistory();
 
 	React.useEffect(() => {
 		fetch(`/api/saved-playlists`, {
@@ -502,7 +503,9 @@ function ViewSavedPlaylists(props){
 				console.log(data['playlists'][item]);
 				//history.push(`/user-detail/${data[idx]['user_id']}`);
 				allPlaylists.push(
-						<li key={data['playlists'][item]}>{data['playlists'][item]}</li>
+						<li key={data['playlists'][item]}>
+							<Link onClick={()=>{history.push(`/playlist-detail/${data['playlists'][item]}`)}}>{data['playlists'][item]}</Link>
+						</li>
 					);
 			}
 			
@@ -583,7 +586,52 @@ function UserDetail(props) {
 		</React.Fragment>
 		) 
 }
+function PlaylistDetail(props) {
+	// pulls the user ID from the "route"
+	const {playlist_id} = ReactRouterDOM.useParams();
+	const[playlistSongs, setPlaylistSongs] = React.useState([]);
 
+
+	// stores the current user details (to be displayed in HTMl)
+	console.log(playlist_id);
+	
+	
+	// call another function to do the loop
+	React.useEffect(() => {
+		fetch(`/api/playlist-detail/${playlist_id}`, {
+			
+			headers: {
+				'Content-Type': 'application/json'
+			},
+		})
+		.then(res => res.json())
+		.then(data => {
+			console.log(data);
+			const playlist = data.playlist;
+	
+			// array to store the songs in playlist
+			const playlistItems = [];
+			
+			for (const item of playlist) {
+				playlistItems.push(
+					<div>
+						<li key={item}>{item}</li>
+						
+					</div>
+				);
+			}
+			setPlaylistSongs(playlistItems);
+			
+			
+			})
+		// reset to avoid infinite loop
+	}, [props.playlistSongs])
+	return(
+		<React.Fragment>
+			<div>{playlistSongs}</div>
+		</React.Fragment>
+		) 
+}
 
 function SimilarUsers() {
 	// get session user and pull the most similar
