@@ -401,14 +401,10 @@ function Users(props) {
 function CombinedPlaylist(props) {
 	// pulls the user ID from the "route"
 	const {user_id} = ReactRouterDOM.useParams();
-	const profile_info = {'user': props.user, 'playlist': props.playlist}
 	const[playlist, setPlaylist] = React.useState([]);
+	const[fname, setFname] = React.useState([]);
 	const[playlistSongs, setPlaylistSongs] = React.useState([]);
 
-
-
-	
-	
 	React.useEffect(() => {
 		fetch(`/api/user-detail/${user_id}`, {
 			
@@ -420,38 +416,32 @@ function CombinedPlaylist(props) {
 		})
 		.then(res => res.json())
 		.then(data => {
-			console.log(data);
-			// arrays to store the song/artists prefs in HTML
+			const f_name = data.user.fname;
+			const playlist = data.playlist;
+	
+			// array to store the songs in playlist
+			const playlistItems = [];
 			
-			const playlist = data.playlist
-			console.log(playlist);
-
-		// array to store the songs in playlist
-		const playlistItems = [];
-		playlistItems.push(
-			<h3>Shared Playlist:</h3>
-		);
-		for (const item of playlist) {
-			console.log('xxxx');
-			console.log(item);
-			playlistItems.push(
-				<div>
-					<li key={item[1]}>{item[0]}</li>
-					<iframe src= {`https://open.spotify.com/embed/track/${item[1]}`}
-						width="300" height="50" frameBorder="0" allowtransparency="true" allow="encrypted-media"></iframe>
-				</div>
-			);
-		}
-		setPlaylistSongs(playlistItems);
-		
-		})
+			for (const item of playlist) {
+				playlistItems.push(
+					<div>
+						<li key={item[1]}>{item[0]}</li>
+						<iframe src= {`https://open.spotify.com/embed/track/${item[1]}`}
+							width="300" height="50" frameBorder="0" allowtransparency="true" allow="encrypted-media"></iframe>
+					</div>
+				);
+			}
+			setPlaylistSongs(playlistItems);
+			setFname(f_name);
+			console.log(f_name)
+			
+			})
 		// reset to avoid infinite loop
 	}, [props.user, props.playlist])
 
-	
-
 	return (
 		<React.Fragment>
+			<h3>Shared Playlist with {fname}:</h3>
 			<div>{playlistSongs}</div>
 		</React.Fragment>
 	)
@@ -466,31 +456,12 @@ function UserDetail(props) {
 	const[favSongs, setFavSongs] = React.useState([]);
 	const[favArtists, setFavArtists] = React.useState([]);
 	const[fname, setFname] = React.useState([]);
-	const[playlist, setPlaylist] = React.useState([]);
-	const[playlistSongs, setPlaylistSongs] = React.useState([]);
 	
 	
 	const user = {"user_id": {user_id}}
 	const history = ReactRouterDOM.useHistory();
 	
-	const showPlaylist = () => {
-
-		// array to store the songs in playlist
-		const playlistItems = [];
-		playlistItems.push(
-			<h3>Shared Playlist:</h3>
-		);
-		for (const item of playlist) {
-			playlistItems.push(
-				<div>
-					<li key={item[1]}>{item[0]}</li>
-					<iframe src= {`https://open.spotify.com/embed/track/${item[1]}`}
-						width="300" height="50" frameBorder="0" allowtransparency="true" allow="encrypted-media"></iframe>
-				</div>
-			);
-		}
-		setPlaylistSongs(playlistItems);
-	}
+	
 	// call another function to do the loop
 	React.useEffect(() => {
 		fetch(`/api/user-detail/${user_id}`, {
@@ -511,11 +482,9 @@ function UserDetail(props) {
 			const song_prefs = data.song_pref;
 			const artist_prefs = data.artist_pref;
 			const f_name = data.user.fname;
-			const playlist = data.playlist
 
 			// add each song pref and artist pref to a li
 			for (const item of song_prefs) {
-				console.log(item.song_uri)
 				fav_songs.push(
 					<div>
 						<li key={item.song_pref_id}>{item.song_title}</li>
@@ -532,15 +501,10 @@ function UserDetail(props) {
 		setFavSongs(fav_songs);
 		setFavArtists(fav_artists);
 		setFname(f_name);
-		setPlaylist(playlist)
-		
-		
 			
 		})
 		// reset to avoid infinite loop
-	}, [props.user, props.song_pref, props.artist_pref, props.playlist])
-
-	
+	}, [props.user, props.song_pref, props.artist_pref])
 
 	return(
 		<React.Fragment>
@@ -549,10 +513,7 @@ function UserDetail(props) {
 			<div>{favSongs}</div>
 			<h4>Favorite Artists</h4>
 			<div>{favArtists}</div>
-			<button id="make-playlist" onClick={showPlaylist}>Generate Shared Playlist with {fname}</button>
-			<div>{playlistSongs}</div>
-			<button id="generate-playlist" onClick={()=>{history.push(`/combined-playlist/${user_id}`)}}>Generate Shared Playlist</button>
-			
+			<button id="generate-playlist" onClick={()=>{history.push(`/combined-playlist/${user_id}`)}}>Generate Shared Playlist with {fname}</button>
 		</React.Fragment>
 		) 
 }
