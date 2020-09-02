@@ -5,7 +5,7 @@ from flask import (Flask, render_template, request, flash, session, jsonify,
 from model import connect_to_db, User, Song_Pref, Artist_Pref
 import crud ##comment out if you want to -i into crud.py
 import api
-from DB import user_details
+from DB import user_details, playlist, playlist_user
 
 from jinja2 import StrictUndefined
 
@@ -162,6 +162,26 @@ def view_user(user_id):
 	session_user = session['user']
 	## get the user id
 	
+	
+	combined_dict = {
+		'user': json_user,
+		'song_pref': song_dict,
+		'artist_pref': artist_list,
+	}
+	return jsonify(combined_dict)
+
+@app.route('/api/combined_playlist/<user_id>', methods=['POST'])
+def view_combined_playlist(user_id):
+	"""Returns the combined playlist."""
+
+	user = crud.get_user_by_id(user_id)
+
+	#jsonifies user info
+	json_user = User.as_dict(user)
+
+	session_user = session['user']
+	## get the user id
+	
 	# gets attributes of user's recommended tracks
 	shared_prefs = crud.get_shared_tracks(session_user, user_id)
 	song_attributes = crud.get_song_attributes(session_user)
@@ -171,8 +191,6 @@ def view_user(user_id):
 	
 	combined_dict = {
 		'user': json_user,
-		'song_pref': song_dict,
-		'artist_pref': artist_list,
 		'playlist': similar_songs
 	}
 	return jsonify(combined_dict)
@@ -268,7 +286,31 @@ def show_shared_songs(user_email):
 
 # be using react. fetch function to get things back from .jsx
 
+@app.route('/api/save_playlist/<user_id>', methods=['POST'])
+def save_shared_playlist(user_id):
+	""" saves a shared playlist ."""
+	#get session user and user
+	#get the shared songs
+	#add the shared songs to playlist db
+	session_user = session['user']
 
+	shared_prefs = crud.get_shared_tracks(session_user, user_id)
+	song_attributes = crud.get_song_attributes(session_user)
+	stdev = crud.get_stdev(song_attributes)
+
+	similar_songs = crud.get_all_similar_songs(session_user, user_id, 10)
+	print(similar_songs)
+	## get song id for each item
+	song_ids = []
+	for item in similar_songs:
+		song_id = crud.get_song_id(item[1])
+		song_ids.append(song_id)
+
+	playlist_1 = playlist_user.save_shared_playlist(session_user, user_id, song_ids)
+
+	
+
+	return jsonify({'status': 'saved'})
 
 
 @app.route('/api/add_song_pref', methods=['POST'])

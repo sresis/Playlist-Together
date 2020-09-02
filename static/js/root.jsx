@@ -81,6 +81,9 @@ function App() {
 				</Route>
 			<Route path="/user-detail/:user_id" component={UserDetail}>
 	            <UserDetail />
+	        </Route>
+			<Route path="/save-playlist/:user_id" component={SavePlaylist}>
+	            <SavePlaylist />
 	        </Route>	
 		
 			
@@ -343,6 +346,7 @@ function YourProfile(props) {
 		</React.Fragment>
 		) 
 }
+
 function GetSongRecs() {
 
 	
@@ -404,9 +408,11 @@ function CombinedPlaylist(props) {
 	const[playlist, setPlaylist] = React.useState([]);
 	const[fname, setFname] = React.useState([]);
 	const[playlistSongs, setPlaylistSongs] = React.useState([]);
-
+	
+	const history = ReactRouterDOM.useHistory();
+	
 	React.useEffect(() => {
-		fetch(`/api/user-detail/${user_id}`, {
+		fetch(`/api/combined_playlist/${user_id}`, {
 			
 			method: 'POST',
 			credentials: 'include',
@@ -443,8 +449,32 @@ function CombinedPlaylist(props) {
 		<React.Fragment>
 			<h3>Shared Playlist with {fname}:</h3>
 			<div>{playlistSongs}</div>
+			<button id="save-playlist" onClick={()=>{history.push(`/save-playlist/${user_id}`)}}>Save Playlist</button>
 		</React.Fragment>
 	)
+}
+function SavePlaylist(props) {
+	// get the songs and users in the playlist and pass it to server. then server commits it
+	const {user_id} = ReactRouterDOM.useParams();
+	
+	React.useEffect(() => {
+		fetch(`/api/save_playlist/${user_id}`, {
+			
+			method: 'POST',
+			credentials: 'include',
+			headers: {
+				'Content-Type': 'application/json'
+			},
+		})
+		.then(res => res.json())
+		.then(data => {
+		
+			// array to store the songs in playlist
+			console.log(data)
+			})
+		// reset to avoid infinite loop
+	})
+	return <h1>Saved</h1>
 }
 function UserDetail(props) {
 	// pulls the user ID from the "route"
@@ -520,8 +550,6 @@ function UserDetail(props) {
 
 
 function SimilarUsers() {
-
-
 	// get session user and pull the most similar
 	const[similarUser, setSimilarUser] = React.useState([]);
 
@@ -567,7 +595,6 @@ function SimilarUsers() {
 			setSimilarUserDanceability(data.similar_user_info[4]);
 			setSimilarUserLoudness(data.similar_user_info[5]);
 
-			
 
 		})
 	})
@@ -580,7 +607,6 @@ function SimilarUsers() {
 		var chart = new Chart(ctx, {
 			// The type of chart we want to create
 			type: 'radar',
-			
 			
 			// The data for our dataset
 			data: {
@@ -728,10 +754,6 @@ function AddArtistPref(props) {
 
 		);
 }
-
-
-
-
 
 
 ReactDOM.render(<App />, document.getElementById('root'))

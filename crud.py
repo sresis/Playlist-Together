@@ -340,6 +340,7 @@ def get_stdev(attribute_dict):
 def get_shared_tracks(user_1, user_2):
 	"""Returns shared recommended tracks for 2 users."""
 
+	## could do a join here
 	# gets recommended songs for each user
 	user_1_songs = Song_Rec.query.filter(Song_Rec.user_id == user_1)
 	user_2_songs = Song_Rec.query.filter(Song_Rec.user_id == user_2)
@@ -457,7 +458,7 @@ def get_all_similar_songs(user_1, user_2, target_songs):
 		song_uris.append(item)
 
 	# return the song_ids and then do something with the total
-	return song_uris
+	return shared_list
 
 
 
