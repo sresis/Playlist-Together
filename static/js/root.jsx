@@ -620,7 +620,8 @@ function PlaylistDetail(props) {
 				playlistItems.push(
 					<div>
 						<li key={item}>{data['songs'][item]['song_title']}</li>
-						
+						<iframe src= {`https://open.spotify.com/embed/track/${data['songs'][item]['song_uri']}`}
+						width="300" height="60" frameBorder="0" allowtransparency="true" allow="encrypted-media"></iframe>
 					</div>
 				);
 			}
