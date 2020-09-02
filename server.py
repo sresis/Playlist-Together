@@ -194,6 +194,14 @@ def view_combined_playlist(user_id):
 		'playlist': similar_songs
 	}
 	return jsonify(combined_dict)
+@app.route('/api/saved-playlists')
+def view_saved_playlists():
+	"""Shows the user's saved playlists."""
+	user_id = session['user']
+	user_playlists = playlist_user.get_user_playlist(user_id)
+
+	return jsonify({'playlists': user_playlists})
+
 
 @app.route('/api/similar-users')
 def get_similar_user():

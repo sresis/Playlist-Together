@@ -28,6 +28,15 @@ def save_shared_playlist(user_1, user_2, song_list):
 		print(item)
 		playlist_song.create_playlist_song(item, new_playlist.playlist_id)
 
-
-
 	return new_playlist
+
+def get_user_playlist(user_id):
+	"""returns all playlists ids for a user."""
+	playlist_user = Playlist_User.query.filter(Playlist_User.user_id == user_id)
+	# stores playlist ids
+	playlist_ids = []
+	for item in playlist_user:
+		playlist_ids.append(item.playlist_id)
+
+	return playlist_ids
+	

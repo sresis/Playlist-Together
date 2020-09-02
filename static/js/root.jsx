@@ -42,6 +42,9 @@ function App() {
 						<Link to="/view-similar-users">View Similar Users </Link>
 						</li>
 						<li>
+						<Link to="/view-saved-playlists">View Saved Playlists </Link>
+						</li>
+						<li>
 						<Link to="/logout">Logout </Link>
 						</li>
 	          		</ul>
@@ -81,6 +84,9 @@ function App() {
 				</Route>
 			<Route path="/user-detail/:user_id" component={UserDetail}>
 	            <UserDetail />
+	        </Route>
+			<Route path="/view-saved-playlists" component={ViewSavedPlaylists}>
+	            <ViewSavedPlaylists />
 	        </Route>
 			<Route path="/save-playlist/:user_id" component={SavePlaylist}>
 	            <SavePlaylist />
@@ -475,6 +481,36 @@ function SavePlaylist(props) {
 		// reset to avoid infinite loop
 	})
 	return <h1>Saved</h1>
+}
+function ViewSavedPlaylists(props){
+	const[playlistList, setPlaylistList] = React.useState([]);
+
+	React.useEffect(() => {
+		fetch(`/api/saved-playlists`, {
+			
+			headers: {
+				'Content-Type': 'application/json'
+			},
+		})
+		.then(res => res.json())
+		.then(data => {
+			const allPlaylists = []
+
+			// adds list of links for each user. handle each click
+			for (const item in data['playlists']) {
+				
+				console.log(data['playlists'][item]);
+				//history.push(`/user-detail/${data[idx]['user_id']}`);
+				allPlaylists.push(
+						<li key={data['playlists'][item]}>{data['playlists'][item]}</li>
+					);
+			}
+			
+		setPlaylistList(allPlaylists);
+		})
+		// reset to avoid infinite loop
+	}, [props.playlistList])
+	return <h1>{playlistList}</h1>
 }
 function UserDetail(props) {
 	// pulls the user ID from the "route"
