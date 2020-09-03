@@ -2,7 +2,7 @@ import model
 import crud
 from server import app
 import unittest
-
+import pdb
 class DBTests(unittest.TestCase):
     def setUp(self):
         """run before every test"""
@@ -23,12 +23,14 @@ class DBTests(unittest.TestCase):
         """makes sure there are users in DB."""
         self.assertNotEqual(crud.get_users(), None)
 
-    def test_song_prefs(self):
+  
+    def test_song_preferences(self):
         self.assertNotEqual(crud.get_all_song_prefs(), None)
 
     def tearDown(self):
-        """tears down."""
-        self.quit()
+        import pdb; pdb.set_trace()
+        pass
+    
 
 
         ## add teardown
