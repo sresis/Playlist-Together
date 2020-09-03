@@ -1,5 +1,4 @@
 from model import db, Playlist, connect_to_db
-import model
 import api
 
 

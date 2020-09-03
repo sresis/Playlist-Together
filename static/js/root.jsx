@@ -619,7 +619,16 @@ function PlaylistDetail(props) {
 				
 				playlistItems.push(
 					<div>
-						<li key={item}data-toggle="tooltip" title={`loudness: ${data['songs'][item]['song_loudness']}`}>{data['songs'][item]['song_title']}</li>
+						<li key={item}data-toggle="tooltip" 
+						title={`Loudness: ${data['songs'][item]['song_loudness']}
+								Danceability: ${data['songs'][item]['song_danceability']}
+								Valence:${data['songs'][item]['song_valence']}
+								Tempo:${data['songs'][item]['song_tempo']}
+								Energy:${data['songs'][item]['song_energy']}
+								Acousticness:${data['songs'][item]['song_acousticness']}
+								`}
+						>
+									{data['songs'][item]['song_title']}</li>
 						<iframe src= {`https://open.spotify.com/embed/track/${data['songs'][item]['song_uri']}`}
 						width="300" height="60" frameBorder="0" allowtransparency="true" allow="encrypted-media"></iframe>
 					</div>

@@ -110,6 +110,11 @@ class Song(db.Model):
         'song_id': self.song_id,
         'song_title': self.song_title,
         'song_uri': self.song_uri,
+        'song_tempo': self.tempo,
+        'song_valence': self.valence,
+        'song_danceability': self.danceability,
+        'song_acousticness': self.acousticness,
+        'song_energy': self.energy,
         'song_loudness': self.loudness
 
         }
