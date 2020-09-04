@@ -45,9 +45,6 @@ function App() {
 						<Link to="/view-saved-playlists">View Saved Playlists </Link>
 						</li>
 						<li>
-						<Link to="/autocomplete">Autocomplete </Link>
-						</li>
-						<li>
 						<Link to="/logout">Logout </Link>
 						</li>
 	          		</ul>
@@ -97,9 +94,7 @@ function App() {
 			<Route path="/save-playlist/:user_id" component={SavePlaylist}>
 	            <SavePlaylist />
 	        </Route>
-			<Route path="/autocomplete" component={AutocompletePage}>
-	            <AutocompletePage />
-	        </Route>	
+
 		
 	          <Route path="/">
 	            <Homepage />
@@ -805,8 +800,12 @@ function AddSongPref(props) {
 }
 
 
-function AutocompletePage(props) {
-	
+function AddArtistPref(props) {
+	// lets user add artist pref to profile
+
+	// input for artist pref title
+	const[artistPref, setArtistPref] = React.useState("");
+	const[addedPref, setAddedPref] = React.useState(false);
 	const[token, setToken] = React.useState("");
 	// get the token from server
 	fetch('/api/token', {
@@ -821,7 +820,6 @@ function AutocompletePage(props) {
 		const token_info = data.token;
 		setToken(token_info);
 	})
-	console.log(token);
 
 	$(document).ready(function() {
 		$("#artist-input").autocomplete({
@@ -842,7 +840,6 @@ function AutocompletePage(props) {
 						q: request.term
 					},
 					success: function(data) {
-						console.log(data.artists.items[0].name);
 						response($.map(data.artists.items, function(item) {
 							console.log(item);
 							return {
@@ -865,24 +862,6 @@ function AutocompletePage(props) {
 		
 		});
 	
-	  
-	return (
-		<React.Fragment>
-
-			<input type="text" className="text-box" placeholder="Enter Artist" id="artist-input"></input>
-
-		
-		</React.Fragment>
-    );
-}
-
-function AddArtistPref(props) {
-	// lets user add artist pref to profile
-
-	// input for artist pref title
-	const[artistPref, setArtistPref] = React.useState("");
-	const[addedPref, setAddedPref] = React.useState(false);
-
 	// formats the user input
 	const user_input = {"artistPref": artistPref};
 
@@ -921,7 +900,8 @@ function AddArtistPref(props) {
 		<form id="artist-pref-form">
 			<label>Artist Name:</label>
 			<input type = "text" 
-				name="artistPref" 
+				name="artistPref"
+				id = "artist-input" 
 				value = {artistPref} 
 				onChange={e => setArtistPref(e.target.value)} >		
 			</input>
