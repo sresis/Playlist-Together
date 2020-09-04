@@ -788,9 +788,7 @@ function AddSongPref(props) {
 								label: item.name,
 								value: item.name,
 								id: item.id
-								
 							}
-							
 						}));
 					}
 				});
@@ -865,6 +863,8 @@ function AddArtistPref(props) {
 	const[addedPref, setAddedPref] = React.useState(false);
 	const[token, setToken] = React.useState("");
 	// get the token from server
+
+	var autocompleteInfo = '';
 	fetch('/api/token', {
 	
 		headers: {
@@ -877,51 +877,54 @@ function AddArtistPref(props) {
 		const token_info = data.token;
 		setToken(token_info);
 	})
+	// how to pass the autocomplete value into when we submit
 
-	$(document).ready(function() {
-		$("#artist-input").autocomplete({
-			
-			source: function(request, response) {
-				$.ajax({
-					type: "GET",
-					url: "https://api.spotify.com/v1/search",
-					dataType: "json",
-					headers: {
-						'Authorization' : 'Bearer ' + token,
-					},
-					data: {
-						type: "artist",
-						limit: 3,
-						contentType: "application/json; charset=utf-8",
-						format: "json",
-						q: request.term
-					},
-					success: function(data) {
-						response($.map(data.artists.items, function(item) {
-							console.log(item);
-							return {
-								label: item.name,
-								value: item.name,
-								id: item.id
-								
-							}
-							
-						}));
-					}
-				});
-			},
-			minLength: 3,
-			select: function(event, ui) {
-				$("#artist-input").val(ui.item.value);
-				window.location.href = "#" + ui.item.value;
-			},
-		});
+	$("#artist-input").autocomplete({
 		
-		});
+		source: function(request, response) {
+			$.ajax({
+				type: "GET",
+				url: "https://api.spotify.com/v1/search",
+				dataType: "json",
+				headers: {
+					'Authorization' : 'Bearer ' + token,
+				},
+				data: {
+					type: "artist",
+					limit: 3,
+					contentType: "application/json; charset=utf-8",
+					format: "json",
+					q: request.term
+				},
+				success: function(data) {
+					response($.map(data.artists.items, function(item) {
+						return {
+							label: item.name,
+							value: item.name,
+							id: item.id
+							
+						}
+						
+					}));
+				}
+			});
+		},
+		
+		minLength: 2,
+		select: function(evt, ui) {
+			// updates artist input field
+			$("#artist-input").val(ui.item.value);
+			autocompleteInfo = ui.item.value;
+			console.log('xxx');
+			console.log(autocompleteInfo);
+		},
+		
+	});
+
 	
 	// formats the user input
-	const user_input = {"artistPref": artistPref};
-
+	const user_input = {"artistPref": autocompleteInfo};
+	console.log(user_input);
 	const addArtist = (evt) => {
 		evt.preventDefault();
 
@@ -935,6 +938,7 @@ function AddArtistPref(props) {
 		})
 		.then(res => res.json())
 		.then(data => {
+			console.log(data);
 			if(data.status === "artist pref added") {
 				alert('Artist pref added!');
 				setAddedPref(true);
@@ -947,9 +951,7 @@ function AddArtistPref(props) {
 	});
 	}
 
-	if (setAddedPref === true) {
-		return <Redirect to='/your-profile' />
-	}
+
 	// can replace line 472 to true with history.push(/your-profile)
 
 		// renders song pref form
@@ -959,8 +961,7 @@ function AddArtistPref(props) {
 			<input type = "text" 
 				name="artistPref"
 				id = "artist-input" 
-				value = {artistPref} 
-				onChange={e => setArtistPref(e.target.value)} >		
+				onChange ={e => setArtistPref(autocompleteInfo)} >		
 			</input>
 	
 			<button id="artist-pref-but" onClick={addArtist}>Add Artist Pref</button>
