@@ -804,35 +804,26 @@ function AddSongPref(props) {
 	
 }
 
-function Autocompleting() {
-	var state = { val: 'hi' };
-	const MoviesData = ['blue', 'yellow', 'pink'];
-	return (
-		<Autocomplete
-		getItemValue={(item) => item.label}
-		items={[
-			{ label: 'apple' },
-			{ label: 'banana' },
-			{ label: 'pear' }
-		]}
-		renderItem={(item, isHighlighted) =>
-			<div style={{ background: isHighlighted ? 'lightgray' : 'white' }}>
-			{item.label}
-			</div>
-		}
-		value={value}
-		onChange={(e) => value = e.target.value}
-		onSelect={(val) => value = val}
-		/>
-	  );
-}
 
 function AutocompletePage(props) {
-	// how to query the api from js
-	const availableTags = ['hi', 'alesso', 'lizzo', 'hozier', 'Lil Wayne'];
+	
+	const[token, setToken] = React.useState("");
+	// get the token from server
+	fetch('/api/token', {
+	
+		headers: {
+			'Content-Type': 'application/json'
+		},
+
+	})
+	.then(res => res.json())
+	.then(data => {
+		const token_info = data.token;
+		setToken(token_info);
+	})
+	console.log(token);
+
 	$(document).ready(function() {
-		console.log('test');
-		const code = 'BQB-Hgn7MtpS7gVranot26_cN-rUaeTo_acUmJ59zt4osHguJfwDNwDvIHCi_G5X6MU3T3u_PsSUNasaEMI'
 		$("#artist-input").autocomplete({
 			
 			source: function(request, response) {
@@ -841,7 +832,7 @@ function AutocompletePage(props) {
 					url: "https://api.spotify.com/v1/search",
 					dataType: "json",
 					headers: {
-						'Authorization' : 'Bearer ' + code,
+						'Authorization' : 'Bearer ' + token,
 					},
 					data: {
 						type: "artist",

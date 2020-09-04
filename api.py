@@ -18,7 +18,9 @@ auth_response_data = auth_response.json()
 
 # save the access token. "golden ticket" to accessing API
 access_token = auth_response_data['access_token']
-print(access_token)
+def get_token():
+	"""Returns current token."""
+	return access_token
 
 #GET request needs access token in header
 headers = {

@@ -203,6 +203,11 @@ def view_saved_playlists():
 	user_playlists = playlist_user.get_user_playlist(user_id)
 
 	return jsonify({'playlists': user_playlists})
+@app.route('/api/token')
+def get_spotify_token():
+	"""Gets secret token."""
+	token = api.get_token()
+	return jsonify({'token': token})
 
 @app.route('/api/playlist-detail/<playlist_id>')
 def view_playlist_details(playlist_id):
