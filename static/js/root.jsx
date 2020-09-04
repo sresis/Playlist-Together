@@ -747,6 +747,63 @@ function AddSongPref(props) {
 	// input for song pref title
 	const[songPref, setSongPref] = React.useState("");
 	const[addedPref, setAddedPref] = React.useState(false);
+
+	const[token, setToken] = React.useState("");
+	// get the token from server
+	fetch('/api/token', {
+	
+		headers: {
+			'Content-Type': 'application/json'
+		},
+
+	})
+	.then(res => res.json())
+	.then(data => {
+		const token_info = data.token;
+		setToken(token_info);
+	})
+
+	$(document).ready(function() {
+		$("#song-input").autocomplete({
+			
+			source: function(request, response) {
+				$.ajax({
+					type: "GET",
+					url: "https://api.spotify.com/v1/search",
+					dataType: "json",
+					headers: {
+						'Authorization' : 'Bearer ' + token,
+					},
+					data: {
+						type: "track",
+						limit: 3,
+						contentType: "application/json; charset=utf-8",
+						format: "json",
+						q: request.term
+					},
+					success: function(data) {
+						response($.map(data.tracks.items, function(item) {
+							console.log(item);
+							return {
+								label: item.name,
+								value: item.name,
+								id: item.id
+								
+							}
+							
+						}));
+					}
+				});
+			},
+			minLength: 3,
+			select: function(event, ui) {
+				$("#song-input").val(ui.item.value);
+				window.location.href = "#" + ui.item.value;
+			},
+		});
+		
+		});
+	
 	const user_input = {"songPref": songPref};
 
 	const addSong = (evt) => {
@@ -785,7 +842,7 @@ function AddSongPref(props) {
 			<label>Song Title:</label>
 			<input type = "text" 
 				name="songPref"
-				id="autocomplete" 
+				id="song-input" 
 				value = {songPref} 
 				onChange={e => setSongPref(e.target.value)} >		
 			</input>
