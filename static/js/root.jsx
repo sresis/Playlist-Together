@@ -916,14 +916,15 @@ function AddArtistPref(props) {
 			$("#artist-input").val(ui.item.value);
 			autocompleteInfo = ui.item.value;
 			console.log('xxx');
-			console.log(autocompleteInfo);
+			setArtistPref(autocompleteInfo);
+			
 		},
 		
 	});
 
 	
 	// formats the user input
-	const user_input = {"artistPref": autocompleteInfo};
+	const user_input = {"artistPref": artistPref};
 	console.log(user_input);
 	const addArtist = (evt) => {
 		evt.preventDefault();
