@@ -4,7 +4,7 @@ const Link = ReactRouterDOM.Link;
 const Prompt = ReactRouterDOM.Prompt;
 const Switch = ReactRouterDOM.Switch;
 const Redirect = ReactRouterDOM.Redirect;
-
+const Autocomplete = React;
 
 
 function App() {
@@ -43,6 +43,9 @@ function App() {
 						</li>
 						<li>
 						<Link to="/view-saved-playlists">View Saved Playlists </Link>
+						</li>
+						<li>
+						<Link to="/autocomplete">Autocomplete </Link>
 						</li>
 						<li>
 						<Link to="/logout">Logout </Link>
@@ -93,6 +96,9 @@ function App() {
 	        </Route>
 			<Route path="/save-playlist/:user_id" component={SavePlaylist}>
 	            <SavePlaylist />
+	        </Route>
+			<Route path="/autocomplete" component={AutocompletePage}>
+	            <AutocompletePage />
 	        </Route>	
 		
 	          <Route path="/">
@@ -779,10 +785,12 @@ function AddSongPref(props) {
 	}
 		// renders song pref form
 	return (
-		<form id="song_pref-form">
+		<form id="song_pref-form" autoComplete="off">
+			
 			<label>Song Title:</label>
 			<input type = "text" 
-				name="songPref" 
+				name="songPref"
+				id="autocomplete" 
 				value = {songPref} 
 				onChange={e => setSongPref(e.target.value)} >		
 			</input>
@@ -795,6 +803,50 @@ function AddSongPref(props) {
 
 	
 }
+
+function Autocompleting() {
+	var state = { val: 'hi' };
+	const MoviesData = ['blue', 'yellow', 'pink'];
+	return (
+		<Autocomplete
+		getItemValue={(item) => item.label}
+		items={[
+			{ label: 'apple' },
+			{ label: 'banana' },
+			{ label: 'pear' }
+		]}
+		renderItem={(item, isHighlighted) =>
+			<div style={{ background: isHighlighted ? 'lightgray' : 'white' }}>
+			{item.label}
+			</div>
+		}
+		value={value}
+		onChange={(e) => value = e.target.value}
+		onSelect={(val) => value = val}
+		/>
+	  );
+}
+
+function AutocompletePage(props) {
+	const availableTags = ['hi', 'alesso', 'lizzo', 'hozier', 'Lil Wayne']
+	$(document).ready(function() {
+
+		$("#artist-input").autocomplete({
+		  source: availableTags
+		  });
+		});
+	
+	  
+	return (
+		<React.Fragment>
+
+			<input type="text" className="text-box" placeholder="Enter Artist" id="artist-input"></input>
+
+		
+		</React.Fragment>
+    );
+}
+
 function AddArtistPref(props) {
 	// lets user add artist pref to profile
 

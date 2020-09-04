@@ -3,19 +3,26 @@ import crud
 from server import app
 import unittest
 import pdb
+import os
+
+
+
 class DBTests(unittest.TestCase):
     def setUp(self):
         """run before every test"""
         self.client = app.test_client()
         app.config['TESTING'] = True
         # connect to test db
-        model.connect_to_db(app, "postgresql:///testdb", False)
+        model.connect_to_db(app, "postgresql:///testdb")
         # create tables and sample data
         # how to clear existing data
-        model.db.drop_all()
+
         model.db.create_all()
         model.example_data()
-    
+
+    def tearDown(self):
+        model.db.session.close()
+        model.db.drop_all()
     
         
 
@@ -27,9 +34,7 @@ class DBTests(unittest.TestCase):
     def test_song_preferences(self):
         self.assertNotEqual(crud.get_all_song_prefs(), None)
 
-    def tearDown(self):
-        import pdb; pdb.set_trace()
-        pass
+
     
 
 
