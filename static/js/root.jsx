@@ -828,12 +828,50 @@ function Autocompleting() {
 }
 
 function AutocompletePage(props) {
-	const availableTags = ['hi', 'alesso', 'lizzo', 'hozier', 'Lil Wayne']
+	// how to query the api from js
+	const availableTags = ['hi', 'alesso', 'lizzo', 'hozier', 'Lil Wayne'];
 	$(document).ready(function() {
-
+		console.log('test');
+		const code = 'BQB-Hgn7MtpS7gVranot26_cN-rUaeTo_acUmJ59zt4osHguJfwDNwDvIHCi_G5X6MU3T3u_PsSUNasaEMI'
 		$("#artist-input").autocomplete({
-		  source: availableTags
-		  });
+			
+			source: function(request, response) {
+				$.ajax({
+					type: "GET",
+					url: "https://api.spotify.com/v1/search",
+					dataType: "json",
+					headers: {
+						'Authorization' : 'Bearer ' + code,
+					},
+					data: {
+						type: "artist",
+						limit: 3,
+						contentType: "application/json; charset=utf-8",
+						format: "json",
+						q: request.term
+					},
+					success: function(data) {
+						console.log(data.artists.items[0].name);
+						response($.map(data.artists.items, function(item) {
+							console.log(item);
+							return {
+								label: item.name,
+								value: item.name,
+								id: item.id
+								
+							}
+							
+						}));
+					}
+				});
+			},
+			minLength: 3,
+			select: function(event, ui) {
+				$("#artist-input").val(ui.item.value);
+				window.location.href = "#" + ui.item.value;
+			},
+		});
+		
 		});
 	
 	  
