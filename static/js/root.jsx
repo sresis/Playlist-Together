@@ -747,6 +747,7 @@ function AddSongPref(props) {
 	// input for song pref title
 	const[songPref, setSongPref] = React.useState("");
 	const[addedPref, setAddedPref] = React.useState(false);
+	var autocompleteInfo = '';
 
 	const[token, setToken] = React.useState("");
 	// get the token from server
@@ -796,7 +797,8 @@ function AddSongPref(props) {
 			minLength: 3,
 			select: function(event, ui) {
 				$("#song-input").val(ui.item.value);
-				window.location.href = "#" + ui.item.value;
+				autocompleteInfo = ui.item.value;
+				setSongPref(autocompleteInfo);
 			},
 		});
 		
@@ -830,19 +832,16 @@ function AddSongPref(props) {
 	});
 	}
 
-	if (setAddedPref === true) {
-		return <Redirect to='/your-profile' />
-	}
+
 		// renders song pref form
 	return (
-		<form id="song_pref-form" autoComplete="off">
+		<form id="song_pref-form">
 			
 			<label>Song Title:</label>
 			<input type = "text" 
 				name="songPref"
 				id="song-input" 
-				value = {songPref} 
-				onChange={e => setSongPref(e.target.value)} >		
+				onChange ={e => setSongPref(autocompleteInfo)} >		
 			</input>
 	
 			<button id="song-pref-but" onClick={addSong}>Add Song Pref</button>
