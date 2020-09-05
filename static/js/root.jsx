@@ -642,7 +642,7 @@ function PlaylistDetail(props) {
 	}, [props.playlistSongs])
 	return(
 		<React.Fragment>
-			<div>{playlistSongs}</div>
+			<div id="shared-playlist">{playlistSongs}</div>
 		</React.Fragment>
 		) 
 }
