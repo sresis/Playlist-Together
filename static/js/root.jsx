@@ -5,9 +5,11 @@ const Prompt = ReactRouterDOM.Prompt;
 const Switch = ReactRouterDOM.Switch;
 const Redirect = ReactRouterDOM.Redirect;
 const Autocomplete = React;
-const {Button, Alert, Col, Row, Container, Collapse, Form, FormControl, Nav, Navbar } = ReactBootstrap;
+const {Button, Alert, Col, Row, Container, Collapse, Form, FormControl, Nav, Navbar, Spinner } = ReactBootstrap;
 
 function App() {
+	const [loggedIn, setLoggedIn] = React.useState(null);
+	
 
 	
 	return (
@@ -286,10 +288,7 @@ function Login() {
 								value={password}
 								 />
 			</Form.Group>
-			
-			
-			<button id="login-button" onClick={loginUser}>Log In</button>
-
+			<Button variant="primary" type="submit" onClick={loginUser}>Submit</Button>
 		</Form>
 
 		);
@@ -456,8 +455,18 @@ function CombinedPlaylist(props) {
 				playlistItems.push(
 					<div>
 						<li key={item[1]}>{item[0]}</li>
-						<iframe src= {`https://open.spotify.com/embed/track/${item[1]}`}
-							width="300" height="50" frameBorder="0" allowtransparency="true" allow="encrypted-media"></iframe>
+						
+						
+ 
+							<iframe src= {`https://open.spotify.com/embed/track/${item[1]}`}
+								
+								width="300" height="50" frameBorder="0" allowtransparency="true" 
+								allow="encrypted-media"></iframe>
+							<div id="loading">
+								<img src="https://mir-s3-cdn-cf.behance.net/project_modules/max_1200/6d391369321565.5b7d0d570e829.gif"
+								width="30"></img>
+							</div>
+						
 					</div>
 				);
 			}
@@ -477,6 +486,7 @@ function CombinedPlaylist(props) {
 		</React.Fragment>
 	)
 }
+
 function SavePlaylist(props) {
 	// get the songs and users in the playlist and pass it to server. then server commits it
 	const {user_id} = ReactRouterDOM.useParams();
