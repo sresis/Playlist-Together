@@ -1,8 +1,38 @@
 
-section {
-    margin-top: 5px;
+body {
+    background: url("https://images.unsplash.com/photo-1470225620780-dba8ba36b745?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&dl=marcela-laskoski-YrtFlrLo2DQ-unsplash.jpg");
+    background-size: cover;
+    color: white;
+    text-align: center;
+    font-family: 'Montserrat','Karla','Quicksand', 'Calibri';
+
+}
+#site-wrapper {
+    display: table;
+    width: 100%;
+    height: 100%;
 }
 
+#inner-site-wrapper {
+    display: table-cell;
+    vertical-align: middle;
+}
+.navigation {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    
+}
+.navigation a{
+	float: left;
+    text-align: center;
+    padding: 5px 5px;
+    color: white
+}
+.navigation a:hover {
+ 
+    color: #D1468D;
+}
 
 a {
     color: #00adb5;
@@ -11,27 +41,12 @@ a {
 div {
     background-color: #18063A;
     opacity: 0.92;
-    width: 80%;
     margin-left: auto;
     margin-right: auto;
     margin-top: auto;
     margin-bottom: auto;
     text-align: center;
     
-}
-
-
-
-body {
-    background: url("https://images.unsplash.com/photo-1470225620780-dba8ba36b745?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&dl=marcela-laskoski-YrtFlrLo2DQ-unsplash.jpg");
-    background-size: cover;
-    color: white;
-
-}
-
-#logo {
-    height: 100px;
-    width: 500px;
 }
 
 button {
@@ -69,19 +84,8 @@ canvas#myChart {
     background-color: white;
 }
 
-.navdiv{
-    
-}
-.navdiv a{
-	float: left;
-    text-align: center;
-    padding: 5px 5px;
-    color: white
-}
-.navdiv a:hover {
- 
-    color: #D1468D;
-}
+
+
 #chart-div {
    
     margin-left: 0;

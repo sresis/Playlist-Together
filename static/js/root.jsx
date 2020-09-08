@@ -5,7 +5,7 @@ const Prompt = ReactRouterDOM.Prompt;
 const Switch = ReactRouterDOM.Switch;
 const Redirect = ReactRouterDOM.Redirect;
 const Autocomplete = React;
-
+const {Button, Alert, Col, Container, Collapse, Form, FormControl, Nav, Navbar } = ReactBootstrap;
 
 function App() {
 
@@ -13,8 +13,16 @@ function App() {
 	return (
 	    <Router>
 	      
-		  	<nav className="navbar navbar-expand-lg">
-                <div className="collapse navbar-collapse" class="navdiv">
+		  	<div>
+				  <Navbar className="navigation">
+					<Navbar.Brand>
+						<img src={'static/img/logo.png'}
+						width='150'
+	
+						className='d-inline-block align-top'
+						id='site-logo' />
+						{'   '} Play[list] Together 
+					</Navbar.Brand>
                     <ul className ="navbar-nav">
 						<li>
 						<Link to="/">Home </Link>
@@ -48,8 +56,8 @@ function App() {
 						<Link to="/logout">Logout </Link>
 						</li>
 	          		</ul>
-				</div>
-	        </nav>
+				</Navbar>
+			</div>
 
 	        <Switch>
 	          <Route path="/login" component={Login}>
@@ -108,7 +116,11 @@ function App() {
 function Homepage() {
 	return(
 		<React.Fragment>
-			<h2> Welcome to Play[list] Together! <span class="icon music"></span> </h2>
+			<div id="site-wrapper">
+				<div id="inner-site-wrapper">
+					<h2> Welcome to Play[list] Together! <span class="icon music"></span> </h2>
+				</div>
+			</div>
 		</React.Fragment> 
 		
 	)
