@@ -5,7 +5,7 @@ const Prompt = ReactRouterDOM.Prompt;
 const Switch = ReactRouterDOM.Switch;
 const Redirect = ReactRouterDOM.Redirect;
 const Autocomplete = React;
-const {Button, Alert, Col, Container, Collapse, Form, FormControl, Nav, Navbar } = ReactBootstrap;
+const {Button, Alert, Col, Row, Container, Collapse, Form, FormControl, Nav, Navbar } = ReactBootstrap;
 
 function App() {
 
@@ -20,8 +20,7 @@ function App() {
 						width='150'
 	
 						className='d-inline-block align-top'
-						id='site-logo' />
-						{'   '} Play[list] Together 
+						id='site-logo' /> 
 					</Navbar.Brand>
                     <ul className ="navbar-nav">
 						<li>
@@ -115,13 +114,17 @@ function App() {
 
 function Homepage() {
 	return(
-		<React.Fragment>
-			<div id="site-wrapper">
-				<div id="inner-site-wrapper">
-					<h2> Welcome to Play[list] Together! <span class="icon music"></span> </h2>
-				</div>
-			</div>
-		</React.Fragment> 
+		<Container fluid="md">
+			<Row>
+				<Col>
+					<h2> Welcome to Play[list] Together! <span class="icon music"></span> </h2>				
+				</Col>
+
+
+			</Row>
+					
+				
+		</Container> 
 		
 	)
 }
@@ -269,23 +272,25 @@ function Login() {
 
 	// renders login form
 	return (
-		<form id="login-form">
-			<label>Email:</label>
-			<input type = "text" 
-				name="email" 
-				value = {email} 
-				onChange={e => setEmail(e.target.value)} >		
-			</input>
-			<label>Password:</label>
-			<input type="text"
-					name="password"
-					onChange= {e => setPassword(e.target.value)}
-					value={password}>
-			</input>
+		<Form>
+			<Form.Group controlID="formEmail">
+				<Form.Label>Email</Form.Label>
+				<Form.Control type="email" placeholder="Email"
+								onChange= {e => setEmail(e.target.value)}
+							 	value={email}/>
+			</Form.Group>
+			<Form.Group controlID="formPassword">
+				<Form.Label>Password</Form.Label>
+				<Form.Control type="password" placeholder="Password"
+								onChange= {e => setPassword(e.target.value)}
+								value={password}
+								 />
+			</Form.Group>
+			
 			
 			<button id="login-button" onClick={loginUser}>Log In</button>
 
-		</form>
+		</Form>
 
 		);
 	}
