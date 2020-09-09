@@ -37,11 +37,13 @@ body {
 }
 .navigation a:hover {
  
-    color: #D1468D;
+    color: #8B9CA0;
+
+    ;
 }
 
 a {
-    color: #00adb5;
+    color: #0c0c0c;
 }
 #your-prof-container, #user-detail-container {
     margin-top: 50px;
@@ -50,7 +52,7 @@ a {
 
 }
 div {
-    background-color: #18063A;
+    background-color: #6A8498;
     opacity: 0.92;
     margin-left: 5px;
     margin-right: 5px;

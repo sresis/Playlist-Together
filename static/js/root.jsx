@@ -123,7 +123,7 @@ function App() {
 
 function Homepage() {
 	// updates the background for just this page
-	document.body.style.background="url('static/img/radio.png)";
+	document.body.style.background="url('static/img/radio.png')";
 	document.body.style.backgroundSize='cover';
 	return(
 		<Container fluid="md" id="homepage">
