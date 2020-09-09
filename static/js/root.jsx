@@ -31,9 +31,7 @@ function App() {
 			<Link to="/view-similar-users">Similar User</Link>
 			<Link to="/your-profile">Your Profile</Link>
 			<Link to="/users">View Users</Link>
-			<Link to="/view-saved-playlists">View Shared Playlists</Link>
-			<Link to="/add-song-pref">Add Song Pref</Link>
-			<Link to="/add-artist-pref">Add Artist Pref</Link>
+			<Link to="/view-saved-playlists">View Saved Playlists</Link>
 			<Link to="/logout">Log Out</Link>
 			
 
@@ -246,8 +244,6 @@ function CreateAccount(props) {
 
 function Login() {
 	
-	// updates background
-	document.body.style.background="url('/static/img/moroccan-flower.png')";
 	// tracks the user response for email/password
 
 	const [email, setEmail] = React.useState('');
@@ -329,10 +325,10 @@ function YourProfile(props) {
 	const[fname, setFname] = React.useState([]);
 
 	const history = ReactRouterDOM.useHistory();
-
-	const createSongRecs = () => {
 	// updates background
-	document.body.style.background="url('static/img/moroccan-flower.png')";
+	document.body.style.background="url('/static/img/moroccan-flower.png')";
+	const createSongRecs = () => {
+	
 
 		fetch('/api/get_song_recs', {
 			method: 'POST',
