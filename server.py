@@ -290,11 +290,10 @@ def get_similar_user():
 
 def logout():
 	"""enables user to logout."""
-	session.pop('user')
-	session.pop('rating')
-	session.pop('show_create_account')
-	session.pop('show_form')
-	session.pop('show_login')
+	session.pop('user', None)
+	session.pop('rating', None)
+	session.pop('show_create_account', None)
+
 	for key in session.keys():
 		print(key)
 		

@@ -5,13 +5,16 @@ const Prompt = ReactRouterDOM.Prompt;
 const Switch = ReactRouterDOM.Switch;
 const Redirect = ReactRouterDOM.Redirect;
 const Autocomplete = React;
-const {Button, Alert, Col, Row, Container, Collapse, Form, FormControl, Nav, Navbar, Spinner } = ReactBootstrap;
+const {Button, Alert, Col, Row, Card, CardColumns, Container, Collapse, Form, FormControl, Nav, Navbar, Spinner } = ReactBootstrap;
 
 // instance of context
 const LoginContext = React.createContext(null);
+// handle showing component
 
 function App() {
 	const [loggedIn, setLoggedIn] = React.useState(null);
+
+	
 	// check in server if there is a logged in user
 	React.useEffect(() => {
 	fetch('api/check_login')
@@ -22,9 +25,14 @@ function App() {
 
 	// group navbar links into 1) viewable by logged in users only 2) viewable when not logged in
 	const Navigation = {
-		true: (<Nav>
+		true: (<Nav className="Navigation">
 			<Nav.Link as={Link} to="/view-similar-users">Similar User</Nav.Link>
 			<Nav.Link as={Link} to="/your-profile">Your Profile</Nav.Link>
+			<Nav.Link as={Link} to="/users">View Users</Nav.Link>
+			<Nav.Link as={Link} to="/view-saved-playlists">View Shared Playlists</Nav.Link>
+			<Nav.Link as={Link} to="/add-song-pref">Add Song Pref</Nav.Link>
+			<Nav.Link as={Link} to="/add-artist-pref">Add Artist Pref</Nav.Link>
+			<Nav.Link as={Link} to="/logout">Log Out</Nav.Link>
 			
 
 		</Nav>
@@ -48,23 +56,13 @@ function App() {
 					<Navbar className="navigation">
 						<Navbar.Brand>
 							<img src={'static/img/logo.png'}
-							width='150'
-
+							width='70'
 							className='d-inline-block align-top'
 							id='site-logo' /> 
 						</Navbar.Brand>
-						<Nav>
-							<li>
-							<Link to="/">Home </Link>
-							</li>
-							<li>
-							<Link to="/create-account">Create Account </Link>
-							</li>
-							<li>
-							<Link to="/login">Login </Link>
-							</li>
+						<Nav className="flex-column">
+							<Link to="/">Home </Link>		
 							{Navigation[loggedIn]}
-							
 						</Nav>
 					</Navbar>
 				</div>
@@ -129,6 +127,9 @@ function Homepage() {
 			<Row>
 				<Col>
 					<h2> Welcome to Play[list] Together! <span class="icon music"></span> </h2>				
+				</Col>
+				<Col>
+
 				</Col>
 
 
@@ -284,13 +285,13 @@ function Login() {
 	// renders login form
 	return (
 		<Form>
-			<Form.Group controlID="formEmail">
+			<Form.Group controlid="formEmail">
 				<Form.Label>Email</Form.Label>
 				<Form.Control type="email" placeholder="Email"
 								onChange= {e => setEmail(e.target.value)}
 							 	value={email}/>
 			</Form.Group>
-			<Form.Group controlID="formPassword">
+			<Form.Group controlid="formPassword">
 				<Form.Label>Password</Form.Label>
 				<Form.Control type="password" placeholder="Password"
 								onChange= {e => setPassword(e.target.value)}
@@ -413,11 +414,23 @@ function Users(props) {
 
 			// adds list of links for each user. handle each click
 			for (const idx in data) {
-				//history.push(`/user-detail/${data[idx]['user_id']}`);
 				users_info.push(
-						<li key={data[idx]['user_id']} id={data[idx]['user_id']}><span class="icon users"></span>
-							<Link onClick={()=>{history.push(`/user-detail/${data[idx]['user_id']}`)}}>{data[idx]['email']}</Link>
-							</li>
+					
+					<Card style={{ width: '18rem' }}>
+						<Card.Body>
+						<Card.Title>
+							<span class="icon users"></span>
+							{data[idx]['email']}
+							</Card.Title>
+						<Card.Text>
+							Insert some info...
+						</Card.Text>
+						<Button variant="primary" 
+						onClick={()=>{history.push(`/user-detail/${data[idx]['user_id']}`)}}>View Profile</Button>
+						</Card.Body>
+					</Card>
+				
+					
 					);
 			}
 			setUsers(users_info);
@@ -429,7 +442,7 @@ function Users(props) {
 	return(
 		<React.Fragment>
 			<h3>All Users</h3>
-			<ul className="user-container">{users}</ul>
+			<CardColumns>{users}</CardColumns>
 
 		</React.Fragment>
 		) 

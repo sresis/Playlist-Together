@@ -8,13 +8,20 @@ body {
 
 }
 
-.navigation {
+.flex-column a {
+    float: left;
+    text-align: center;
+    padding: 5px 5px;
+    color: white
+
+}
+.navbar {
     margin: 0;
     padding: 0;
     list-style: none;
     
 }
-.navigation a{
+.navbar a{
 	float: left;
     text-align: center;
     padding: 5px 5px;
