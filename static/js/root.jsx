@@ -234,8 +234,6 @@ function CreateAccount(props) {
 			</Form.Group>
 			<Button variant="primary" type="submit" onClick={createUser}>Create Account</Button>
 		</Form>
-
-
 		</Container>
 		
 	
@@ -864,9 +862,6 @@ function SimilarUsers() {
 			</Row>
 	
 		</Container>
-
-			
-		
 		
 	)
 }
@@ -968,18 +963,18 @@ function AddSongPref(props) {
 
 		// renders song pref form
 	return (
-		<form id="song_pref-form">
-			
-			<label>Song Title:</label>
-			<input type = "text" 
-				name="songPref"
-				id="song-input" 
-				onChange ={e => setSongPref(autocompleteInfo)} >		
-			</input>
+		<Container fluid="md" id="song-pref-form">
+			<Form>
+				<Form.Group controlid="song-input-form">
+					<Form.Label>Song Title:</Form.Label>
+					<Form.Control type="text"
+									id="song-input" 
+									onChange= {e => setSongPref(autocompleteInfo)}/>
+				</Form.Group>
+				<Button variant="primary" onClick={addSong}>Add Song Preference</Button>
+			</Form>
+		</Container>
 	
-			<Button id="song-pref-but" onClick={addSong}>Add Song Pref</Button>
-
-		</form>
 
 		);
 
