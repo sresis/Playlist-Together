@@ -123,7 +123,7 @@ function App() {
 
 function Homepage() {
 	// updates the background for just this page
-	document.body.style.background="url('static/img/dj.jpg')";
+	document.body.style.background="url('static/img/radio.png)";
 	document.body.style.backgroundSize='cover';
 	return(
 		<Container fluid="md" id="homepage">
@@ -417,7 +417,8 @@ function GetSongRecs() {
 
 function Users(props) {
 
-	
+	// updates background
+	document.body.style.background="url('static/img/moroccan-flower.png')";
 	// formats the data 
 	const user_details = {'email': props.email, 'user_id': props.user_id, 
 	'fname': props.fname, 'lname': props.lname};
@@ -483,7 +484,8 @@ function CombinedPlaylist(props) {
 	
 	const history = ReactRouterDOM.useHistory();
 
-	
+	// updates background
+	document.body.style.background="url('static/img/moroccan-flower.png')";
 	
 	React.useEffect(() => {
 		fetch(`/api/combined_playlist/${user_id}`, {
@@ -541,7 +543,8 @@ function CombinedPlaylist(props) {
 function SavePlaylist(props) {
 	// get the songs and users in the playlist and pass it to server. then server commits it
 	const {user_id} = ReactRouterDOM.useParams();
-	
+	// updates background
+	document.body.style.background="url('static/img/moroccan-flower.png')";
 	React.useEffect(() => {
 		fetch(`/api/save_playlist/${user_id}`, {
 			
