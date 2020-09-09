@@ -151,7 +151,7 @@ function Homepage() {
 }
 
 function Logout() {
-
+	const {loggedIn, setLoggedIn} = React.useContext(LoginContext);
 	React.useEffect(() => {
 		fetch('/api/logout', {
 			
@@ -163,9 +163,11 @@ function Logout() {
 		.then(data => {
 			// arrays to store the song/artists prefs in HTML
 			console.log(data);
-		});
+			setLoggedIn(false);
+			console.log(loggedIn);
+		})
 		
-	})
+	},[]);
 		
 	 
 
