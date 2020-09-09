@@ -198,39 +198,38 @@ function CreateAccount(props) {
 	
 	// returns create account form
 	return(
-		<React.Fragment>
-			<form id="create-account-form">
-				<div>First Name: </div>
-				<input type="text"
-						name="fname"
-						value = {fname}
-						onChange={e => setFname(e.target.value)}>
-				</input>
-				<div>Last Name: </div>
-				<input type="text"
-						name="lname"
-						value = {lname}
-						onChange={e => setLname(e.target.value)}>
-				</input>
-				<div>Email: </div>
-				<input type="text"
-						name="email"
-						value = {email}
-						onChange={e => setEmail(e.target.value)}>
-				</input>
-				<div>Password: </div>
-				<input type="text"
-						name="password"
-						value = {password}
-						onChange={e => setPassword(e.target.value)}>
-				</input>
-				<div>
-					<button id="register-button" onClick={createUser}>
-						Create Account
-					</button>
-				</div>
-			</form>
-		</React.Fragment>
+
+		<Form>
+			<Form.Group controlid="createFName">
+				<Form.Label>First Name</Form.Label>
+				<Form.Control type="text" placeholder="First Name"
+								onChange= {e => setFname(e.target.value)}
+							 	value={fname}/>
+			</Form.Group>
+			<Form.Group controlid="createLName">
+				<Form.Label>Last Name</Form.Label>
+				<Form.Control type="text" placeholder="Last Name"
+								onChange= {e => setLname(e.target.value)}
+								value={lname}
+								 />
+			</Form.Group>
+			<Form.Group controlid="createEmail">
+				<Form.Label>Email</Form.Label>
+				<Form.Control type="email" placeholder="Email"
+								onChange= {e => setEmail(e.target.value)}
+								value={email}
+								 />
+			</Form.Group>
+			<Form.Group controlid="createPassword">
+				<Form.Label>Password</Form.Label>
+				<Form.Control type="password" placeholder="Password"
+								onChange= {e => setPassword(e.target.value)}
+								value={password}
+								 />
+			</Form.Group>
+			<Button variant="primary" type="submit" onClick={createUser}>Create Account</Button>
+		</Form>
+	
 	)
 }
 
