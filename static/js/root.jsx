@@ -26,21 +26,21 @@ function App() {
 	// group navbar links into 1) viewable by logged in users only 2) viewable when not logged in
 	const Navigation = {
 		true: (<Nav className="Navigation">
-			<Nav.Link as={Link} to="/view-similar-users">Similar User</Nav.Link>
-			<Nav.Link as={Link} to="/your-profile">Your Profile</Nav.Link>
-			<Nav.Link as={Link} to="/users">View Users</Nav.Link>
-			<Nav.Link as={Link} to="/view-saved-playlists">View Shared Playlists</Nav.Link>
-			<Nav.Link as={Link} to="/add-song-pref">Add Song Pref</Nav.Link>
-			<Nav.Link as={Link} to="/add-artist-pref">Add Artist Pref</Nav.Link>
-			<Nav.Link as={Link} to="/logout">Log Out</Nav.Link>
+			<Link to="/view-similar-users">Similar User</Link>
+			<Link to="/your-profile">Your Profile</Link>
+			<Link to="/users">View Users</Link>
+			<Link to="/view-saved-playlists">View Shared Playlists</Link>
+			<Link to="/add-song-pref">Add Song Pref</Link>
+			<Link as={Link} to="/add-artist-pref">Add Artist Pref</Link>
+			<Link as={Link} to="/logout">Log Out</Link>
 			
 
 		</Nav>
 		),
 		false: (
 			<Nav>
-				<Nav.Link as={Link} to="/login">Log In</Nav.Link>
-				<Nav.Link as={Link} to="/create-account">Create Account</Nav.Link>
+				<Link as={Link} to="/login">Log In</Link>
+				<Link as={Link} to="/create-account">Create Account</Link>
 			</Nav>
 		)
 	}
@@ -378,6 +378,8 @@ function YourProfile(props) {
 			</Col>
 			<Col>
 				<h4>Favorite Artists<span class="icon mic"></span></h4>
+				<Button variant="secondary" onClick={()=>{history.push(`/add-artist-pref`)}}>Add Favorite Songs</Button>
+
 				<div>{favArtists}</div>				
 			</Col>
 		</Row>
@@ -640,17 +642,20 @@ function UserDetail(props) {
 			<h2>{fname}'s Profile<span class="icon music"></span></h2>
 			<Row>
 				<Col>
+					<Button id="generate-playlist" onClick={()=>{history.push(`/combined-playlist/${user_id}`)}}>Generate Shared Playlist with {fname}</Button>
+				</Col>
+			</Row>
+			<Row>
+				<Col>
 					<h4>Favorite Songs<span class="icon cd"></span></h4>
 					<div>{favSongs}</div>				
 				</Col>
-				<Col>
+				<Col id="profile-artists">
 					<h4>Favorite Artists<span class="icon mic"></span></h4>
 					<div>{favArtists}</div>				
 				</Col>
 			</Row>
-			<Row>
-			<button id="generate-playlist" onClick={()=>{history.push(`/combined-playlist/${user_id}`)}}>Generate Shared Playlist with {fname}</button>
-			</Row>
+			
 		</Container>
 
 		) 

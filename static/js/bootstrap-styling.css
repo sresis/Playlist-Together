@@ -92,6 +92,9 @@ canvas#myChart {
     align-content: center;
    
 }
+#profile-artists {
+    vertical-align: text-top;
+}
 ul li {
     list-style-type: none;
 
