@@ -26,21 +26,24 @@ function App() {
 	// group navbar links into 1) viewable by logged in users only 2) viewable when not logged in
 	const Navigation = {
 		true: (<Nav className="Navigation">
+			<Link to="/">Home </Link>
+			<Link to="/about">About </Link>
 			<Link to="/view-similar-users">Similar User</Link>
 			<Link to="/your-profile">Your Profile</Link>
 			<Link to="/users">View Users</Link>
 			<Link to="/view-saved-playlists">View Shared Playlists</Link>
 			<Link to="/add-song-pref">Add Song Pref</Link>
-			<Link as={Link} to="/add-artist-pref">Add Artist Pref</Link>
-			<Link as={Link} to="/logout">Log Out</Link>
+			<Link to="/add-artist-pref">Add Artist Pref</Link>
+			<Link to="/logout">Log Out</Link>
 			
 
 		</Nav>
 		),
 		false: (
 			<Nav>
-				<Link as={Link} to="/login">Log In</Link>
-				<Link as={Link} to="/create-account">Create Account</Link>
+				<Link to="/about">About </Link>
+				<Link to="/login">Log In</Link>
+				<Link to="/create-account">Create Account</Link>
 			</Nav>
 		)
 	}
@@ -60,8 +63,7 @@ function App() {
 							className='d-inline-block align-top'
 							id='site-logo' /> 
 						</Navbar.Brand>
-						<Nav className="flex-column">
-							<Link to="/">Home </Link>		
+						<Nav className="flex-column">	
 							{Navigation[loggedIn]}
 						</Nav>
 					</Navbar>
@@ -85,6 +87,9 @@ function App() {
 				</Route>
 				<Route path="/add-song-pref" component={AddSongPref}>
 					<AddSongPref />
+				</Route>
+				<Route path="/about" component={About}>
+					<About />
 				</Route>
 				<Route path="/add-artist-pref" component={AddArtistPref}>
 					<AddArtistPref />
@@ -148,6 +153,9 @@ function Homepage() {
 		</Container> 
 		
 	)
+}
+function About() {
+	return <h1>About</h1>
 }
 
 function Logout() {
