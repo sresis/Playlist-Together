@@ -951,16 +951,12 @@ function AddSongPref(props) {
 			if(data.status === "song pref added") {
 				alert('Song pref added!');
 				setAddedPref(true);
-				
 			}
 			else{
 				alert('error');
 			}
-			
 	});
 	}
-
-
 		// renders song pref form
 	return (
 		<Container fluid="md" id="song-pref-form">
@@ -974,11 +970,7 @@ function AddSongPref(props) {
 				<Button variant="primary" onClick={addSong}>Add Song Preference</Button>
 			</Form>
 		</Container>
-	
-
 		);
-
-	
 }
 
 
@@ -1087,17 +1079,18 @@ function AddArtistPref(props) {
 
 		// renders song pref form
 	return (
-		<form id="artist-pref-form">
-			<label>Artist Name:</label>
-			<input type = "text" 
-				name="artistPref"
-				id = "artist-input" 
-				onChange ={e => setArtistPref(autocompleteInfo)} >		
-			</input>
-	
-			<Button id="artist-pref-but" onClick={addArtist}>Add Artist Pref</Button>
 
-		</form>
+		<Container fluid="md" id="artist-pref-form">
+			<Form>
+				<Form.Group controlid="artist-input-form">
+					<Form.Label>Artist Name:</Form.Label>
+					<Form.Control type="text"
+									id="artist-input" 
+									onChange= {e => setArtistPref(autocompleteInfo)}/>
+				</Form.Group>
+				<Button variant="primary" onClick={addArtist}>Add Artist Preference</Button>
+			</Form>
+		</Container>
 
 		);
 }
