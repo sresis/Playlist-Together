@@ -769,8 +769,11 @@ function SimilarUsers() {
 
 		})
 	})
-
+	// stores the style
+	const chartStyle = {height: '60%'};
 	const makeGraph = () => {
+		
+		
 		
 	
 		// add a graph comparing each of their songs for each attr?
@@ -799,16 +802,29 @@ function SimilarUsers() {
 		
 		
 		});
+	
 	}
 	return(
-		<React.Fragment>
-			<h3>Similar User:</h3>
-			<li>{similarUser}<span class="icon similar-user"></span></li>
-			<button id="user-graph" onClick={makeGraph}>See Graph</button>
-			<div id="chart-div">
-				<canvas id="myChart"></canvas>
-			</div>	
-		</React.Fragment>
+		<Container fluid="md" id="similar-container">
+			<Row>
+				<Col>
+					<h3>Similar User:</h3>
+					<li>{similarUser}<span class="icon similar-user"></span></li>
+				<button id="user-graph" onClick={makeGraph}>See Graph</button>
+				</Col>
+			</Row>
+			<Row>
+				<Col>
+					
+					<canvas id="myChart" style={chartStyle} ></canvas>
+					
+				</Col>
+			</Row>
+	
+		</Container>
+
+			
+		
 		
 	)
 }
