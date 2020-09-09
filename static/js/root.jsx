@@ -53,7 +53,7 @@ function App() {
 		<LoginContext.Provider value={{loggedIn, setLoggedIn}}>
 			<Router>
 				<div>
-					<Navbar className="navigation">
+					<Navbar className="navigation" id="navbar-nav">
 						<Navbar.Brand>
 							<img src={'static/img/logo.png'}
 							width='70'
@@ -567,7 +567,8 @@ function SavePlaylist(props) {
 function ViewSavedPlaylists(props){
 	const[playlistList, setPlaylistList] = React.useState([]);
 	const history = ReactRouterDOM.useHistory();
-
+	// updates background
+	document.body.style.background="url('static/img/moroccan-flower.png')";
 	React.useEffect(() => {
 		fetch(`/api/saved-playlists`, {
 			
@@ -611,7 +612,8 @@ function UserDetail(props) {
 	
 	const user = {"user_id": {user_id}}
 	const history = ReactRouterDOM.useHistory();
-	
+	// updates background
+	document.body.style.background="url('static/img/moroccan-flower.png')";
 	
 	// call another function to do the loop
 	React.useEffect(() => {
@@ -691,7 +693,8 @@ function PlaylistDetail(props) {
 	// stores the current user details (to be displayed in HTMl)
 	console.log(playlist_id);
 	
-	
+	// updates background
+	document.body.style.background="url('static/img/moroccan-flower.png')";
 	// call another function to do the loop
 	React.useEffect(() => {
 		fetch(`/api/playlist-detail/${playlist_id}`, {
@@ -759,6 +762,10 @@ function SimilarUsers() {
 	const[similarUserEnergy, setSimilarUserEnergy] = React.useState([]);
 	const[similarUserDanceability, setSimilarUserDanceability] = React.useState([]);
 	const[similarUserLoudness, setSimilarUserLoudness] = React.useState([]);
+	
+	// updates background
+	document.body.style.background="url('static/img/moroccan-flower.png')";
+
 	React.useEffect(() => {
 
 		fetch('/api/similar-users', {
@@ -854,6 +861,8 @@ function SimilarUsers() {
 function AddSongPref(props) {
 	// lets user add song pref to profile
 
+	// updates background
+	document.body.style.background="url('static/img/moroccan-flower.png')";
 	// input for song pref title
 	const[songPref, setSongPref] = React.useState("");
 	const[addedPref, setAddedPref] = React.useState(false);
@@ -967,6 +976,9 @@ function AddSongPref(props) {
 function AddArtistPref(props) {
 	// lets user add artist pref to profile
 
+	// updates background
+	document.body.style.background="url('static/img/moroccan-flower.png')";
+	
 	// input for artist pref title
 	const[artistPref, setArtistPref] = React.useState("");
 	const[addedPref, setAddedPref] = React.useState(false);
