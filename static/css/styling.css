@@ -8,6 +8,7 @@ body {
     
 
 }
+
 .btn-primary, .btn-secondary{
     background: transparent;
     border-radius: 15px;
@@ -25,11 +26,10 @@ body {
     margin: 0;
     padding: 0;
     list-style: none;
+    justify-content: flex-end;
     
 }
-.navigation: {
-    padding: 50px;
-}
+
 .navbar a{
 	float: left;
     text-align: center;
@@ -41,29 +41,19 @@ body {
 }
 .navigation a:hover {
  
-    color: #8B9CA0;
-}
-
-a {
     color: #0c0c0c;
 }
-#your-prof-container, #user-detail-container, #shared-playlist-container {
-    margin-top: 50px;
-    margin-bottom: 200px;
-    text-align: center;
-    padding: 50px;
 
-}
-div {
+#homepage, #your-prof-container, #user-detail-container, #shared-playlist-container  {
     background-color: #6A8498;
     opacity: 0.92;
     margin-left: 5px;
     margin-right: 5px;
-    margin-top: 5px;
-    margin-bottom: auto;
+    margin-top: 50px;
+    margin-bottom:  100px;
     text-align: center;
     border-radius: 15px;
-
+    padding: 50px;
     
 }
 
@@ -74,7 +64,12 @@ button {
     overflow: hidden;
     
 }
-  
+#create-account-but {
+    color: white;
+    background-color: #2C2927;
+    border-color: #2C2927;
+ 
+}
 button:hover {
     box-shadow: 1px 1px 5px 5px rgba(146, 148, 248, 0.4);
     background: pink;

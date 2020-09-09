@@ -41,6 +41,7 @@ function App() {
 		),
 		false: (
 			<Nav>
+				<Link to="/">Home </Link>
 				<Link to="/about">About </Link>
 				<Link to="/login">Log In</Link>
 				<Link to="/create-account">Create Account</Link>
@@ -48,26 +49,21 @@ function App() {
 		)
 	}
 
-
-
-
-	
 	return (
 		<LoginContext.Provider value={{loggedIn, setLoggedIn}}>
 			<Router>
-				<div>
-					<Navbar className="navigation" id="navbar-nav">
-						<Navbar.Brand>
-							<img src={'static/img/logo.png'}
-							width='70'
-							className='d-inline-block align-top'
-							id='site-logo' /> 
-						</Navbar.Brand>
-						<Nav className="flex-column">	
-							{Navigation[loggedIn]}
-						</Nav>
-					</Navbar>
-				</div>
+				<Navbar className="navigation" id="navbar-nav">
+					<Navbar.Brand>
+						<img src={'static/img/logo.png'}
+						width='100'
+						className='d-inline-block align-top'
+						id='site-logo' /> 
+					</Navbar.Brand>
+					<Nav className="flex-column">	
+						{Navigation[loggedIn]}
+					</Nav>
+				</Navbar>
+				
 
 				<Switch>
 				<Route path="/login" component={Login}>
@@ -132,7 +128,6 @@ function Homepage() {
 	document.body.style.backgroundSize='cover';
 	return(
 		<Container fluid="md" id="homepage">
-			
 			<Row>
 				<Col>
 					<h2> Welcome to Play[list] Together! <span class="icon music"></span> </h2>				
@@ -141,17 +136,9 @@ function Homepage() {
 					<Button id="create-account-but">
 					Create a New Account
 					</Button>
-				
-				
 				</Col>  
-				
-
-
 			</Row>
-					
-				
 		</Container> 
-		
 	)
 }
 function About() {
