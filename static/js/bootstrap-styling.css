@@ -133,7 +133,7 @@ ul li {
     padding: 10px;
     font-size: 16px;
   }
-#shared-playlist {
+#shared-playlist, #playlist-songs {
     height: 300px;
     width: 50%;
     overflow: auto;

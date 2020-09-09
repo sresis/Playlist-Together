@@ -514,7 +514,7 @@ function CombinedPlaylist(props) {
 	return (
 		<React.Fragment>
 			<h3>Shared Playlist with {fname}:</h3>
-			<div>{playlistSongs}</div>
+			<div id="playlist-songs">{playlistSongs}</div>
 			<button id="save-playlist" onClick={()=>{history.push(`/save-playlist/${user_id}`)}}>Save Playlist</button>
 		</React.Fragment>
 	)
