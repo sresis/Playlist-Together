@@ -255,7 +255,7 @@ function Login() {
 	const [password, setPassword] = React.useState('');
 
 	// tracks if user is logged in. Defaults to false.
-	const [loggedIn, setLoggedIn] =React.useState(false);
+	const {loggedIn, setLoggedIn} = React.useContext(LoginContext);
 
 	// verifies if login input is correct
 	const loginUser = (evt) => {
