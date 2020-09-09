@@ -25,7 +25,7 @@ function App() {
 
 	// group navbar links into 1) viewable by logged in users only 2) viewable when not logged in
 	const Navigation = {
-		true: (<Nav className="Navigation">
+		true: (<Nav className="after-login-links">
 			<Link to="/">Home </Link>
 			<Link to="/about">About </Link>
 			<Link to="/view-similar-users">Similar User</Link>
@@ -40,7 +40,7 @@ function App() {
 		</Nav>
 		),
 		false: (
-			<Nav>
+			<Nav className="before-login-links">
 				<Link to="/">Home </Link>
 				<Link to="/about">About </Link>
 				<Link to="/login">Log In</Link>
@@ -124,7 +124,7 @@ function App() {
 
 function Homepage() {
 	// updates the background for just this page
-	document.body.style.background="url('static/img/radio.png')";
+	document.body.style.background="url('/static/img/radio.png')";
 	document.body.style.backgroundSize='cover';
 	return(
 		<Container fluid="md" id="homepage">
@@ -201,12 +201,12 @@ function CreateAccount(props) {
 			}
 		})
 	}
-	// updates background
-	document.body.style.background="url('static/img/moroccan-flower.png')";
+	
 	// returns create account form
 	return(
-
-		<Form>
+		<Container fluid="md" id="create-account-form">
+			<Form>
+			<h4>Create an Account</h4>
 			<Form.Group controlid="createFName">
 				<Form.Label>First Name</Form.Label>
 				<Form.Control type="text" placeholder="First Name"
@@ -236,13 +236,17 @@ function CreateAccount(props) {
 			</Form.Group>
 			<Button variant="primary" type="submit" onClick={createUser}>Create Account</Button>
 		</Form>
+
+
+		</Container>
+		
 	
 	)
 }
 
 function Login() {
 	// updates background
-	document.body.style.background="url('static/img/moroccan-flower.png')";
+	document.body.style.background="url('/static/img/moroccan-flower.png')";
 	
 	// tracks the user response for email/password
 
@@ -291,7 +295,7 @@ function Login() {
 
 	// renders login form
 	return (
-		<Form>
+		<Form id="create-acct-form">
 			<Form.Group controlid="formEmail">
 				<Form.Label>Email</Form.Label>
 				<Form.Control type="email" placeholder="Email"
@@ -381,7 +385,11 @@ function YourProfile(props) {
 
 		<Container fluid="md" id="your-prof-container">
 			<h2>{fname}'s Profile<span class="icon music"></span></h2>
-			
+			<Row>
+				<Col>
+					<Button variant="primary" onClick={createSongRecs}>Get Song Recs</Button>
+				</Col>				
+			</Row>
 			<Row>
 				<Col>
 					<h4>Favorite Songs<span class="icon cd"></span></h4>
@@ -394,11 +402,7 @@ function YourProfile(props) {
 					<div>{favArtists}</div>				
 				</Col>
 			</Row>
-			<Row>
-				<Col>
-					<Button variant="primary" onClick={createSongRecs}>Get Song Recs</Button>
-				</Col>				
-			</Row>
+			
 		</Container>
 
 	) 
@@ -407,7 +411,7 @@ function YourProfile(props) {
 function GetSongRecs() {
 
 	// updates background
-	document.body.style.background="url('static/img/moroccan-flower.png')";
+	document.body.style.background="url('/static/img/moroccan-flower.png')";
 
 	console.log('test');
 	return <h2>hi</h2>
@@ -417,7 +421,7 @@ function GetSongRecs() {
 function Users(props) {
 
 	// updates background
-	document.body.style.background="url('static/img/moroccan-flower.png')";
+	document.body.style.background="url('/static/img/moroccan-flower.png')";
 	// formats the data 
 	const user_details = {'email': props.email, 'user_id': props.user_id, 
 	'fname': props.fname, 'lname': props.lname};
@@ -484,7 +488,7 @@ function CombinedPlaylist(props) {
 	const history = ReactRouterDOM.useHistory();
 
 	// updates background
-	document.body.style.background="url('static/img/moroccan-flower.png')";
+	document.body.style.background="url('/static/img/moroccan-flower.png')";
 	
 	React.useEffect(() => {
 		fetch(`/api/combined_playlist/${user_id}`, {
@@ -555,7 +559,7 @@ function SavePlaylist(props) {
 	// get the songs and users in the playlist and pass it to server. then server commits it
 	const {user_id} = ReactRouterDOM.useParams();
 	// updates background
-	document.body.style.background="url('static/img/moroccan-flower.png')";
+	document.body.style.background="url('/static/img/moroccan-flower.png')";
 	React.useEffect(() => {
 		fetch(`/api/save_playlist/${user_id}`, {
 			
@@ -579,7 +583,7 @@ function ViewSavedPlaylists(props){
 	const[playlistList, setPlaylistList] = React.useState([]);
 	const history = ReactRouterDOM.useHistory();
 	// updates background
-	document.body.style.background="url('static/img/moroccan-flower.png')";
+	document.body.style.background="url('/static/img/moroccan-flower.png')";
 	React.useEffect(() => {
 		fetch(`/api/saved-playlists`, {
 			
@@ -705,7 +709,7 @@ function PlaylistDetail(props) {
 	console.log(playlist_id);
 	
 	// updates background
-	document.body.style.background="url('static/img/moroccan-flower.png')";
+	document.body.style.background="url('/static/img/moroccan-flower.png')";
 	// call another function to do the loop
 	React.useEffect(() => {
 		fetch(`/api/playlist-detail/${playlist_id}`, {
@@ -775,7 +779,7 @@ function SimilarUsers() {
 	const[similarUserLoudness, setSimilarUserLoudness] = React.useState([]);
 	
 	// updates background
-	document.body.style.background="url('static/img/moroccan-flower.png')";
+	document.body.style.background="url('/static/img/moroccan-flower.png')";
 
 	React.useEffect(() => {
 
@@ -849,7 +853,7 @@ function SimilarUsers() {
 				<Col>
 					<h3>Similar User:</h3>
 					<li>{similarUser}<span class="icon similar-user"></span></li>
-				<button id="user-graph" onClick={makeGraph}>See Graph</button>
+				<Button id="user-graph" onClick={makeGraph}>See Graph</Button>
 				</Col>
 			</Row>
 			<Row>
@@ -873,7 +877,7 @@ function AddSongPref(props) {
 	// lets user add song pref to profile
 
 	// updates background
-	document.body.style.background="url('static/img/moroccan-flower.png')";
+	document.body.style.background="url('/static/img/moroccan-flower.png')";
 	// input for song pref title
 	const[songPref, setSongPref] = React.useState("");
 	const[addedPref, setAddedPref] = React.useState(false);
@@ -974,7 +978,7 @@ function AddSongPref(props) {
 				onChange ={e => setSongPref(autocompleteInfo)} >		
 			</input>
 	
-			<button id="song-pref-but" onClick={addSong}>Add Song Pref</button>
+			<Button id="song-pref-but" onClick={addSong}>Add Song Pref</Button>
 
 		</form>
 
@@ -1097,7 +1101,7 @@ function AddArtistPref(props) {
 				onChange ={e => setArtistPref(autocompleteInfo)} >		
 			</input>
 	
-			<button id="artist-pref-but" onClick={addArtist}>Add Artist Pref</button>
+			<Button id="artist-pref-but" onClick={addArtist}>Add Artist Pref</Button>
 
 		</form>
 

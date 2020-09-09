@@ -1,6 +1,6 @@
 
 body {
-    background: url("static/img/moroccan-flower.png");
+    background: url("/static/img/moroccan-flower.png");
     background-size: cover;
     color: #f1f1f1;;
     text-align: center;
@@ -30,12 +30,11 @@ body {
     
 }
 
-.navbar a{
-	float: left;
-    text-align: center;
-    padding: 5px 5px;
-    color: white
+.after-login-links a {
+    color: pink;
 }
+
+
 .align-top {
     text-align: top;
 }
@@ -44,24 +43,33 @@ body {
     color: #0c0c0c;
 }
 
-#homepage, #user-detail-container, #shared-playlist-container, #your-prof-container  {
+#homepage, #user-detail-container, #shared-playlist-container, #your-prof-container, #similar-container  {
     background-color: #6A8498;
     opacity: 0.92;
     text-align: center;
-    border-radius: 15px;
+    border: 3px solid #2C2927;
+    border-radius: 25px;
     padding: 20px;
+    
+}
 
+#create-account-form {
+    width: 50%;
+    background-color:#f1f1f1;
+    opacity: 0.92;
+    text-align: center;
+    border: 3px solid #2C2927;
+    border-radius: 25px;
+    padding: 20px;
+    color: #2C2927;
+    align-content: center;
+    
 }
 
     
 
 
-button {
-    text-decoration: none;
-    border: 1px solid rgb(146, 148, 248);
-    position: relative;
-    overflow: hidden;
-    
+ 
 }
 #create-account-but {
     color: white;
@@ -94,18 +102,7 @@ canvas#myChart {
    
 }
 
-#similar-container {
-    text-align: center;
-}
 
-#chart-div {
-   
-    margin-left: 0;
-    width: 50%;
-    height: 50%;
-    align-content: center;
-   
-}
 #profile-artists {
     vertical-align: text-top;
 }
