@@ -128,9 +128,7 @@ function Homepage() {
 				<Col>
 					<h2> Welcome to Play[list] Together! <span class="icon music"></span> </h2>				
 				</Col>
-				<Col>
-
-				</Col>
+				
 
 
 			</Row>
@@ -625,14 +623,24 @@ function UserDetail(props) {
 	}, [props.user, props.song_pref, props.artist_pref])
 
 	return(
-		<React.Fragment>
-			<h2>{fname}'s Profile</h2>
-			<h4>Favorite Songs</h4>
-			<div>{favSongs}</div>
-			<h4>Favorite Artists</h4>
-			<div>{favArtists}</div>
+
+		<Container fluid="md">
+			<h2>{fname}'s Profile<span class="icon music"></span></h2>
+			<Row>
+				<Col>
+					<h4>Favorite Songs<span class="icon cd"></span></h4>
+					<div>{favSongs}</div>				
+				</Col>
+				<Col>
+					<h4>Favorite Artists<span class="icon mic"></span></h4>
+					<div>{favArtists}</div>				
+				</Col>
+			</Row>
+			<Row>
 			<button id="generate-playlist" onClick={()=>{history.push(`/combined-playlist/${user_id}`)}}>Generate Shared Playlist with {fname}</button>
-		</React.Fragment>
+			</Row>
+		</Container>
+
 		) 
 }
 function PlaylistDetail(props) {

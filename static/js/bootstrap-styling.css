@@ -106,6 +106,14 @@ ul li {
     font-family: "Font Awesome 5 Free"; font-weight: 900; content: "\f007";
     
   }
+.cd::before {
+    font-family: "Font Awesome 5 Free"; font-weight: 900; content: "\f130";
+}
+
+.email::before {
+    font-family: "Font Awesome 5 Free"; font-weight: 900; content: "\f199";
+    
+  }
 .similar-user::after {
     font-family: "Font Awesome 5 Free"; font-weight: 900; content: "\f2bb";
     
