@@ -532,11 +532,23 @@ function CombinedPlaylist(props) {
 	}, [props.user, props.playlist])
 
 	return (
-		<React.Fragment>
-			<h3>Shared Playlist with {fname}:</h3>
-			<div id="playlist-songs">{playlistSongs}</div>
-			<button id="save-playlist" onClick={()=>{history.push(`/save-playlist/${user_id}`)}}>Save Playlist</button>
-		</React.Fragment>
+
+		<Container fluid="md" id="shared-playlist-container">
+			<h2>Shared Playlist with {fname}<span class="icon music"></span></h2>
+			<Row>
+				<Col id="playlist-songs-col">
+					{playlistSongs}
+				</Col>
+			</Row>
+			<Row>
+				<Col>
+					<Button id="save-playlist" onClick={()=>{history.push(`/save-playlist/${user_id}`)}}></Button>
+				</Col>
+				
+			</Row>
+			
+		</Container>
+		
 	)
 }
 
@@ -978,7 +990,7 @@ function AddArtistPref(props) {
 
 	// updates background
 	document.body.style.background="url('static/img/moroccan-flower.png')";
-	
+
 	// input for artist pref title
 	const[artistPref, setArtistPref] = React.useState("");
 	const[addedPref, setAddedPref] = React.useState(false);

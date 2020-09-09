@@ -47,7 +47,7 @@ body {
 a {
     color: #0c0c0c;
 }
-#your-prof-container, #user-detail-container {
+#your-prof-container, #user-detail-container, #shared-playlist-container {
     margin-top: 50px;
     margin-bottom: 200px;
     text-align: center;
@@ -153,8 +153,10 @@ ul li {
     padding: 10px;
     font-size: 16px;
   }
-#shared-playlist, #playlist-songs {
+#shared-playlist, #playlist-songs-col {
     height: 300px;
     width: 50%;
     overflow: auto;
+    text-align: center;
+    align-content: center;
 }
