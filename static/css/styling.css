@@ -7,6 +7,15 @@ body {
     font-family: 'Montserrat','Karla','Quicksand', 'Calibri';
 
 }
+.btn-primary {
+    background: linear-gradient(
+      120deg,
+      transparent,
+      rgba(146, 148, 248, 0.4),
+      transparent
+    );
+    border-radius: 15px;
+}
 
 .flex-column a {
     float: left;

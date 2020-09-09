@@ -128,6 +128,13 @@ function Homepage() {
 				<Col>
 					<h2> Welcome to Play[list] Together! <span class="icon music"></span> </h2>				
 				</Col>
+				<Col>
+					<Button id="create-account-but">
+					Create a New Account
+					</Button>
+				
+				
+				</Col>
 				
 
 
