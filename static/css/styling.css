@@ -32,6 +32,9 @@ body {
     padding: 5px 5px;
     color: white
 }
+.align-top {
+    text-align: top;
+}
 .navigation a:hover {
  
     color: #D1468D;
@@ -40,13 +43,18 @@ body {
 a {
     color: #00adb5;
 }
+#your-prof-container, #user-detail-container {
+    margin-top: 50px;
+    margin-bottom: 200px;
+    text-align: center;
 
+}
 div {
     background-color: #18063A;
     opacity: 0.92;
-    margin-left: auto;
-    margin-right: auto;
-    margin-top: auto;
+    margin-left: 5px;
+    margin-right: 5px;
+    margin-top: 5px;
     margin-bottom: auto;
     text-align: center;
     

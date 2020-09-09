@@ -375,25 +375,25 @@ function YourProfile(props) {
 	return(
 
 
-		<Container fluid="md">
-		<h2>{fname}'s Profile<span class="icon music"></span></h2>
-		<Row>
-			<Col>
-				<h4>Favorite Songs<span class="icon cd"></span></h4>
-				<Button variant="secondary" onClick={()=>{history.push(`/add-song-pref`)}}>Add Favorite Songs</Button>
-				<div>{favSongs}</div>				
-			</Col>
-			<Col>
-				<h4>Favorite Artists<span class="icon mic"></span></h4>
-				<Button variant="secondary" onClick={()=>{history.push(`/add-artist-pref`)}}>Add Favorite Songs</Button>
+		<Container fluid="md" id="your-prof-container">
+			<h2>{fname}'s Profile<span class="icon music"></span></h2>
+			<Row>
+				<Col>
+					<h4>Favorite Songs<span class="icon cd"></span></h4>
+					<Button variant="secondary" onClick={()=>{history.push(`/add-song-pref`)}}>Add Favorite Songs</Button>
+					<div>{favSongs}</div>				
+				</Col>
+				<Col>
+					<h4>Favorite Artists<span class="icon mic"></span></h4>
+					<Button variant="secondary" onClick={()=>{history.push(`/add-artist-pref`)}}>Add Favorite Songs</Button>
 
-				<div>{favArtists}</div>				
-			</Col>
-		</Row>
-		<Row>
-		<Button variant="primary" onClick={createSongRecs}>Get Song Recs</Button>
-		</Row>
-	</Container>
+					<div>{favArtists}</div>				
+				</Col>
+			</Row>
+			<Row>
+			<Button variant="primary" onClick={createSongRecs}>Get Song Recs</Button>
+			</Row>
+		</Container>
 
 	) 
 }
@@ -645,7 +645,7 @@ function UserDetail(props) {
 
 	return(
 
-		<Container fluid="md">
+		<Container fluid="md" id="user-detail-container">
 			<h2>{fname}'s Profile<span class="icon music"></span></h2>
 			<Row>
 				<Col>
@@ -657,7 +657,7 @@ function UserDetail(props) {
 					<h4>Favorite Songs<span class="icon cd"></span></h4>
 					<div>{favSongs}</div>				
 				</Col>
-				<Col id="profile-artists">
+				<Col id="profile-artists" className="align-top">
 					<h4>Favorite Artists<span class="icon mic"></span></h4>
 					<div>{favArtists}</div>				
 				</Col>
