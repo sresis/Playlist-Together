@@ -381,6 +381,7 @@ function YourProfile(props) {
 
 		<Container fluid="md" id="your-prof-container">
 			<h2>{fname}'s Profile<span class="icon music"></span></h2>
+			
 			<Row>
 				<Col>
 					<h4>Favorite Songs<span class="icon cd"></span></h4>
@@ -389,13 +390,14 @@ function YourProfile(props) {
 				</Col>
 				<Col>
 					<h4>Favorite Artists<span class="icon mic"></span></h4>
-					<Button variant="secondary" onClick={()=>{history.push(`/add-artist-pref`)}}>Add Favorite Songs</Button>
-
+					<Button variant="secondary" onClick={()=>{history.push(`/add-artist-pref`)}}>Add Favorite Artists</Button>
 					<div>{favArtists}</div>				
 				</Col>
 			</Row>
 			<Row>
-			<Button variant="primary" onClick={createSongRecs}>Get Song Recs</Button>
+				<Col>
+					<Button variant="primary" onClick={createSongRecs}>Get Song Recs</Button>
+				</Col>				
 			</Row>
 		</Container>
 
@@ -622,7 +624,7 @@ function UserDetail(props) {
 	const user = {"user_id": {user_id}}
 	const history = ReactRouterDOM.useHistory();
 	// updates background
-	document.body.style.background="url('static/img/moroccan-flower.png')";
+	document.body.style.background="url('/static/img/moroccan-flower.png')";
 	
 	// call another function to do the loop
 	React.useEffect(() => {
