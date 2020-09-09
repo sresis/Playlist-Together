@@ -7,111 +7,120 @@ const Redirect = ReactRouterDOM.Redirect;
 const Autocomplete = React;
 const {Button, Alert, Col, Row, Container, Collapse, Form, FormControl, Nav, Navbar, Spinner } = ReactBootstrap;
 
+// instance of context
+const LoginContext = React.createContext(null);
+
 function App() {
 	const [loggedIn, setLoggedIn] = React.useState(null);
-	
+	// check in server if there is a logged in user
+	React.useEffect(() => {
+	fetch('api/check_login')
+		.then(res => res.json())
+		.then(data => setLoggedIn(data.logged_in))
+	}, [loggedIn]);
+
+
+	// group navbar links into 1) viewable by logged in users only 2) viewable when not logged in
+	const Navigation = {
+		true: (<Nav>
+			<Nav.Link as={Link} to="/view-similar-users">Similar User</Nav.Link>
+			<Nav.Link as={Link} to="/your-profile">Your Profile</Nav.Link>
+			
+
+		</Nav>
+		),
+		false: (
+			<Nav>
+				<Nav.Link as={Link} to="/login">Log In</Nav.Link>
+				<Nav.Link as={Link} to="/create-account">Create Account</Nav.Link>
+			</Nav>
+		)
+	}
+
+
+
 
 	
 	return (
-	    <Router>
-	      
-		  	<div>
-				  <Navbar className="navigation">
-					<Navbar.Brand>
-						<img src={'static/img/logo.png'}
-						width='150'
-	
-						className='d-inline-block align-top'
-						id='site-logo' /> 
-					</Navbar.Brand>
-                    <ul className ="navbar-nav">
-						<li>
-						<Link to="/">Home </Link>
-						</li>
-						<li>
-						<Link to="/create-account">Create Account </Link>
-						</li>
-						<li>
-						<Link to="/login">Login </Link>
-						</li>
+		<LoginContext.Provider value={{loggedIn, setLoggedIn}}>
+			<Router>
+				<div>
+					<Navbar className="navigation">
+						<Navbar.Brand>
+							<img src={'static/img/logo.png'}
+							width='150'
 
-						<li>
-						<Link to="/users">Users </Link>
-						</li>
-						<li>
-						<Link to="/your-profile">View Your Profile </Link>
-						</li>
-						<li>
-						<Link to="/add-song-pref">Add Song Pref </Link>
-						</li>
-						<li>
-						<Link to="/add-artist-pref">Add Artist Pref </Link>
-						</li>
-						<li>
-						<Link to="/view-similar-users">View Similar Users </Link>
-						</li>
-						<li>
-						<Link to="/view-saved-playlists">View Saved Playlists </Link>
-						</li>
-						<li>
-						<Link to="/logout">Logout </Link>
-						</li>
-	          		</ul>
-				</Navbar>
-			</div>
+							className='d-inline-block align-top'
+							id='site-logo' /> 
+						</Navbar.Brand>
+						<Nav>
+							<li>
+							<Link to="/">Home </Link>
+							</li>
+							<li>
+							<Link to="/create-account">Create Account </Link>
+							</li>
+							<li>
+							<Link to="/login">Login </Link>
+							</li>
+							{Navigation[loggedIn]}
+							
+						</Nav>
+					</Navbar>
+				</div>
 
-	        <Switch>
-	          <Route path="/login" component={Login}>
-	            <Login />
-	          </Route>
-	          <Route path="/create-account" component={CreateAccount}>
-	            <CreateAccount />
-	          </Route>
-	          <Route path="/users" component={Users}>
-	            <Users />
-	          </Route>
-			  <Route path="/get-recs" component={GetSongRecs}>
-	            <GetSongRecs />
-	          </Route>
-			  <Route path="/your-profile">
-	            <YourProfile />
-	          </Route>
-			  <Route path="/add-song-pref" component={AddSongPref}>
-	            <AddSongPref />
-	          </Route>
-			  <Route path="/add-artist-pref" component={AddArtistPref}>
-	            <AddArtistPref />
-	          </Route>
-			  <Route path="/logout" component={Login}>
-	            <Logout />
-	          </Route>
-			  <Route path="/view-similar-users">
-	            <SimilarUsers />
+				<Switch>
+				<Route path="/login" component={Login}>
+					<Login />
 				</Route>
-			  <Route path="/combined-playlist/:user_id">
-	            <CombinedPlaylist />
+				<Route path="/create-account" component={CreateAccount}>
+					<CreateAccount />
 				</Route>
-			<Route path="/user-detail/:user_id" component={UserDetail}>
-	            <UserDetail />
-	        </Route>
-			<Route path="/playlist-detail/:playlist_id" component={PlaylistDetail}>
-	            <PlaylistDetail />
-	        </Route>
-			<Route path="/view-saved-playlists" component={ViewSavedPlaylists}>
-	            <ViewSavedPlaylists />
-	        </Route>
-			<Route path="/save-playlist/:user_id" component={SavePlaylist}>
-	            <SavePlaylist />
-	        </Route>
+				<Route path="/users" component={Users}>
+					<Users />
+				</Route>
+				<Route path="/get-recs" component={GetSongRecs}>
+					<GetSongRecs />
+				</Route>
+				<Route path="/your-profile">
+					<YourProfile />
+				</Route>
+				<Route path="/add-song-pref" component={AddSongPref}>
+					<AddSongPref />
+				</Route>
+				<Route path="/add-artist-pref" component={AddArtistPref}>
+					<AddArtistPref />
+				</Route>
+				<Route path="/logout" component={Login}>
+					<Logout />
+				</Route>
+				<Route path="/view-similar-users">
+					<SimilarUsers />
+					</Route>
+				<Route path="/combined-playlist/:user_id">
+					<CombinedPlaylist />
+					</Route>
+				<Route path="/user-detail/:user_id" component={UserDetail}>
+					<UserDetail />
+				</Route>
+				<Route path="/playlist-detail/:playlist_id" component={PlaylistDetail}>
+					<PlaylistDetail />
+				</Route>
+				<Route path="/view-saved-playlists" component={ViewSavedPlaylists}>
+					<ViewSavedPlaylists />
+				</Route>
+				<Route path="/save-playlist/:user_id" component={SavePlaylist}>
+					<SavePlaylist />
+				</Route>
+				<Route path="/">
+					<Homepage />
+				</Route>
+				</Switch>
+			</Router>
 
-		
-	          <Route path="/">
-	            <Homepage />
-	          </Route>
-	        </Switch>
-	     
-	    </Router>
-  );
+		</LoginContext.Provider>
+	    
+  )
 }
 
 function Homepage() {

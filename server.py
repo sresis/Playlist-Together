@@ -73,6 +73,16 @@ def login():
 		session['user'] = user.user_id
 		return jsonify({'status': 'correct'})
 
+@app.route('/api/check_login')
+def check_login_status():
+
+	"""checks if a user is logged in."""
+	if session.get('user'):
+		return jsonify({'logged_in': True})
+	else:
+		return jsonify({'logged_in': False})
+
+
 @app.route('/api/users')
 def get_users():
 	"""View all users."""
