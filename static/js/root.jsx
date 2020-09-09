@@ -122,8 +122,12 @@ function App() {
 }
 
 function Homepage() {
+	// updates the background for just this page
+	document.body.style.background="url('static/img/dj.jpg')";
+	document.body.style.backgroundSize='cover';
 	return(
-		<Container fluid="md">
+		<Container fluid="md" id="homepage">
+			
 			<Row>
 				<Col>
 					<h2> Welcome to Play[list] Together! <span class="icon music"></span> </h2>				
@@ -134,7 +138,7 @@ function Homepage() {
 					</Button>
 				
 				
-				</Col>
+				</Col>  
 				
 
 
@@ -200,7 +204,8 @@ function CreateAccount(props) {
 			}
 		})
 	}
-	
+	// updates background
+	document.body.style.background="url('static/img/moroccan-flower.png')";
 	// returns create account form
 	return(
 
@@ -239,7 +244,8 @@ function CreateAccount(props) {
 }
 
 function Login() {
-
+	// updates background
+	document.body.style.background="url('static/img/moroccan-flower.png')";
 	
 	// tracks the user response for email/password
 
@@ -321,7 +327,8 @@ function YourProfile(props) {
 	const history = ReactRouterDOM.useHistory();
 
 	const createSongRecs = () => {
-	
+	// updates background
+	document.body.style.background="url('static/img/moroccan-flower.png')";
 
 		fetch('/api/get_song_recs', {
 			method: 'POST',
@@ -400,7 +407,8 @@ function YourProfile(props) {
 
 function GetSongRecs() {
 
-	
+	// updates background
+	document.body.style.background="url('static/img/moroccan-flower.png')";
 
 	console.log('test');
 	return <h2>hi</h2>
@@ -409,6 +417,7 @@ function GetSongRecs() {
 
 function Users(props) {
 
+	
 	// formats the data 
 	const user_details = {'email': props.email, 'user_id': props.user_id, 
 	'fname': props.fname, 'lname': props.lname};
@@ -473,6 +482,8 @@ function CombinedPlaylist(props) {
 	const[playlistSongs, setPlaylistSongs] = React.useState([]);
 	
 	const history = ReactRouterDOM.useHistory();
+
+	
 	
 	React.useEffect(() => {
 		fetch(`/api/combined_playlist/${user_id}`, {
