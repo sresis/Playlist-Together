@@ -311,6 +311,8 @@ function YourProfile(props) {
 	const[favArtists, setFavArtists] = React.useState([]);
 	const[fname, setFname] = React.useState([]);
 
+	const history = ReactRouterDOM.useHistory();
+
 	const createSongRecs = () => {
 	
 
@@ -364,17 +366,27 @@ function YourProfile(props) {
 	}, [props.user, props.song_pref, props.artist_pref])
 
 	return(
-		<React.Fragment>
-			<h2>{fname}'s Profile</h2>
-			<h4>Favorite Songs</h4>
-			<div>{favSongs}</div>
-			<h4>Favorite Artists</h4>
-			<div>{favArtists}</div>
-			<button id="generate-song-recs" onClick={createSongRecs}>Get Song Recs</button>
 
 
-		</React.Fragment>
-		) 
+		<Container fluid="md">
+		<h2>{fname}'s Profile<span class="icon music"></span></h2>
+		<Row>
+			<Col>
+				<h4>Favorite Songs<span class="icon cd"></span></h4>
+				<Button variant="secondary" onClick={()=>{history.push(`/add-song-pref`)}}>Add Favorite Songs</Button>
+				<div>{favSongs}</div>				
+			</Col>
+			<Col>
+				<h4>Favorite Artists<span class="icon mic"></span></h4>
+				<div>{favArtists}</div>				
+			</Col>
+		</Row>
+		<Row>
+		<Button variant="primary" onClick={createSongRecs}>Get Song Recs</Button>
+		</Row>
+	</Container>
+
+	) 
 }
 
 function GetSongRecs() {
