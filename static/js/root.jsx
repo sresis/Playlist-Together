@@ -165,7 +165,7 @@ function Logout() {
 		
 	 
 
-	return <div>logout</div>
+	return <Redirect to='/' />
 }
 
 function CreateAccount(props) {
