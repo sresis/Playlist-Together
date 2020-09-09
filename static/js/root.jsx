@@ -245,9 +245,9 @@ function CreateAccount(props) {
 }
 
 function Login() {
+	
 	// updates background
 	document.body.style.background="url('/static/img/moroccan-flower.png')";
-	
 	// tracks the user response for email/password
 
 	const [email, setEmail] = React.useState('');
@@ -295,23 +295,26 @@ function Login() {
 
 	// renders login form
 	return (
-		<Form id="create-acct-form">
-			<Form.Group controlid="formEmail">
-				<Form.Label>Email</Form.Label>
-				<Form.Control type="email" placeholder="Email"
-								onChange= {e => setEmail(e.target.value)}
-							 	value={email}/>
-			</Form.Group>
-			<Form.Group controlid="formPassword">
-				<Form.Label>Password</Form.Label>
-				<Form.Control type="password" placeholder="Password"
-								onChange= {e => setPassword(e.target.value)}
-								value={password}
-								 />
-			</Form.Group>
-			<Button variant="primary" type="submit" onClick={loginUser}>Submit</Button>
-		</Form>
-
+		<Container fluid="md" id="login-form">
+			<h4>Log In</h4>
+			<Form>
+				<Form.Group controlid="formEmail">
+					<Form.Label>Email</Form.Label>
+					<Form.Control type="email" placeholder="Email"
+									onChange= {e => setEmail(e.target.value)}
+									value={email}/>
+				</Form.Group>
+				<Form.Group controlid="formPassword">
+					<Form.Label>Password</Form.Label>
+					<Form.Control type="password" placeholder="Password"
+									onChange= {e => setPassword(e.target.value)}
+									value={password}
+									/>
+				</Form.Group>
+				<Button variant="primary" type="submit" onClick={loginUser}>Submit</Button>
+			</Form>
+		
+		</Container>
 		);
 	}
 
