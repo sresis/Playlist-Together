@@ -29,35 +29,32 @@ h1, h2, h3, h4 {
     padding: 5px 5px;
 }
 
-#logo-prelogin{
+#pre-logo, #post-logo{
     text-align: left;
 }
 
 #before-login-links a:hover {
     color: #2C2927;
 }
-.after-login-links a {
+#after-login-links a {
     color: #8B9CA0;
-    background-color: #2C2927;
-    padding: 5px 5px;
-    flex: 1;
-    overflow: hidden;
-    
-
-
+    padding: 3px;
+    text-align: left;
 }
-.after-login-links {
-    justify-content: center;
+#topbar-post {
+    background-color: #2C2927;
     margin-bottom: 10px;
+    margin-top: 0px;
     width: 100%;
     margin-left:0;
     margin-right: 0;
     display: flex;
-    flex-wrap: wrap; 
+    padding: 0;
     min-width: 0;
+    
 
 }
-.after-login-links a:hover {
+#after-login-links a:hover {
     color: #C4BCB7;
 }
 

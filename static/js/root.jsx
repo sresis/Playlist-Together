@@ -25,25 +25,36 @@ function App() {
 
 	// group navbar links into 1) viewable by logged in users only 2) viewable when not logged in
 	const Navigation = {
-		true: (<Nav className="after-login-links">
-			<Link to="/">Home </Link>
-			<Link to="/about">About </Link>
-			<Link to="/view-similar-users">Similar User</Link>
-			<Link to="/your-profile">Your Profile</Link>
-			<Link to="/users">View Users</Link>
-			<Link to="/view-saved-playlists">View Saved Playlists</Link>
-			<Link to="/logout">Log Out</Link>
-			
-
-		</Nav>
+		true: (
+		<Navbar id ="topbar-post">
+			<Col className="justify-content-start" id="post-logo">
+				<Navbar.Brand className="nav-logo">
+					<img src='/static/img/small-logo.png'
+					width='60'
+					height='30'
+					className='d-inline-block align-top'
+					id='logo' />
+				</Navbar.Brand>
+			</Col>
+			<Col className="justify-content-end" id="after-login-links">
+				<Link to="/">Home </Link>
+				<Link to="/about">About </Link>
+				<Link to="/view-similar-users">Similar User</Link>
+				<Link to="/your-profile">Your Profile</Link>
+				<Link to="/users">View Users</Link>
+				<Link to="/view-saved-playlists">Saved Playlists</Link>
+				<Link to="/logout">Log Out</Link>
+			</Col>
+	   </Navbar>
+		
 		),
 		false: (
-			<Navbar id ="topbar">
-				 <Col className="justify-content-start" id="logo-prelogin">
-					<Navbar.Brand>
+			<Navbar id ="topbar-pre">
+				 <Col className="justify-content-start" id="pre-logo">
+					<Navbar.Brand className="nav-logo">
 						<img src='/static/img/small-logo.png'
-						width='50'
-						height='50'
+						width='60'
+						height='60'
 						className='d-inline-block align-top'
 						id='logo' />
 					</Navbar.Brand>
@@ -54,7 +65,6 @@ function App() {
 					<Link to="/login">Log In</Link>
 					<Link to="/create-account">Create Account</Link>
 				</Col>
-				
 			</Navbar>
 
 			
