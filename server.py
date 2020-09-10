@@ -192,11 +192,7 @@ def view_combined_playlist(user_id):
 	session_user = session['user']
 	## get the user id
 	
-	## gets the playlist name from form
-	user_data = request.get_json()
-	playlist_name = user_data['playlistName']
-	print('test')
-	print(playlist_name)
+	
 
 
 	# gets attributes of user's recommended tracks
@@ -209,7 +205,6 @@ def view_combined_playlist(user_id):
 	combined_dict = {
 		'user': json_user,
 		'playlist': similar_songs,
-		'playlist_name': playlist_name
 	}
 	return jsonify(combined_dict)
 

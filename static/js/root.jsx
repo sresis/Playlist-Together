@@ -501,7 +501,6 @@ function CombinedPlaylist(props) {
 		.then(data => {
 			const f_name = data.user.fname;
 			const playlist = data.playlist;
-			const playlist_name = data.playlist_name
 	
 			// array to store the songs in playlist
 			const playlistItems = [];
@@ -524,8 +523,7 @@ function CombinedPlaylist(props) {
 			}
 			setPlaylistSongs(playlistItems);
 			setFname(f_name);
-			setPlaylistName(playlist_name);
-			console.log(playlistName);
+			
 			
 			})
 		// reset to avoid infinite loop
@@ -534,7 +532,12 @@ function CombinedPlaylist(props) {
 	return (
 		
 		<Container fluid="md" id="shared-playlist-container">
-			<h2>Shared Playlist withxx {fname}<span class="icon music"></span></h2>
+			<h2>Shared Playlist with {fname}<span class="icon music"></span></h2>
+			<Row>
+				<Col id="playlist-songs-col">
+					{playlistSongs}
+				</Col>
+			</Row>
 			<Row>
 				<Col>
 					<Form>
@@ -549,11 +552,7 @@ function CombinedPlaylist(props) {
 					</Form>
 				</Col>
 			</Row>
-			<Row>
-				<Col id="playlist-songs-col">
-					{playlistSongs}
-				</Col>
-			</Row>
+		
 		</Container>
 		
 	)
