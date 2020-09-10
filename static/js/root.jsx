@@ -231,7 +231,7 @@ function CreateAccount(props) {
 								value={password}
 								 />
 			</Form.Group>
-			<Button classname="btn" variant="primary" type="submit" onClick={createUser}>Create Account</Button>
+			<Button classname="btn" type="submit" onClick={createUser}>Create Account</Button>
 		</Form>
 		</Container>
 		
@@ -304,7 +304,7 @@ function Login() {
 									value={password}
 									/>
 				</Form.Group>
-				<Button variant="primary" classname="btn" type="submit" onClick={loginUser}>Submit</Button>
+				<Button classname="btn" type="submit" onClick={loginUser}>Submit</Button>
 			</Form>
 		
 		</Container>
@@ -383,18 +383,18 @@ function YourProfile(props) {
 			<h2>{fname}'s Profile<span class="icon music"></span></h2>
 			<Row>
 				<Col>
-					<Button variant="primary" onClick={createSongRecs}>Get Song Recs</Button>
+					<Button onClick={createSongRecs}>Get Song Recs</Button>
 				</Col>				
 			</Row>
 			<Row>
 				<Col>
 					<h4>Favorite Songs<span class="icon cd"></span></h4>
-					<Button variant="secondary" onClick={()=>{history.push(`/add-song-pref`)}}>Add Favorite Songs</Button>
+					<Button onClick={()=>{history.push(`/add-song-pref`)}}>Add Favorite Songs</Button>
 					<div>{favSongs}</div>				
 				</Col>
 				<Col>
 					<h4>Favorite Artists<span class="icon mic"></span></h4>
-					<Button variant="secondary" onClick={()=>{history.push(`/add-artist-pref`)}}>Add Favorite Artists</Button>
+					<Button onClick={()=>{history.push(`/add-artist-pref`)}}>Add Favorite Artists</Button>
 					<div>{favArtists}</div>				
 				</Col>
 			</Row>

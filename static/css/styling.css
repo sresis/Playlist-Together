@@ -5,39 +5,27 @@ body {
     color: #f1f1f1;;
     text-align: center;
     font-family: 'Montserrat','Karla','Quicksand', 'Calibri';
-    
-
 }
 
-.btn-primary, .btn-secondary{
-    background: transparent;
-    border-radius: 15px;
-    
-}
+
 
 .flex-column a {
     float: left;
     text-align: center;
     padding: 5px 5px;
     color: white
-
 }
 .navbar {
     margin-bottom: 10px;
     padding: 0;
     list-style: none;
     justify-content: flex-end;
-    
 }
-
-
-
 
 .align-top {
     text-align: top;
 }
 .navigation a:hover {
- 
     color: #2C2927;
 }
 .after-login-links a {
@@ -87,12 +75,16 @@ body {
     color: white;
     background-color: #2C2927;
     border-color: 3px solid white;
- 
+    border-radius: 15px;
+    box-shadow: 0 0 0 0.2rem;
 }
+ 
+
 .btn:hover {
   
     box-shadow: 0 0 0 0.2rem;
     background-color:  #8B9CA0;
+    border-radius: 15px;
   }
 canvas#myChart {
     opacity: 0.87;
