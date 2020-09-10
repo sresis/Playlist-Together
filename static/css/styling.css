@@ -22,12 +22,16 @@ h1, h2, h3, h4 {
     list-style: none;
     justify-content: flex-end;
     color: white;
+    text-align: right;
 }
 #before-login-links a {
     color: white;
     padding: 5px 5px;
 }
 
+#logo-prelogin{
+    text-align: left;
+}
 
 #before-login-links a:hover {
     color: #2C2927;

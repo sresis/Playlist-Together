@@ -38,12 +38,26 @@ function App() {
 		</Nav>
 		),
 		false: (
-			<Nav className="justify-content-end" id="before-login-links">
-				<Link to="/">Home </Link>
-				<Link to="/about">About </Link>
-				<Link to="/login">Log In</Link>
-				<Link to="/create-account">Create Account</Link>
-			</Nav>
+			<Navbar id ="topbar">
+				 <Col className="justify-content-start" id="logo-prelogin">
+					<Navbar.Brand>
+						<img src='/static/img/small-logo.png'
+						width='50'
+						height='50'
+						className='d-inline-block align-top'
+						id='logo' />
+					</Navbar.Brand>
+				</Col>
+				<Col className="justify-content-end" id="before-login-links">
+					<Link to="/">Home </Link>
+					<Link to="/about">About </Link>
+					<Link to="/login">Log In</Link>
+					<Link to="/create-account">Create Account</Link>
+				</Col>
+				
+			</Navbar>
+
+			
 		)
 	}
 
