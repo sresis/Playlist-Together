@@ -536,17 +536,15 @@ function CombinedPlaylist(props) {
 		<Container fluid="md" id="shared-playlist-container">
 			<h2>Shared Playlist with {fname}<span class="icon music"></span></h2>
 			<Row>
+				<Col>
+					<Button id="save-playlist" onClick={()=>{history.push(`/save-playlist/${user_id}`)}}>Save Playlist</Button>
+				</Col>
+			</Row>
+			<Row>
 				<Col id="playlist-songs-col">
 					{playlistSongs}
 				</Col>
 			</Row>
-			<Row>
-				<Col>
-					<Button id="save-playlist" onClick={()=>{history.push(`/save-playlist/${user_id}`)}}></Button>
-				</Col>
-				
-			</Row>
-			
 		</Container>
 		
 	)
