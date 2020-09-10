@@ -6,7 +6,9 @@ body {
     text-align: center;
     font-family: 'Montserrat','Karla','Quicksand', 'Calibri';
 }
-
+h1, h2 {
+    font-family: 'CodeProW01-BoldLowercase', 'Montserrat', 'Calibri';
+}
 
 
 .flex-column a {
@@ -68,8 +70,9 @@ body {
 
     display: inline-block;
     vertical-align: top;
+    border-radius: 15px;
  
-  }
+}
 
 .btn {
     color: white;
@@ -85,7 +88,7 @@ body {
     box-shadow: 0 0 0 0.2rem;
     background-color:  #8B9CA0;
     border-radius: 15px;
-  }
+}
 canvas#myChart {
     opacity: 0.87;
     background-color: white;
