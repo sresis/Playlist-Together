@@ -192,6 +192,7 @@ def view_combined_playlist(user_id):
 	session_user = session['user']
 	## get the user id
 	
+	## gets the playlist name from form
 	
 
 
@@ -344,7 +345,7 @@ def save_shared_playlist(user_id):
 	shared_prefs = crud.get_shared_tracks(session_user, user_id)
 	song_attributes = crud.get_song_attributes(session_user)
 	stdev = crud.get_stdev(song_attributes)
-
+	playlist_name = "test"
 	similar_songs = crud.get_all_similar_songs(session_user, user_id, 10)
 	print(similar_songs)
 	## get song id for each item
@@ -353,7 +354,7 @@ def save_shared_playlist(user_id):
 		song_id = crud.get_song_id(item[1])
 		song_ids.append(song_id)
 
-	playlist_1 = playlist_user.save_shared_playlist(session_user, user_id, song_ids)
+	playlist_1 = playlist_user.save_shared_playlist(session_user, user_id, song_ids, playlist_name)
 
 	
 

@@ -12,11 +12,11 @@ def create_playlist_user(user_id, playlist_id):
 
 	return playlist_user
 
-def save_shared_playlist(user_1, user_2, song_list):
+def save_shared_playlist(user_1, user_2, song_list, playlist_name):
 	"""stores a shared playlist. """
 
 	# create instance of Playlist class
-	new_playlist = playlist.create_playlist()
+	new_playlist = playlist.create_playlist(playlist_name)
 
 	# creates playlist user instances
 	create_playlist_user(user_1, new_playlist.playlist_id)

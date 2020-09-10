@@ -524,7 +524,7 @@ function CombinedPlaylist(props) {
 			setPlaylistSongs(playlistItems);
 			setFname(f_name);
 			
-			
+			//**** need to find a way to pass the playlist name in and send to server */
 			})
 		// reset to avoid infinite loop
 	}, [props.user, props.playlist, props.playlistName])
@@ -565,7 +565,7 @@ function SavePlaylist(props) {
 	document.body.style.background="url('/static/img/moroccan-flower.png')";
 	// make a form to store the playlist name. update the state of it ***
 	React.useEffect(() => {
-		fetch(`/api/save_playlist/${user_id}`, {
+		fetch(`/api/save_playlist/${user_id}`, { // playlist name?
 			
 			method: 'POST',
 			credentials: 'include',
