@@ -125,15 +125,17 @@ function Homepage() {
 		<Container fluid="md" id="homepage">
 			<Row>
 				<Col>
-					<h2> Welcome to Play[list] Together! <span class="icon music"></span> </h2>				
-				</Col>
-				
+					<img src={'static/img/logo.png'}
+							width='400'
+							
+							id='site-logo' />
+				</Col>	
 			</Row>
 			<Row>
-				<img src={'static/img/logo.png'}
-						width='400'
-						
-						id='site-logo' />
+				<Col>
+					<h2> Curate a Custom Playlist with a Friend <span class="icon music"></span> </h2>				
+				</Col>
+				
 			</Row>
 		</Container> 
 	)
