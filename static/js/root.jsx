@@ -572,7 +572,7 @@ function SavePlaylist(props) {
 			})
 		// reset to avoid infinite loop
 	})
-	return <h1>Saved</h1>
+	return <Redirect to='/users' />
 }
 function ViewSavedPlaylists(props){
 	const[playlistList, setPlaylistList] = React.useState([]);
@@ -606,7 +606,16 @@ function ViewSavedPlaylists(props){
 		})
 		// reset to avoid infinite loop
 	}, [props.playlistList])
-	return <h1>{playlistList}</h1>
+	return(
+		<Container fluid="md" id="saved-playlist-container">
+			<h2>Saved Playlists</h2>
+			<Row>
+				<Col>
+					{playlistList}
+				</Col>
+			</Row>
+		</Container>
+	)
 }
 function UserDetail(props) {
 	// pulls the user ID from the "route"

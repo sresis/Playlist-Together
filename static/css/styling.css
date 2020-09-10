@@ -43,7 +43,8 @@ body {
     color: #0c0c0c;
 }
 
-#homepage, #user-detail-container, #shared-playlist-container, #your-prof-container, #similar-container  {
+#homepage, #user-detail-container, #shared-playlist-container, #your-prof-container, #similar-container,
+#saved-playlist-container  {
     background-color: #6A8498;
     opacity: 0.92;
     text-align: center;
