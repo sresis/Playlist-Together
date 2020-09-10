@@ -38,7 +38,7 @@ function App() {
 		</Nav>
 		),
 		false: (
-			<Nav className="before-login-links">
+			<Nav className="justify-content-end" id="before-login-links">
 				<Link to="/">Home </Link>
 				<Link to="/about">About </Link>
 				<Link to="/login">Log In</Link>
@@ -50,16 +50,8 @@ function App() {
 	return (
 		<LoginContext.Provider value={{loggedIn, setLoggedIn}}>
 			<Router>
-				<Navbar className="navigation" id="navbar-nav">
-					<Navbar.Brand>
-						 
-					</Navbar.Brand>
-					<Nav className="flex-column">	
-						{Navigation[loggedIn]}
-					</Nav>
-				</Navbar>
 				
-
+				{Navigation[loggedIn]}
 				<Switch>
 				<Route path="/login" component={Login}>
 					<Login />
