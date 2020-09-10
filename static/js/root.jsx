@@ -125,15 +125,14 @@ function Homepage() {
 		<Container fluid="md" id="homepage">
 			<Row>
 				<Col>
-					<img src={'static/img/logo.png'}
+					<img src={'static/img/transparent-logo.png'}
 							width='400'
-							
 							id='site-logo' />
 				</Col>	
 			</Row>
 			<Row>
 				<Col>
-					<h2> Curate a Custom Playlist with a Friend <span class="icon music"></span> </h2>				
+					<h2 id="homepage-caption"> Curate a Custom Playlist with a Friend <span class="icon music"></span> </h2>				
 				</Col>
 				
 			</Row>
