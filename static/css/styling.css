@@ -30,9 +30,7 @@ body {
     
 }
 
-.after-login-links a {
-    color: pink;
-}
+
 
 
 .align-top {
@@ -40,7 +38,14 @@ body {
 }
 .navigation a:hover {
  
-    color: #0c0c0c;
+    color: #2C2927;
+}
+.after-login-links a {
+    color: #8B9CA0;
+    background-color: #2C2927;
+}
+.after-login-links a:hover {
+    color: #C4BCB7;
 }
 
 #homepage, #user-detail-container, #shared-playlist-container, #your-prof-container, #similar-container,
@@ -53,7 +58,9 @@ body {
     padding: 20px;
     
 }
-
+#homepage {
+    width: 50%;
+}
 #create-account-form, #login-form, #song-pref-form, #artist-pref-form {
     width: 50%;
     background-color:#f1f1f1;
@@ -73,12 +80,8 @@ body {
 
     display: inline-block;
     vertical-align: top;
-    border-color: 5px solid red;
-    border-radius: 20px;
-    
-  }
-
  
+  }
 
 .btn {
     color: white;
@@ -89,7 +92,7 @@ body {
 .btn:hover {
   
     box-shadow: 0 0 0 0.2rem;
-    background-color:  #2E5547;
+    background-color:  #8B9CA0;
   }
 canvas#myChart {
     opacity: 0.87;
