@@ -481,9 +481,10 @@ function CombinedPlaylist(props) {
 	const[playlist, setPlaylist] = React.useState([]);
 	const[fname, setFname] = React.useState([]);
 	const[playlistSongs, setPlaylistSongs] = React.useState([]);
+	const[playlistName, setPlaylistName] = React.useState([]);
 	
 	const history = ReactRouterDOM.useHistory();
-
+	console.log(playlistName);
 	// updates background
 	document.body.style.background="url('/static/img/moroccan-flower.png')";
 	
@@ -500,6 +501,7 @@ function CombinedPlaylist(props) {
 		.then(data => {
 			const f_name = data.user.fname;
 			const playlist = data.playlist;
+			const playlist_name = data.playlist_name
 	
 			// array to store the songs in playlist
 			const playlistItems = [];
@@ -508,9 +510,6 @@ function CombinedPlaylist(props) {
 				playlistItems.push(
 					<div>
 						<li key={item[1]}>{item[0]}</li>
-						
-						
- 
 							<iframe src= {`https://open.spotify.com/embed/track/${item[1]}`}
 								
 								width="300" height="50" frameBorder="0" allowtransparency="true" 
@@ -525,19 +524,29 @@ function CombinedPlaylist(props) {
 			}
 			setPlaylistSongs(playlistItems);
 			setFname(f_name);
-			console.log(f_name)
+			setPlaylistName(playlist_name);
+			console.log(playlistName);
 			
 			})
 		// reset to avoid infinite loop
-	}, [props.user, props.playlist])
+	}, [props.user, props.playlist, props.playlistName])
 
 	return (
-
+		
 		<Container fluid="md" id="shared-playlist-container">
-			<h2>Shared Playlist with {fname}<span class="icon music"></span></h2>
+			<h2>Shared Playlist withxx {fname}<span class="icon music"></span></h2>
 			<Row>
 				<Col>
-					<Button id="save-playlist" onClick={()=>{history.push(`/save-playlist/${user_id}`)}}>Save Playlist</Button>
+					<Form>
+						<Form.Group controlid="playlistName">
+							<Form.Label>Playlist Name</Form.Label>
+							<Form.Control type="text" placeholder="Playlist Name"
+											onChange= {e => setPlaylistName(e.target.value)}
+											value={playlistName}/>
+						</Form.Group>
+						<Button id="save-playlist" classname="btn"
+						onClick={()=>{history.push(`/save-playlist/${user_id}`)}}>Save Playlist</Button>
+					</Form>
 				</Col>
 			</Row>
 			<Row>
@@ -555,6 +564,7 @@ function SavePlaylist(props) {
 	const {user_id} = ReactRouterDOM.useParams();
 	// updates background
 	document.body.style.background="url('/static/img/moroccan-flower.png')";
+	// make a form to store the playlist name. update the state of it ***
 	React.useEffect(() => {
 		fetch(`/api/save_playlist/${user_id}`, {
 			
@@ -594,6 +604,7 @@ function ViewSavedPlaylists(props){
 			for (const item in data['playlists']) {
 				
 				console.log(data['playlists'][item]);
+				console.log('xx');
 				//history.push(`/user-detail/${data[idx]['user_id']}`);
 				allPlaylists.push(
 						<li key={data['playlists'][item]}>
@@ -681,7 +692,7 @@ function UserDetail(props) {
 	return(
 
 		<Container fluid="md" id="user-detail-container">
-			<h2>{fname}'s Profile<span class="icon music"></span></h2>
+			<h2>{fname}'s Profile<span className="icon music"></span></h2>
 			<Row>
 				<Col>
 					<Button id="generate-playlist" onClick={()=>{history.push(`/combined-playlist/${user_id}`)}}>Generate Shared Playlist with {fname}</Button>
@@ -689,11 +700,11 @@ function UserDetail(props) {
 			</Row>
 			<Row>
 				<Col>
-					<h4>Favorite Songs<span class="icon cd"></span></h4>
+					<h4>Favorite Songs<span className="icon cd"></span></h4>
 					<div>{favSongs}</div>				
 				</Col>
 				<Col id="profile-artists" className="align-top">
-					<h4>Favorite Artists<span class="icon mic"></span></h4>
+					<h4>Favorite Artists<span className="icon mic"></span></h4>
 					<div>{favArtists}</div>				
 				</Col>
 			</Row>
@@ -757,7 +768,6 @@ function PlaylistDetail(props) {
 		// reset to avoid infinite loop
 	}, [props.playlistSongs])
 	return(
-
 		<Container fluid="md" id="playlist-details-container">
 			<h2>Shared Playlist</h2>
 			<Row>

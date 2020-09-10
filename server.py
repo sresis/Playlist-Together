@@ -192,6 +192,13 @@ def view_combined_playlist(user_id):
 	session_user = session['user']
 	## get the user id
 	
+	## gets the playlist name from form
+	user_data = request.get_json()
+	playlist_name = user_data['playlistName']
+	print('test')
+	print(playlist_name)
+
+
 	# gets attributes of user's recommended tracks
 	shared_prefs = crud.get_shared_tracks(session_user, user_id)
 	song_attributes = crud.get_song_attributes(session_user)
@@ -201,7 +208,8 @@ def view_combined_playlist(user_id):
 	
 	combined_dict = {
 		'user': json_user,
-		'playlist': similar_songs
+		'playlist': similar_songs,
+		'playlist_name': playlist_name
 	}
 	return jsonify(combined_dict)
 
@@ -213,6 +221,8 @@ def view_saved_playlists():
 	user_playlists = playlist_user.get_user_playlist(user_id)
 
 	return jsonify({'playlists': user_playlists})
+
+
 @app.route('/api/token')
 def get_spotify_token():
 	"""Gets secret token."""

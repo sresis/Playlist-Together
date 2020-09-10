@@ -95,6 +95,7 @@ canvas#myChart {
     opacity: 0.87;
     background-color: white;
     text-align: center;
+    border-radius: 25px;
    
 }
 
@@ -113,11 +114,14 @@ ul li {
     display: inline-block;
 }
 .users::before {
-    font-family: "Font Awesome 5 Free"; font-weight: 900; content: "\f007";
+    font-family: "Font Awesome 5 Free"; font-weight: 900; content: "\f2bd";
     
   }
-.cd::before {
+.mic::before {
     font-family: "Font Awesome 5 Free"; font-weight: 900; content: "\f130";
+}
+.cd::before {
+    font-family: "Font Awesome 5 Free"; font-weight: 900; content: "\f144";
 }
 
 .email::before {

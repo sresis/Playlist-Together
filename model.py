@@ -47,6 +47,8 @@ class Playlist(db.Model):
     playlist_id = db.Column(db.Integer,
                         autoincrement=True,
                         primary_key=True)
+    playlist_name = db.Column(db.String(50))
+
 
     def __repr__(self):
         return f'<playlist_id={self.playlist_id}>'
