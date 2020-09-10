@@ -67,14 +67,22 @@ body {
 }
 
     
+.card {
+   background-color: #6A8498;
 
+    display: inline-block;
+    vertical-align: top;
+    border-color: 5px solid red;
+    border-radius: 20px;
+    
+  }
 
  
 
 .btn {
     color: white;
     background-color: #2C2927;
-    border-color: #2C2927;
+    border-color: 3px solid white;
  
 }
 .btn:hover {
