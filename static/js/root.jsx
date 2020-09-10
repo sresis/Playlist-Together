@@ -52,10 +52,7 @@ function App() {
 			<Router>
 				<Navbar className="navigation" id="navbar-nav">
 					<Navbar.Brand>
-						<img src={'static/img/logo.png'}
-						width='100'
-						className='d-inline-block align-top'
-						id='site-logo' /> 
+						 
 					</Navbar.Brand>
 					<Nav className="flex-column">	
 						{Navigation[loggedIn]}
@@ -131,6 +128,12 @@ function Homepage() {
 					<h2> Welcome to Play[list] Together! <span class="icon music"></span> </h2>				
 				</Col>
 				
+			</Row>
+			<Row>
+				<img src={'static/img/logo.png'}
+						width='400'
+						
+						id='site-logo' />
 			</Row>
 		</Container> 
 	)
