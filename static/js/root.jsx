@@ -39,10 +39,10 @@ function App() {
 			<Col className="justify-content-end" id="after-login-links">
 				<Link to="/">Home </Link>
 				<Link to="/about">About </Link>
-				<Link to="/view-similar-users">Similar User</Link>
 				<Link to="/your-profile">Your Profile</Link>
 				<Link to="/users">View Users</Link>
 				<Link to="/view-saved-playlists">Saved Playlists</Link>
+				<Link to="/view-similar-users">Similar User</Link>
 				<Link to="/logout">Log Out</Link>
 			</Col>
 	   </Navbar>
@@ -285,8 +285,6 @@ function Login() {
 		.then(res => res.json())
 		.then(data => {
 		        if (data.status === "correct") {
-
-		            alert('correct!')
 		            setLoggedIn(true);
 		        } else if(data.status === "email error") {
 
@@ -400,7 +398,7 @@ function YourProfile(props) {
 			<h2>{fname}'s Profile<span class="icon music"></span></h2>
 			<Row>
 				<Col>
-					<Button onClick={createSongRecs}>Get Song Recs</Button>
+					<Button onClick={createSongRecs}>Update Song Recs</Button>
 				</Col>				
 			</Row>
 			<Row>
@@ -484,11 +482,22 @@ function Users(props) {
 	}, [props.email, props.user_id, props.fname, props.lname])
 
 	return(
-		<React.Fragment>
-			<h3>All Users</h3>
-			<CardColumns>{users}</CardColumns>
+		<Container fluid="md" id="all-users-container">
+			<Row>
+				<Col>
+					<h3>All Users</h3>
+				</Col>
+			</Row>
+			<Row>
+				<CardColumns>
+					{users}
+				</CardColumns>
+			</Row>
+		</Container>
+			
+			
 
-		</React.Fragment>
+	
 		) 
 }
 function CombinedPlaylist(props) {
