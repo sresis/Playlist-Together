@@ -345,9 +345,12 @@ def save_shared_playlist(user_id):
 	shared_prefs = crud.get_shared_tracks(session_user, user_id)
 	song_attributes = crud.get_song_attributes(session_user)
 	stdev = crud.get_stdev(song_attributes)
-	playlist_name = "test"
+
+	## need to get the playlist name from form
+	user_input = request.get_json()
+	playlist_name = user_input['playlistName']
+	
 	similar_songs = crud.get_all_similar_songs(session_user, user_id, 10)
-	print(similar_songs)
 	## get song id for each item
 	song_ids = []
 	for item in similar_songs:

@@ -488,6 +488,26 @@ function CombinedPlaylist(props) {
 	// updates background
 	document.body.style.background="url('/static/img/moroccan-flower.png')";
 	
+	// save playlist function
+	const savePlaylist = (evt) => {
+
+		evt.preventDefault();
+		const user_input = {"playlistName": playlistName}
+		console.log(playlistName);
+		console.log('testingxx');
+		fetch(`/api/save_playlist/${user_id}`, {
+			method: 'POST',
+			body: JSON.stringify(user_input),
+			headers: {
+				'Content-Type': 'application/json'
+			},
+
+		})
+		.then(res => res.json())
+		.then(data => {
+			console.log(data);
+		})
+	}
 	React.useEffect(() => {
 		fetch(`/api/combined_playlist/${user_id}`, {
 			
@@ -527,7 +547,7 @@ function CombinedPlaylist(props) {
 			//**** need to find a way to pass the playlist name in and send to server */
 			})
 		// reset to avoid infinite loop
-	}, [props.user, props.playlist, props.playlistName])
+	}, [props.user, props.playlist])
 
 	return (
 		
@@ -548,7 +568,7 @@ function CombinedPlaylist(props) {
 											value={playlistName}/>
 						</Form.Group>
 						<Button id="save-playlist" classname="btn"
-						onClick={()=>{history.push(`/save-playlist/${user_id}`)}}>Save Playlist</Button>
+						onClick={savePlaylist}>Save Playlist</Button>
 					</Form>
 				</Col>
 			</Row>
