@@ -622,12 +622,11 @@ function ViewSavedPlaylists(props){
 			// adds list of links for each user. handle each click
 			for (const item in data['playlists']) {
 				
-				console.log(data['playlists'][item]);
-				console.log('xx');
+				console.log(data['playlists'][item][0]);
 				//history.push(`/user-detail/${data[idx]['user_id']}`);
 				allPlaylists.push(
-						<li key={data['playlists'][item]}>
-							<Link onClick={()=>{history.push(`/playlist-detail/${data['playlists'][item]}`)}}>{data['playlists'][item]}</Link>
+						<li key={data['playlists'][item][0]}>
+							<Link onClick={()=>{history.push(`/playlist-detail/${data['playlists'][item][0]}`)}}>{data['playlists'][item][1]}</Link>
 						</li>
 					);
 			}

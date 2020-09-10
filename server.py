@@ -215,7 +215,7 @@ def view_saved_playlists():
 	"""Shows the user's saved playlists."""
 	user_id = session['user']
 	user_playlists = playlist_user.get_user_playlist(user_id)
-
+	print(user_playlists)
 	return jsonify({'playlists': user_playlists})
 
 

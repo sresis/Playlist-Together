@@ -35,7 +35,13 @@ def get_user_playlist(user_id):
 	# stores playlist ids
 	playlist_ids = []
 	for item in playlist_user:
-		playlist_ids.append(item.playlist_id)
+		#gets playlist id
+		playlist_id = item.playlist_id
+		#gets playlist name based on id
+		playlist_name = playlist.get_playlist_name(playlist_id)
+		playlist_ids.append([playlist_id, playlist_name])
+
+		print(playlist_name)
 
 	return playlist_ids
 	
