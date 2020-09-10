@@ -44,7 +44,7 @@ body {
 }
 
 #homepage, #user-detail-container, #shared-playlist-container, #your-prof-container, #similar-container,
-#saved-playlist-container  {
+#saved-playlist-container, #playlist-details-container  {
     background-color: #6A8498;
     opacity: 0.92;
     text-align: center;
@@ -140,7 +140,7 @@ ul li {
     padding: 10px;
     font-size: 16px;
   }
-#shared-playlist, #playlist-songs-col {
+#shared-playlist, #playlist-songs-col, #saved-playlist-col {
     height: 300px;
     width: 50%;
     overflow: auto;

@@ -757,9 +757,15 @@ function PlaylistDetail(props) {
 		// reset to avoid infinite loop
 	}, [props.playlistSongs])
 	return(
-		<React.Fragment>
-			<div id="shared-playlist">{playlistSongs}</div>
-		</React.Fragment>
+
+		<Container fluid="md" id="playlist-details-container">
+			<h2>Shared Playlist</h2>
+			<Row>
+				<Col id="saved-playlist-col">
+					{playlistSongs}
+				</Col>
+			</Row>
+		</Container>
 		) 
 }
 
