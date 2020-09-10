@@ -29,8 +29,8 @@ function App() {
 		<Navbar id ="topbar-post">
 			<Col className="justify-content-start" id="post-logo">
 				<Navbar.Brand className="nav-logo">
-					<img src='/static/img/small-logo.png'
-					width='60'
+					<img src='/static/img/wide-logo.png'
+					width='100'
 					height='30'
 					className='d-inline-block align-top'
 					id='logo' />
@@ -52,9 +52,9 @@ function App() {
 			<Navbar id ="topbar-pre">
 				 <Col className="justify-content-start" id="pre-logo">
 					<Navbar.Brand className="nav-logo">
-						<img src='/static/img/small-logo.png'
-						width='60'
-						height='60'
+						<img src='/static/img/wide-logo.png'
+						width='100'
+						height='30'
 						className='d-inline-block align-top'
 						id='logo' />
 					</Navbar.Brand>
