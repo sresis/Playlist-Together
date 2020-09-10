@@ -131,7 +131,7 @@ function Homepage() {
 					<h2> Welcome to Play[list] Together! <span class="icon music"></span> </h2>				
 				</Col>
 				<Col>
-					<Button id="create-account-but">
+					<Button id="create-account-but" classname="btn">
 					Create a New Account
 					</Button>
 				</Col>  
@@ -232,7 +232,7 @@ function CreateAccount(props) {
 								value={password}
 								 />
 			</Form.Group>
-			<Button variant="primary" type="submit" onClick={createUser}>Create Account</Button>
+			<Button classname="btn" variant="primary" type="submit" onClick={createUser}>Create Account</Button>
 		</Form>
 		</Container>
 		
@@ -305,7 +305,7 @@ function Login() {
 									value={password}
 									/>
 				</Form.Group>
-				<Button variant="primary" type="submit" onClick={loginUser}>Submit</Button>
+				<Button variant="primary" classname="btn" type="submit" onClick={loginUser}>Submit</Button>
 			</Form>
 		
 		</Container>
