@@ -1,6 +1,6 @@
 ![alt text](static/img/wide-logo.png)
 
-Play[list] Together is a single-page web app built in React that enables enables 2 users to generate a playlist that considers each of their music preferences in identifying songs that will appeal to both users. The inspiration for this project stems from my experiences making shared playlists with a friend -- while we could each add songs that we liked to the playlist, we didn’t always like the songs that the other person put on the playlist. Play[list] Together solves this by using song attribute data from the Spotify API to identify songs that both users are likely to enjoy. 
+Play[list] Together is a single-page web app built in React that enables 2 users to generate a playlist that considers each of their music preferences in identifying songs that will appeal to both users. The inspiration for this project stems from my experiences making shared playlists with a friend -- while we could each add songs that we liked to the playlist, we didn’t always like the songs that the other person put on the playlist. Play[list] Together solves this by using song attribute data from the Spotify API to identify songs that both users are likely to enjoy. 
 
 
 
