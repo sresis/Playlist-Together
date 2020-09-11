@@ -5,7 +5,8 @@ const Prompt = ReactRouterDOM.Prompt;
 const Switch = ReactRouterDOM.Switch;
 const Redirect = ReactRouterDOM.Redirect;
 const Autocomplete = React;
-const {Button, Alert, Col, Row, Card, CardColumns, CardGroup, Container, Collapse, Form, FormControl, Nav, Navbar, Spinner } = ReactBootstrap;
+const {Button, Alert, Col, Row, Card, CardColumns, CardGroup, Container, Collapse, 
+	Form, FormControl, Nav, Navbar, Spinner, Popover } = ReactBootstrap;
 
 // instance of context
 const LoginContext = React.createContext(null);
@@ -760,7 +761,7 @@ function PlaylistDetail(props) {
 	const {playlist_id} = ReactRouterDOM.useParams();
 	const[playlistSongs, setPlaylistSongs] = React.useState([]);
 	const[songTitles, setSongTitles] = React.useState([]);
-
+	const [playlistName, setPlaylistName] = React.useState([]);
 
 	// stores the current user details (to be displayed in HTMl)
 	console.log(playlist_id);
@@ -780,6 +781,7 @@ function PlaylistDetail(props) {
 		
 			const songs = data.songs;
 			console.log(songs);
+			const playlist_name = data.playlist_name;
 	
 			// array to store the songs in playlist
 			const playlistItems = [];
@@ -789,13 +791,13 @@ function PlaylistDetail(props) {
 				
 				playlistItems.push(
 					<div>
-						<li key={item}data-toggle="tooltip" 
-						title={`Loudness: ${data['songs'][item]['song_loudness']}
-								Danceability: ${data['songs'][item]['song_danceability']}
-								Valence:${data['songs'][item]['song_valence']}
-								Tempo:${data['songs'][item]['song_tempo']}
-								Energy:${data['songs'][item]['song_energy']}
-								Acousticness:${data['songs'][item]['song_acousticness']}
+						<li key={item}data-toggle="tooltip" data-html="true"
+						title={`Loudness: ${data['songs'][item]['song_loudness']}           
+								Danceability: ${data['songs'][item]['song_danceability']}         
+								Valence:${data['songs'][item]['song_valence']}       
+								Tempo:${data['songs'][item]['song_tempo']}        
+								Energy:${data['songs'][item]['song_energy']}       
+								Acousticness:${data['songs'][item]['song_acousticness']}        
 								`}
 						>
 									{data['songs'][item]['song_title']}</li>
@@ -805,13 +807,14 @@ function PlaylistDetail(props) {
 				);
 			}
 			setPlaylistSongs(playlistItems);
+			setPlaylistName(playlist_name);
 			
 			})
 		// reset to avoid infinite loop
-	}, [props.playlistSongs])
+	}, [props.playlistSongs], [props.playlistName])
 	return(
 		<Container fluid="md" id="playlist-details-container">
-			<h2>Shared Playlist</h2>
+			<h2>{playlistName}</h2>
 			<Row>
 				<Col id="saved-playlist-col">
 					{playlistSongs}

@@ -140,7 +140,10 @@ ul li {
     list-style-type: none;
 
 }
-
+.tooltip .tooltiptext {
+text-align: left;
+color: blue;
+}
 .autocomplete {
     /*the container must be positioned relative:*/
     position: relative;

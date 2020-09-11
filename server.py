@@ -228,7 +228,8 @@ def get_spotify_token():
 @app.route('/api/playlist-detail/<playlist_id>')
 def view_playlist_details(playlist_id):
 	"""Returns the playlist details."""
-	
+	# get playlist name
+	playlist_name = playlist.get_playlist_name(playlist_id)
 	#get songs in playlist
 	song_ids = playlist_song.get_playlist_songs(playlist_id)
 	songs_list = []
@@ -242,7 +243,8 @@ def view_playlist_details(playlist_id):
 		x = Song.as_dict(song)
 		song_dict.append(x)
 
-	return jsonify({'songs': song_dict})
+	return jsonify({'songs': song_dict,
+					'playlist_name': playlist_name})
 
 @app.route('/api/similar-users')
 def get_similar_user():
