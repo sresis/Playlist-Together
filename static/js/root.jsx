@@ -5,7 +5,7 @@ const Prompt = ReactRouterDOM.Prompt;
 const Switch = ReactRouterDOM.Switch;
 const Redirect = ReactRouterDOM.Redirect;
 const Autocomplete = React;
-const {Button, Alert, Col, Row, Card, CardColumns, Container, Collapse, Form, FormControl, Nav, Navbar, Spinner } = ReactBootstrap;
+const {Button, Alert, Col, Row, Card, CardColumns, CardGroup, Container, Collapse, Form, FormControl, Nav, Navbar, Spinner } = ReactBootstrap;
 
 // instance of context
 const LoginContext = React.createContext(null);
@@ -458,14 +458,13 @@ function Users(props) {
 			for (const idx in data) {
 				users_info.push(
 					
-					<Card style={{ width: '18rem' }}>
+					<Card style={{ width: '18rem' }} class="user-card">
 						<Card.Body>
 						<Card.Title>
-							<span class="icon users"></span>
 							{data[idx]['email']}
 							</Card.Title>
 						<Card.Text>
-							Insert some info...
+							<span class="icon users"></span>
 						</Card.Text>
 						<Button variant="primary" 
 						onClick={()=>{history.push(`/user-detail/${data[idx]['user_id']}`)}}>View Profile</Button>
@@ -876,11 +875,11 @@ function SimilarUsers() {
 		})
 	})
 	// stores the style
-	const chartStyle = {height: '60%'};
+	const chartStyle = {height: '50%'};
 	const makeGraph = () => {
 		
 		
-		
+
 	
 		// add a graph comparing each of their songs for each attr?
 		var ctx = document.getElementById('myChart').getContext('2d');

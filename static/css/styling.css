@@ -59,8 +59,8 @@ h1, h2, h3, h4 {
     color: #C4BCB7;
 }
 
-#homepage, #user-detail-container, #shared-playlist-container, #your-prof-container, #similar-container,
-#saved-playlist-container, #playlist-details-container, #all-users-container  {
+#homepage, #user-detail-container, #shared-playlist-container, #your-prof-container, 
+#saved-playlist-container, #playlist-details-container, #all-users-container, #similar-container  {
     background-color: #6A8498;
     opacity: 0.92;
     text-align: center;
@@ -68,8 +68,16 @@ h1, h2, h3, h4 {
     border-radius: 25px;
     padding: 20px;
     box-shadow: 0 8px 6px -6px gray;
+}
+ #all-users-container {
+    background-color: #C4BCB7;
+    color: #2C2927;
+}
+#similar-container {
+    background-color: #f1f1f1;
+    color: #2C2927;
+    margin-bottom: 30px;
 
-    
 }
 #homepage {
     width: 50%;
@@ -93,10 +101,13 @@ h1, h2, h3, h4 {
 
     display: inline-block;
     vertical-align: top;
-    border-radius: 15px;
+    margin: 5px 5px;
+    width: 500px;
  
 }
-
+.user-card {
+    border-radius: 20px;
+}
 .btn {
     color: white;
     background-color: #2C2927;
@@ -115,7 +126,7 @@ h1, h2, h3, h4 {
 }
 canvas#myChart {
     opacity: 0.87;
-    background-color: white;
+    background-color: transparent;
     text-align: center;
     border-radius: 25px;
    
