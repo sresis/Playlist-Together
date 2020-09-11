@@ -312,14 +312,14 @@ def get_average(attribute_dict):
 
 	}
 	# get the mean and add it to the dict
-	for item in attribute_dict:
-		averages['tempo'] = statistics.mean(attribute_dict['tempo'])
-		averages['valence'] = statistics.mean(attribute_dict['valence'])
-		averages['danceability'] = statistics.mean(attribute_dict['danceability'])
-		averages['energy'] = statistics.mean(attribute_dict['energy'])
-		averages['loudness'] = statistics.mean(attribute_dict['loudness'])
-		averages['acousticness'] = statistics.mean(attribute_dict['acousticness'])
-		averages['speechiness'] = statistics.mean(attribute_dict['speechiness'])
+	
+	averages['tempo'] = statistics.mean(attribute_dict['tempo'])
+	averages['valence'] = statistics.mean(attribute_dict['valence'])
+	averages['danceability'] = statistics.mean(attribute_dict['danceability'])
+	averages['energy'] = statistics.mean(attribute_dict['energy'])
+	averages['loudness'] = statistics.mean(attribute_dict['loudness'])
+	averages['acousticness'] = statistics.mean(attribute_dict['acousticness'])
+	averages['speechiness'] = statistics.mean(attribute_dict['speechiness'])
 
 
 	return averages
