@@ -1,0 +1,1 @@
+![alt text](/'/static/img/moroccan-flower.png')
