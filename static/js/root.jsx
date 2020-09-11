@@ -39,11 +39,10 @@ function App() {
 			</Col>
 			<Col className="justify-content-end" id="after-login-links">
 				<Link to="/">Home </Link>
-				<Link to="/about">About </Link>
 				<Link to="/your-profile">Your Profile</Link>
 				<Link to="/users">View Users</Link>
 				<Link to="/view-saved-playlists">Saved Playlists</Link>
-				<Link to="/view-similar-users">Similar User</Link>
+				<Link to="/view-similar-users">User Match</Link>
 				<Link to="/logout">Log Out</Link>
 			</Col>
 	   </Navbar>
@@ -62,7 +61,6 @@ function App() {
 				</Col>
 				<Col className="justify-content-end" id="before-login-links">
 					<Link to="/">Home </Link>
-					<Link to="/about">About </Link>
 					<Link to="/login">Log In</Link>
 					<Link to="/create-account">Create Account</Link>
 				</Col>
@@ -916,7 +914,7 @@ function SimilarUsers() {
 		<Container fluid="md" id="similar-container">
 			<Row>
 				<Col>
-					<h3>Similar User:</h3>
+					<h3>Music Taste Match <span class="icon music"></span></h3>
 					<li>{similarUser}<span class="icon similar-user"></span></li>
 				<Button id="user-graph" onClick={makeGraph}>See Graph</Button>
 				</Col>

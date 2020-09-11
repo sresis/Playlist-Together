@@ -38,7 +38,7 @@ h1, h2, h3, h4 {
 }
 #after-login-links a {
     color: #8B9CA0;
-    padding: 3px;
+    padding: 5px;
     text-align: left;
 }
 #topbar-post {
@@ -69,15 +69,17 @@ h1, h2, h3, h4 {
     padding: 20px;
     box-shadow: 0 8px 6px -6px gray;
 }
- #all-users-container {
-    background-color: #C4BCB7;
-    color: #2C2927;
-}
-#similar-container {
+
+#similar-container, #all-users-container {
     background-color: #f1f1f1;
     color: #2C2927;
     margin-bottom: 30px;
-
+}
+#saved-playlist-container, #playlist-details-container {
+    width: 50%;
+}
+#saved-playlist-container a{
+    color: white;
 }
 #homepage {
     width: 50%;
