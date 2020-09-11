@@ -1,1 +1,1 @@
-![alt text](/'/static/img/moroccan-flower.png')
+![alt text](static/img/wide-logo.png)
