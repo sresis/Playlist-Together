@@ -5,6 +5,10 @@ body {
     color: #f1f1f1;;
     text-align: center;
     font-family: 'Montserrat','Karla','Quicksand', 'Calibri';
+    height: 100%;
+}
+html {
+    height: 100%;
 }
 h1, h2, h3, h4 {
     font-family: 'CodeProW01-Lowercase', 'Montserrat', 'Calibri';
@@ -68,6 +72,7 @@ h1, h2, h3, h4 {
     border-radius: 25px;
     padding: 20px;
     box-shadow: 0 8px 6px -6px gray;
+    align-self: center;
 }
 
 #similar-container, #all-users-container {
