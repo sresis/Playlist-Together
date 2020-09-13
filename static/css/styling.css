@@ -89,7 +89,7 @@ h1, h2, h3, h4 {
 #homepage {
     width: 50%;
 }
-#create-account-form, #login-form, #song-pref-form, #artist-pref-form {
+#create-account-form, #login-form, #song-pref-form, #artist-pref-form , #playlist-form {
     width: 50%;
     background-color:#f1f1f1;
     opacity: 0.92;
@@ -100,6 +100,12 @@ h1, h2, h3, h4 {
     color: #2C2927;
     align-content: center;
     
+}
+#playlist-form {
+    margin-top: 30px;
+    align-content: center;
+    align-self: center;
+
 }
 
     

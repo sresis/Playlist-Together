@@ -398,7 +398,13 @@ function YourProfile(props) {
 			<Row>
 				<Col>
 					<Button onClick={createSongRecs}>Update Song Recs</Button>
-				</Col>				
+					 
+				</Col>			
+			</Row>
+			<Row>
+				<Col>
+					<h10>Input at least 3 songs and 3 artists to generate song recs</h10>
+				</Col>
 			</Row>
 			<Row>
 				<Col>
@@ -426,7 +432,6 @@ function GetSongRecs() {
 	console.log('test');
 	return <h2>hi</h2>
 }
-
 
 function Users(props) {
 
@@ -494,8 +499,6 @@ function Users(props) {
 		</Container>
 			
 			
-
-	
 		) 
 }
 function CombinedPlaylist(props) {
@@ -529,7 +532,9 @@ function CombinedPlaylist(props) {
 		.then(res => res.json())
 		.then(data => {
 			console.log(data);
+			// how to redirect to another route
 		})
+		
 	}
 	React.useEffect(() => {
 		fetch(`/api/combined_playlist/${user_id}`, {
@@ -570,30 +575,34 @@ function CombinedPlaylist(props) {
 	}, [props.user, props.playlist])
 
 	return (
+		<React.Fragment>
+			<Container fluid="md" id="shared-playlist-container">
+				<h2>Shared Playlist with {fname}<span class="icon music"></span></h2>
+				<Row>
+					<Col id="playlist-songs-col">
+						{playlistSongs}
+					</Col>
+				</Row>
+				
+			</Container>
+			<Container fluid="md" id="playlist-form">
+				<Row>
+					<Col>
+						<Form >
+							<Form.Group controlid="playlistName">
+								<Form.Label>Save Playlist</Form.Label>
+								<Form.Control type="text" placeholder="Playlist Name"
+												onChange= {e => setPlaylistName(e.target.value)}
+												value={playlistName}/>
+							<Button id="save-playlist" classname="btn"
+							onClick={savePlaylist}>Save Playlist</Button>
+							</Form.Group>
+						</Form>
+					</Col>
+				</Row>
+			</Container>
+		</React.Fragment>
 		
-		<Container fluid="md" id="shared-playlist-container">
-			<h2>Shared Playlist with {fname}<span class="icon music"></span></h2>
-			<Row>
-				<Col id="playlist-songs-col">
-					{playlistSongs}
-				</Col>
-			</Row>
-			<Row>
-				<Col>
-					<Form>
-						<Form.Group controlid="playlistName">
-							<Form.Label>Playlist Name</Form.Label>
-							<Form.Control type="text" placeholder="Playlist Name"
-											onChange= {e => setPlaylistName(e.target.value)}
-											value={playlistName}/>
-						</Form.Group>
-						<Button id="save-playlist" classname="btn"
-						onClick={savePlaylist}>Save Playlist</Button>
-					</Form>
-				</Col>
-			</Row>
-		
-		</Container>
 		
 	)
 }
