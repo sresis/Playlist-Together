@@ -487,7 +487,7 @@ function Users(props) {
 	return(
 		<Container fluid="md" id="all-users-container">
 			<Row>
-				<Col>
+				<Col id="users-col">
 					<h3>All Users</h3>
 				</Col>
 			</Row>
@@ -509,6 +509,8 @@ function CombinedPlaylist(props) {
 	const[playlistSongs, setPlaylistSongs] = React.useState([]);
 	const[playlistName, setPlaylistName] = React.useState([]);
 	
+	$('#save-success').hide();
+
 	const history = ReactRouterDOM.useHistory();
 	console.log(playlistName);
 	// updates background
@@ -531,8 +533,8 @@ function CombinedPlaylist(props) {
 		})
 		.then(res => res.json())
 		.then(data => {
-			console.log(data);
-			// how to redirect to another routegi
+			$("#save-success").delay(50).fadeIn(500);
+			$('#save-success').hide();
 		})
 		
 	}
@@ -600,6 +602,7 @@ function CombinedPlaylist(props) {
 						</Form>
 					</Col>
 				</Row>
+				<div id="save-success">Saved!</div>
 			</Container>
 		</React.Fragment>
 		
@@ -947,6 +950,9 @@ function AddSongPref(props) {
 	// input for song pref title
 	const[songPref, setSongPref] = React.useState("");
 	const[addedPref, setAddedPref] = React.useState(false);
+
+	// default
+	$('#song-success').hide();
 	var autocompleteInfo = '';
 
 	const[token, setToken] = React.useState("");
@@ -1022,18 +1028,14 @@ function AddSongPref(props) {
 		.then(res => res.json())
 		.then(data => {
 			if(data.status === "song pref added") {
-				alert('Song pref added!');
 				setAddedPref(true);
-				
+				$("#song-success").delay(20).fadeIn(300);
+				$('#song-success').hide();
 			}
 			else{
 				alert('error');
-			}
-			
-			
+			}		
 	});
-
-	
 	}
 		// renders song pref form
 	return (
@@ -1047,6 +1049,7 @@ function AddSongPref(props) {
 				</Form.Group>
 				<Button variant="primary" onClick={addSong}>Add Song Preference</Button>
 			</Form>
+			<div id="song-success">Added!</div>
 		</Container>
 		);
 }
@@ -1118,9 +1121,7 @@ function AddArtistPref(props) {
 			// updates artist input field
 			$("#artist-input").val(ui.item.value);
 			autocompleteInfo = ui.item.value;
-			console.log('xxx');
 			setArtistPref(autocompleteInfo);
-			
 		},
 		
 	});
@@ -1146,10 +1147,7 @@ function AddArtistPref(props) {
 			if(data.status === "artist pref added") {
 				setAddedPref(true);
 				$("#alert-success").delay(50).fadeIn(500);
-
 				$('#alert-success').hide();
-
-			
 				
 			}
 			else{
@@ -1159,7 +1157,6 @@ function AddArtistPref(props) {
 	});
 	
 	}
-
 
 	// can replace line 472 to true with history.push(/your-profile)
 

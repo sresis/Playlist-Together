@@ -107,8 +107,6 @@ h1, h2, h3, h4 {
     align-self: center;
 
 }
-
-    
 .card {
    background-color: #6A8498;
 
@@ -129,7 +127,6 @@ h1, h2, h3, h4 {
     box-shadow: 0 0 0 0.2rem;
     margin-bottom: 4px;
 }
- 
 
 .btn:hover {
   
@@ -193,6 +190,14 @@ color: blue;
     padding: 10px;
     font-size: 16px;
   }
+
+#all-users-container {
+    height: 550px;
+    overflow: auto;
+    text-align: center;
+    align-content: center;
+
+}
 #shared-playlist, #playlist-songs-col, #saved-playlist-col {
     height: 300px;
     width: 50%;
@@ -200,3 +205,4 @@ color: blue;
     text-align: center;
     align-content: center;
 }
+
