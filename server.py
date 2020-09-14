@@ -6,7 +6,6 @@ from model import connect_to_db, User, Song_Pref, Artist_Pref, Song
 import crud ##comment out if you want to -i into crud.py
 import api
 from DB import user_details, playlist, playlist_user, playlist_song
-
 from jinja2 import StrictUndefined
 
 app = Flask(__name__)

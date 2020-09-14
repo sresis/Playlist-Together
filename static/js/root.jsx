@@ -147,7 +147,7 @@ function Homepage() {
 			</Row>
 			<Row>
 				<Col>
-					<h2 id="homepage-caption"> Curate a Custom Playlist with a Friend <span class="icon music"></span> </h2>				
+					<h2 id="homepage-caption"> Curate a Custom Playlist with a Friend <span className="icon music"></span> </h2>				
 				</Col>
 				
 			</Row>
@@ -247,7 +247,7 @@ function CreateAccount(props) {
 								value={password}
 								 />
 			</Form.Group>
-			<Button classname="btn" type="submit" onClick={createUser}>Create Account</Button>
+			<Button className="btn" type="submit" onClick={createUser}>Create Account</Button>
 		</Form>
 		</Container>
 		
@@ -318,7 +318,7 @@ function Login() {
 									value={password}
 									/>
 				</Form.Group>
-				<Button classname="btn" type="submit" onClick={loginUser}>Submit</Button>
+				<Button className="btn" type="submit" onClick={loginUser}>Submit</Button>
 			</Form>
 		
 		</Container>
@@ -394,7 +394,7 @@ function YourProfile(props) {
 
 
 		<Container fluid="md" id="your-prof-container">
-			<h2>{fname}'s Profile<span class="icon music"></span></h2>
+			<h2>{fname}'s Profile<span className="icon music"></span></h2>
 			<Row>
 				<Col>
 					<Button onClick={createSongRecs}>Update Song Recs</Button>
@@ -408,12 +408,12 @@ function YourProfile(props) {
 			</Row>
 			<Row>
 				<Col>
-					<h4>Favorite Songs<span class="icon cd"></span></h4>
+					<h4>Favorite Songs<span className="icon cd"></span></h4>
 					<Button onClick={()=>{history.push(`/add-song-pref`)}}>Add Favorite Songs</Button>
 					<div>{favSongs}</div>				
 				</Col>
 				<Col>
-					<h4>Favorite Artists<span class="icon mic"></span></h4>
+					<h4>Favorite Artists<span className="icon mic"></span></h4>
 					<Button onClick={()=>{history.push(`/add-artist-pref`)}}>Add Favorite Artists</Button>
 					<div>{favArtists}</div>				
 				</Col>
@@ -462,13 +462,13 @@ function Users(props) {
 			for (const idx in data) {
 				users_info.push(
 					
-					<Card style={{ width: '18rem' }} class="user-card">
+					<Card style={{ width: '18rem' }} className="user-card">
 						<Card.Body>
 						<Card.Title>
 							{data[idx]['email']}
 							</Card.Title>
 						<Card.Text>
-							<span class="icon users"></span>
+							<span className="icon users"></span>
 						</Card.Text>
 						<Button variant="primary" 
 						onClick={()=>{history.push(`/user-detail/${data[idx]['user_id']}`)}}>View Profile</Button>
@@ -532,7 +532,7 @@ function CombinedPlaylist(props) {
 		.then(res => res.json())
 		.then(data => {
 			console.log(data);
-			// how to redirect to another route
+			// how to redirect to another routegi
 		})
 		
 	}
@@ -577,7 +577,7 @@ function CombinedPlaylist(props) {
 	return (
 		<React.Fragment>
 			<Container fluid="md" id="shared-playlist-container">
-				<h2>Shared Playlist with {fname}<span class="icon music"></span></h2>
+				<h2>Shared Playlist with {fname}<span className="icon music"></span></h2>
 				<Row>
 					<Col id="playlist-songs-col">
 						{playlistSongs}
@@ -594,7 +594,7 @@ function CombinedPlaylist(props) {
 								<Form.Control type="text" placeholder="Playlist Name"
 												onChange= {e => setPlaylistName(e.target.value)}
 												value={playlistName}/>
-							<Button id="save-playlist" classname="btn"
+							<Button id="save-playlist" className="btn"
 							onClick={savePlaylist}>Save Playlist</Button>
 							</Form.Group>
 						</Form>
@@ -920,8 +920,8 @@ function SimilarUsers() {
 		<Container fluid="md" id="similar-container">
 			<Row>
 				<Col>
-					<h3>Music Taste Match <span class="icon music"></span></h3>
-					<li>{similarUser}<span class="icon similar-user"></span></li>
+					<h3>Music Taste Match <span className="icon music"></span></h3>
+					<li>{similarUser}<span className="icon similar-user"></span></li>
 				<Button id="user-graph" onClick={makeGraph}>See Graph</Button>
 				</Col>
 			</Row>
@@ -1008,6 +1008,7 @@ function AddSongPref(props) {
 
 	const addSong = (evt) => {
 		evt.preventDefault();
+		
 
 		fetch('/api/add_song_pref', {
 			method: 'POST',
@@ -1023,11 +1024,16 @@ function AddSongPref(props) {
 			if(data.status === "song pref added") {
 				alert('Song pref added!');
 				setAddedPref(true);
+				
 			}
 			else{
 				alert('error');
 			}
+			
+			
 	});
+
+	
 	}
 		// renders song pref form
 	return (
@@ -1051,11 +1057,14 @@ function AddArtistPref(props) {
 
 	// updates background
 	document.body.style.background="url('static/img/moroccan-flower.png')";
-
 	// input for artist pref title
 	const[artistPref, setArtistPref] = React.useState("");
 	const[addedPref, setAddedPref] = React.useState(false);
 	const[token, setToken] = React.useState("");
+
+	// default
+	$('#alert-success').hide();
+
 	// get the token from server
 
 	var autocompleteInfo = '';
@@ -1135,8 +1144,12 @@ function AddArtistPref(props) {
 		.then(data => {
 			console.log(data);
 			if(data.status === "artist pref added") {
-				alert('Artist pref added!');
 				setAddedPref(true);
+				$("#alert-success").delay(50).fadeIn(500);
+
+				$('#alert-success').hide();
+
+			
 				
 			}
 			else{
@@ -1144,6 +1157,7 @@ function AddArtistPref(props) {
 			}
 			
 	});
+	
 	}
 
 
@@ -1162,6 +1176,7 @@ function AddArtistPref(props) {
 				</Form.Group>
 				<Button variant="primary" onClick={addArtist}>Add Artist Preference</Button>
 			</Form>
+			<div id="alert-success">Added!</div>
 		</Container>
 
 		);
