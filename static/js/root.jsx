@@ -520,6 +520,7 @@ function CombinedPlaylist(props) {
 	const savePlaylist = (evt) => {
 
 		evt.preventDefault();
+		
 		const user_input = {"playlistName": playlistName}
 		console.log(playlistName);
 		console.log('testingxx');
@@ -533,9 +534,10 @@ function CombinedPlaylist(props) {
 		})
 		.then(res => res.json())
 		.then(data => {
-			$("#save-success").delay(50).fadeIn(500);
-			$('#save-success').hide();
+		
 		})
+		$("#save-success").delay(50).fadeIn(500);
+		$('#save-success').hide();
 		
 	}
 	React.useEffect(() => {
@@ -551,6 +553,7 @@ function CombinedPlaylist(props) {
 		.then(data => {
 			const f_name = data.user.fname;
 			const playlist = data.playlist;
+			
 	
 			// array to store the songs in playlist
 			const playlistItems = [];
