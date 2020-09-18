@@ -405,11 +405,6 @@ def add_artist_pref():
 		
 		return jsonify({'status': 'artist pref added'})
 	
-	
-
-
-
-
 @app.route('/api/get_song_recs', methods=['POST'])
 def get_song_recs():
 	"""Gets song recommendations for user."""
