@@ -234,8 +234,8 @@ function CreateAccount(props) {
 								 />
 			</Form.Group>
 			<Form.Group controlid="createEmail">
-				<Form.Label>Email</Form.Label>
-				<Form.Control type="email" placeholder="Email"
+				<Form.Label>Username</Form.Label>
+				<Form.Control type="text" placeholder="Username"
 								onChange= {e => setEmail(e.target.value)}
 								value={email}
 								 />
@@ -306,8 +306,8 @@ function Login() {
 			<h4>Log In</h4>
 			<Form>
 				<Form.Group controlid="formEmail">
-					<Form.Label>Email</Form.Label>
-					<Form.Control type="email" placeholder="Email"
+					<Form.Label>Username</Form.Label>
+					<Form.Control type="text" placeholder="Username"
 									onChange= {e => setEmail(e.target.value)}
 									value={email}/>
 				</Form.Group>
