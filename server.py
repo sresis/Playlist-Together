@@ -267,7 +267,7 @@ def get_similar_user():
 	min_diff = [1000, '']
 	# iterate through all users that are not the session user that have recs.
 	for user_x in all_users:
-		if user_x.user_id == 2:
+		if user_x.user_id != user.user_id and crud.user_has_song_recs(user_x.user_id):
 			user_diff = (abs(user.user_valence - user_x.user_valence)/session_user_stdev['valence']) 
 			+ (abs(user.user_speechiness - user_x.user_speechiness)/session_user_stdev['speechiness'])
 			+ (abs(user.user_acousticness - user_x.user_acousticness)/session_user_stdev['acousticness'])
@@ -485,4 +485,4 @@ def get_song_recs():
 if __name__ == '__main__':
 	connect_to_db(app)
 	app.run()
-	#app.run(host='0.0.0.0'), debug=True)
+	#app.run(host='0.0.0.0', debug=True)
