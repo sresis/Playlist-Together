@@ -267,7 +267,7 @@ def get_similar_user():
 	min_diff = [1000, '']
 	# iterate through all users that are not the session user.
 	for user_x in all_users:
-		if user_x != user:
+		if user_x != user and crud.get_user_song_prefs(user_x):
 			user_diff = (abs(user.user_valence - user_x.user_valence)/session_user_stdev['valence']) 
 			+ (abs(user.user_speechiness - user_x.user_speechiness)/session_user_stdev['speechiness'])
 			+ (abs(user.user_acousticness - user_x.user_acousticness)/session_user_stdev['acousticness'])
