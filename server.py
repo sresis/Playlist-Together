@@ -267,7 +267,7 @@ def get_similar_user():
 	min_diff = [1000, '']
 	# iterate through all users that are not the session user that have recs.
 	for user_x in all_users:
-		if user_x != user and user_x.user_id < 2:
+		if user_x.user_id == 2:
 			user_diff = (abs(user.user_valence - user_x.user_valence)/session_user_stdev['valence']) 
 			+ (abs(user.user_speechiness - user_x.user_speechiness)/session_user_stdev['speechiness'])
 			+ (abs(user.user_acousticness - user_x.user_acousticness)/session_user_stdev['acousticness'])
@@ -277,6 +277,8 @@ def get_similar_user():
 			# if the difference is smaller, update the array with the difference and ID
 			if user_diff < min_diff[0]:
 				min_diff = [user_diff, user_x.email]
+		else: 
+			pass
 	
 	similar_user_email = min_diff[1]
 	similar_user = crud.get_user_by_email(similar_user_email)
