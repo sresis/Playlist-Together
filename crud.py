@@ -185,7 +185,14 @@ def get_user_song_recs(user_id):
 
 	return Song_Rec.query.filter(Song_Rec.user_id == user_id)
 
+def user_has_song_recs(user_id):
+	"""Gets all song recs for a user."""
 
+	has_recs = Song_Rec.query.filter(Song_Rec.user_id == user_id).first()
+	if has_recs:
+		return True
+	else:
+		return False
 
 def get_all_song_recs():
     """Return all song recs."""
