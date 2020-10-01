@@ -147,7 +147,7 @@ function Homepage() {
 			</Row>
 			<Row>
 				<Col>
-					<h2 id="homepage-caption"> Curate a Custom Playlist with a Friend! <span className="icon music"></span> </h2>				
+					<h2 id="homepage-caption"> Curate a Custom Playlist with a Friend <span className="icon music"></span> </h2>				
 				</Col>
 				
 			</Row>
