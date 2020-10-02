@@ -1,4 +1,3 @@
-"""Server for movie ratings app."""
 
 from flask import (Flask, render_template, request, flash, session, jsonify,
 				   redirect)
