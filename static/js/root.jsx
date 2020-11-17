@@ -1089,6 +1089,19 @@ function AddArtistPref(props) {
 	// how to pass the autocomplete value into when we submit
 
 	$("#artist-input").autocomplete({
+
+		fetch('/api/token', {
+	
+			headers: {
+				'Content-Type': 'application/json'
+			},
+	
+		})
+		.then(res => res.json())
+		.then(data => {
+			const token_info = data.token;
+			console.log(token_info)
+		})
 		
 		source: function(request, response) {
 			$.ajax({
