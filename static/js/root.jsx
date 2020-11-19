@@ -1071,7 +1071,6 @@ function AddArtistPref(props) {
 	// default
 	$('#alert-success').hide();
 
-	const[token, setToken] = React.useState("");
 	// get the token from server
 	fetch('/api/token', {
 	
