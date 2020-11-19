@@ -1071,9 +1071,8 @@ function AddArtistPref(props) {
 	// default
 	$('#alert-success').hide();
 
+	const[token, setToken] = React.useState("");
 	// get the token from server
-
-	var autocompleteInfo = '';
 	fetch('/api/token', {
 	
 		headers: {
@@ -1086,61 +1085,46 @@ function AddArtistPref(props) {
 		const token_info = data.token;
 		setToken(token_info);
 	})
-	// how to pass the autocomplete value into when we submit
 
-	$("#artist-input").autocomplete({
-
-		fetch('/api/token', {
-	
-			headers: {
-				'Content-Type': 'application/json'
+	$(document).ready(function() {
+		$("#artist-input").autocomplete({
+			
+			source: function(request, response) {
+				$.ajax({
+					type: "GET",
+					url: "https://api.spotify.com/v1/search",
+					dataType: "json",
+					headers: {
+						'Authorization' : 'Bearer ' + token,
+					},
+					data: {
+						type: "artist",
+						limit: 3,
+						contentType: "application/json; charset=utf-8",
+						format: "json",
+						q: request.term
+					},
+					success: function(data) {
+						response($.map(data.artists.items, function(item) {
+							console.log(item);
+							return {
+								label: item.name,
+								value: item.name,
+								id: item.id
+							}
+						}));
+					}
+				});
 			},
-	
-		})
-		.then(res => res.json())
-		.then(data => {
-			const token_info = data.token;
-			console.log(token_info)
-		})
+			minLength: 3,
+			select: function(event, ui) {
+				$("#artist-input").val(ui.item.value);
+				autocompleteInfo = ui.item.value;
+				setArtistPref(autocompleteInfo);
+			},
+		});
 		
-		source: function(request, response) {
-			$.ajax({
-				type: "GET",
-				url: "https://api.spotify.com/v1/search",
-				dataType: "json",
-				headers: {
-					'Authorization' : 'Bearer ' + token,
-				},
-				data: {
-					type: "artist",
-					limit: 3,
-					contentType: "application/json; charset=utf-8",
-					format: "json",
-					q: request.term
-				},
-				success: function(data) {
-					response($.map(data.artists.items, function(item) {
-						return {
-							label: item.name,
-							value: item.name,
-							id: item.id
-							
-						}
-						
-					}));
-				}
-			});
-		},
-		
-		minLength: 2,
-		select: function(evt, ui) {
-			// updates artist input field
-			$("#artist-input").val(ui.item.value);
-			autocompleteInfo = ui.item.value;
-			setArtistPref(autocompleteInfo);
-		},
-		
-	});
+		});
 
 	
 	// formats the user input
