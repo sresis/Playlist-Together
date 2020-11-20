@@ -340,7 +340,6 @@ function YourProfile(props) {
 	document.body.style.background="url('/static/img/moroccan-flower.png')";
 	const createSongRecs = () => {
 	
-
 		fetch('/api/get_song_recs', {
 			method: 'POST',
 			headers: {
@@ -567,8 +566,6 @@ function CombinedPlaylist(props) {
 								
 								width="300" height="50" frameBorder="0" allowtransparency="true" 
 								allow="encrypted-media"></iframe>
-							
-						
 					</div>
 				);
 			}
@@ -1034,7 +1031,7 @@ function AddSongPref(props) {
 			if(data.status === "song pref added") {
 				setAddedPref(true);
 				console.log('song added');
-				$("#song-success").delay(20).fadeIn(300);
+				$("#song-success").delay(5).fadeIn(300);
 				$('#song-success').hide();
 			}
 			else{
