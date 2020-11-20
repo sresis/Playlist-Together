@@ -888,10 +888,7 @@ function SimilarUsers() {
 	// stores the style
 	const chartStyle = {height: '50%'};
 	const makeGraph = () => {
-		
-		
 
-	
 		// add a graph comparing each of their songs for each attr?
 		var ctx = document.getElementById('myChart').getContext('2d');
 		var chart = new Chart(ctx, {
@@ -914,9 +911,7 @@ function SimilarUsers() {
 					`${similarUserEnergy}`, `${similarUserDanceability}`, `${similarUserLoudness}`]
 				}]
 			},
-			
-		
-		
+
 		});
 	
 	}
@@ -1031,7 +1026,7 @@ function AddSongPref(props) {
 			if(data.status === "song pref added") {
 				setAddedPref(true);
 				console.log('song added');
-				$("#song-success").delay(5).fadeIn(300);
+				$("#song-success").delay(100).fadeIn(300);
 				$('#song-success').hide();
 			}
 			else{
@@ -1146,7 +1141,6 @@ function AddArtistPref(props) {
 				setAddedPref(true);
 				$("#alert-success").delay(50).fadeIn(500);
 				$('#alert-success').hide();
-				
 			}
 			else{
 				alert('error');
