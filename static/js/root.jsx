@@ -403,7 +403,8 @@ function YourProfile(props) {
 			</Row>
 			<Row>
 				<Col>
-					<h10>Input at least 3 songs and 3 artists to generate song recs</h10>
+					<h6>Input at least 3 songs and 3 artists to generate song recs</h6>
+					<h6>Once you have clicked this, you can create shared playlists with other users.</h6>
 				</Col>
 			</Row>
 			<Row>
