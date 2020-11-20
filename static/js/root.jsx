@@ -1033,6 +1033,7 @@ function AddSongPref(props) {
 		.then(data => {
 			if(data.status === "song pref added") {
 				setAddedPref(true);
+				console.log('song added');
 				$("#song-success").delay(20).fadeIn(300);
 				$('#song-success').hide();
 			}
