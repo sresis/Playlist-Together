@@ -1069,7 +1069,7 @@ function AddArtistPref(props) {
 	const[artistPref, setArtistPref] = React.useState("");
 	const[addedPref, setAddedPref] = React.useState(false);
 	const[token, setToken] = React.useState("");
-
+	var autocompleteInfo = '';
 	// default
 	$('#alert-success').hide();
 
