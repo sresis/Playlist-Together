@@ -950,20 +950,25 @@ function AddSongPref(props) {
 	// default
 	$('#song-success').hide();
 	var autocompleteInfo = '';
+	// console log -> when is state changing. when is fetch happenging
+	// why is it not changing
+	// store token in state. when they log in? store it at earliest time possible (costs a lot on client side)
 
 	const[token, setToken] = React.useState("");
 	// get the token from server
+	// if error 
+	// backend api server to catch errors from backend
 	fetch('/api/token', {
 	
 		headers: {
 			'Content-Type': 'application/json'
 		},
-
 	})
 	.then(res => res.json())
 	.then(data => {
 		const token_info = data.token;
 		setToken(token_info);
+		console.log(token);
 	})
 
 	$(document).ready(function() {
@@ -984,6 +989,7 @@ function AddSongPref(props) {
 						format: "json",
 						q: request.term
 					},
+					// how to catch errors here
 					success: function(data) {
 						response($.map(data.tracks.items, function(item) {
 							console.log(item);
