@@ -969,7 +969,7 @@ function AddSongPref(props) {
 		const token_info = data.token;
 		setToken(token_info);
 		console.log(token);
-	})
+	},[props.token])
 
 	$(document).ready(function() {
 		$("#song-input").autocomplete({
@@ -1039,6 +1039,7 @@ function AddSongPref(props) {
 				alert('error');
 			}		
 	});
+	
 	}
 		// renders song pref form
 	return (
