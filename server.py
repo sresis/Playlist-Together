@@ -11,6 +11,22 @@ app = Flask(__name__)
 app.secret_key = "dev"
 app.jinja_env.undefined = StrictUndefined
 
+CLIENT_ID = os.environ['CLIENT_ID']
+CLIENT_SECRET = os.environ['CLIENT_SECRET']
+
+AUTH_URL = 'https://accounts.spotify.com/api/token'
+
+# POST
+auth_response = requests.post(AUTH_URL, {
+    'grant_type': 'client_credentials',
+    'client_id': CLIENT_ID,
+    'client_secret': CLIENT_SECRET,
+})
+
+# convert the response to JSON
+auth_response_data = auth_response.json()
+# save the access token. "golden ticket" to accessing API
+access_token = auth_response_data['access_token']
 
 @app.route('/')
 def root():
@@ -220,7 +236,7 @@ def view_saved_playlists():
 @app.route('/api/token')
 def get_spotify_token():
 	"""Gets secret token."""
-	token = api.get_token()
+	token = access_token
 	return jsonify({'token': token})
 
 @app.route('/api/playlist-detail/<playlist_id>')
