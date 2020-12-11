@@ -6,23 +6,11 @@ import crud ##comment out if you want to -i into crud.py
 import api
 from DB import user_details, playlist, playlist_user, playlist_song
 from jinja2 import StrictUndefined
-import requests
-import os
+
 app = Flask(__name__)
 app.secret_key = "dev"
 app.jinja_env.undefined = StrictUndefined
 
-CLIENT_ID = os.environ['CLIENT_ID']
-CLIENT_SECRET = os.environ['CLIENT_SECRET']
-
-AUTH_URL = 'https://accounts.spotify.com/api/token'
-
-# POST
-auth_response = requests.post(AUTH_URL, {
-    'grant_type': 'client_credentials',
-    'client_id': CLIENT_ID,
-    'client_secret': CLIENT_SECRET,
-})
 
 # convert the response to JSON
 auth_response_data = auth_response.json()
