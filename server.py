@@ -12,11 +12,6 @@ app.secret_key = "dev"
 app.jinja_env.undefined = StrictUndefined
 
 
-# convert the response to JSON
-auth_response_data = auth_response.json()
-# save the access token. "golden ticket" to accessing API
-access_token = auth_response_data['access_token']
-
 @app.route('/')
 def root():
 	"""view the homepage."""
@@ -225,7 +220,7 @@ def view_saved_playlists():
 @app.route('/api/token')
 def get_spotify_token():
 	"""Gets secret token."""
-	token = access_token
+	token = api.get_token()
 	return jsonify({'token': token})
 
 @app.route('/api/playlist-detail/<playlist_id>')
