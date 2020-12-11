@@ -865,6 +865,7 @@ function SimilarUsers() {
 		
 		.then(response => response.json())
 		.then(data => {
+			console.log(data);
 			// set current user attributes
 			setSimilarUser(data.similar_user);
 			setCurrentUserValence(data.current_user_info[0]);
