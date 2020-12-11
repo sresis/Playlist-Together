@@ -285,13 +285,15 @@ def get_similar_user():
 	# adjust loudness for graph
 	adj_user_loudness = abs(user.user_loudness)/10
 	adj_similar_user_loudness = abs(similar_user.user_loudness)/10
-	return jsonify({'similar_user': similar_user_email,
-					'current_user_info': [user.user_valence, user.user_speechiness, 
-					user.user_acousticness, user.user_energy, user.user_danceability, adj_user_loudness],
-					'similar_user_info': [similar_user.user_valence, similar_user.user_speechiness, 
-					similar_user.user_acousticness, similar_user.user_energy, 
-					similar_user.user_danceability, adj_similar_user_loudness]}
-					)
+
+	return jsonify({'similar_user': similar_user})
+	# return jsonify({'similar_user': similar_user_email,
+	# 				'current_user_info': [user.user_valence, user.user_speechiness, 
+	# 				user.user_acousticness, user.user_energy, user.user_danceability, adj_user_loudness],
+	# 				'similar_user_info': [similar_user.user_valence, similar_user.user_speechiness, 
+	# 				similar_user.user_acousticness, similar_user.user_energy, 
+	# 				similar_user.user_danceability, adj_similar_user_loudness]}
+	# 				)
 
 		
 @app.route('/api/logout')
