@@ -141,7 +141,7 @@ function Homepage() {
 			<Row>
 				<Col>
 					<img src={'static/img/transparent-logo.png'}
-							width='400'
+							width='100%'
 							id='site-logo' />
 				</Col>	
 			</Row>
