@@ -88,6 +88,7 @@ h1, h2, h3, h4 {
 }
 #homepage {
     width: 50%;
+    height: 70%;
 }
 #create-account-form, #login-form, #song-pref-form, #artist-pref-form , #playlist-form {
     width: 50%;
