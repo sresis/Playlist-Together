@@ -964,6 +964,7 @@ function AddSongPref(props) {
 	.then(data => {
 		const token_info = data.token;
 		setToken(token_info);
+		console.log(token_info);
 	})
 
 	$(document).ready(function() {
@@ -1005,6 +1006,7 @@ function AddSongPref(props) {
 		});
 		
 		});
+	
 	
 	const user_input = {"songPref": songPref};
 

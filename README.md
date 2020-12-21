@@ -8,8 +8,10 @@ Play[list] Together is a single-page web app built in React that enables 2 users
 ## Demo Video
 [Link](https://www.youtube.com/watch?v=Ua2aOYD788Q)
 
-## Example
+## Examples
+- Adding artist preferences and generating a shared playlist
 ![alt text](static/img/playlist-gif.gif)
+- Viewing User Match
 
 ## Technology Stack
 - Python
