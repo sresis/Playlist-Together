@@ -189,11 +189,6 @@ def view_combined_playlist(user_id):
 
 	session_user = session['user']
 	## get the user id
-	
-	## gets the playlist name from form
-	
-
-
 	# gets attributes of user's recommended tracks
 	shared_prefs = crud.get_shared_tracks(session_user, user_id)
 	song_attributes = crud.get_song_attributes(session_user)

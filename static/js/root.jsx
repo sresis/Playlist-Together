@@ -946,7 +946,7 @@ function AddSongPref(props) {
 	// input for song pref title
 	const[songPref, setSongPref] = React.useState("");
 	const[addedPref, setAddedPref] = React.useState(false);
-
+	
 	// default
 	$('#song-success').hide();
 	var autocompleteInfo = '';
@@ -965,6 +965,7 @@ function AddSongPref(props) {
 		const token_info = data.token;
 		setToken(token_info);
 		console.log(token_info);
+		console.log('xx')
 	})
 
 	$(document).ready(function() {
